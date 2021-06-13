@@ -31,11 +31,30 @@ syn keyword neluaTodo contained TODO FIXME XXX
 syn match neluaComment "--.*$" contains=neluaTodo,@Spell
 " Comments in Lua 5.1: --[[ ... ]], [=[ ... ]=], [===[ ... ]===], etc.
 syn region neluaComment 
-      \ matchgroup=neluaComment 
-      \ start="--\[\z(=*\)\[" end="\]\z1\]" 
-      \ contains=neluaTodo,@Spell
+  \ matchgroup=neluaComment 
+  \ start="--\[\z(=*\)\[" end="\]\z1\]" 
+  \ contains=neluaTodo,@Spell
+
+syn match neluaPreProc "\(#\)"
+
+syn region neluaPreProcCodeBlock
+  \ matchgroup=Include
+  \ start="##\[\z(=*\)\[" end="\]\z1\]"
+  \ contains=ALL
+
+syn region neluaPreProcExpression
+  \ matchgroup=neluaPreProc
+  \ start="#\[" end="\]#"
+  \ contains=ALLBUT,neluaParenError,neluaTodo,neluaSpecial,neluaIfThen,neluaElseifThen,neluaElse,neluaThenEnd,neluaBlock,neluaLoopBlock,neluaIn,neluaStatement
+
+syn region neluaPreProcNameReplacement
+  \ matchgroup=neluaPreProc
+  \ start="#|" end="|#"
+  \ contains=ALLBUT,neluaParenError,neluaTodo,neluaSpecial,neluaIfThen,neluaElseifThen,neluaElse,neluaThenEnd,neluaBlock,neluaLoopBlock,neluaIn,neluaStatement
 
 syn match neluaKeyword "\(@\)"
+
+syn match neluaKeyword "\V."
 
 syn match neluaOperator "\V^"   contained
 syn match neluaOperator "+"     contained
@@ -45,12 +64,9 @@ syn match neluaOperator "=>"    contained
 syn match neluaOperator "\V~="  contained
 syn match neluaOperator "<"     contained
 syn match neluaOperator ">"     contained
-syn match neluaOperator "\V."   contained
 syn match neluaOperator "*"     contained
 syn match neluaOperator "&"     contained
 syn match neluaOperator "\/"    contained
-
-syn match neluaPreProc /[|#\[\]]/
 
 " First line may start with #!
 syn match neluaComment "\%^#!.*"
