@@ -66,6 +66,7 @@ syn match neluaOperator "<"     contained
 syn match neluaOperator ">"     contained
 syn match neluaOperator "*"     contained
 syn match neluaOperator "&"     contained
+syn match neluaOperator "\~"    contained
 syn match neluaOperator "\/"    contained
 
 " First line may start with #!
