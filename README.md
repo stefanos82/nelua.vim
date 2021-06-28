@@ -2,7 +2,8 @@
 
 Syntax highlighting for [Nelua](https://nelua.io/) programming language.
 
-![image](https://user-images.githubusercontent.com/1777466/121826201-2ebead00-ccbf-11eb-84f9-4119b52982d2.png)
+![image](https://user-images.githubusercontent.com/1777466/123715028-27330280-d880-11eb-95f2-565fc90085f6.png)
+
 
 ## Contributing
 
