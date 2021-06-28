@@ -2,7 +2,7 @@
 " Language:     Nelua 0.2.0
 " Maintainer:   Stefanos Sofroniou <sofr.stef 'at' cytanet.com.cy>
 " First Author: Stefanos Sofroniou <sofr.stef 'at' cytanet.com.cy>
-" Last Change:  2021-06-26 01:36:24 
+" Last Change:  2021-06-29 00:51:02
 " Remark:       Based on /usr/share/vim/vim82/syntax/lua.vim
 
 " quit when a syntax file was already loaded
@@ -62,13 +62,12 @@ syn match neluaKeyword "\(>\)"
 syn match neluaKeyword "\(<\)"
 syn match neluaKeyword "\(\~\)"
 syn match neluaKeyword "\(\/\)"
-
+syn match neluaKeyword "\(<=\)"
+syn match neluaKeyword "\(=>\)"
+syn match neluaKeyword "\(:\)"
+syn match neluaKeyword "\(\^\)"
+syn match neluaKeyword "\(\~=\)"
 syn match neluaKeyword "\V."
-
-syn match neluaOperator "\V^"   contained
-syn match neluaOperator "<="    contained
-syn match neluaOperator "=>"    contained
-syn match neluaOperator "\V~="  contained
 
 " First line may start with #!
 syn match neluaComment "\%^#!.*"
