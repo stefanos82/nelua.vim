@@ -2,7 +2,7 @@
 " Language:     Nelua 0.2.0
 " Maintainer:   Stefanos Sofroniou <sofr.stef 'at' cytanet.com.cy>
 " First Author: Stefanos Sofroniou <sofr.stef 'at' cytanet.com.cy>
-" Last Change:  2021-06-29 00:51:02
+" Last Change:  2021-07-02 10:15:10
 " Remark:       Based on /usr/share/vim/vim82/syntax/lua.vim
 
 " quit when a syntax file was already loaded
@@ -30,9 +30,9 @@ syn sync minlines=100
 syn keyword neluaTodo contained TODO FIXME XXX
 syn match neluaComment "--.*$" contains=neluaTodo,@Spell
 " Comments in Lua 5.1: --[[ ... ]], [=[ ... ]=], [===[ ... ]===], etc.
-syn region neluaComment 
-  \ matchgroup=neluaComment 
-  \ start="--\[\z(=*\)\[" end="\]\z1\]" 
+syn region neluaComment
+  \ matchgroup=neluaComment
+  \ start="--\[\z(=*\)\[" end="\]\z1\]"
   \ contains=neluaTodo,@Spell
 
 syn match neluaPreProc "\(#\)"
@@ -45,12 +45,36 @@ syn region neluaPreProcCodeBlock
 syn region neluaPreProcExpression
   \ matchgroup=neluaPreProc
   \ start="#\[" end="\]#"
-  \ contains=ALLBUT,neluaParenError,neluaTodo,neluaSpecial,neluaIfThen,neluaElseifThen,neluaElse,neluaThenEnd,neluaBlock,neluaLoopBlock,neluaIn,neluaStatement
+  \ contains=
+    \ALLBUT,
+    \neluaParenError,
+    \neluaTodo,
+    \neluaSpecial,
+    \neluaIfThen,
+    \neluaElseifThen,
+    \neluaElse,
+    \neluaThenEnd,
+    \neluaBlock,
+    \neluaLoopBlock,
+    \neluaIn,
+    \neluaStatement
 
 syn region neluaPreProcNameReplacement
   \ matchgroup=neluaPreProc
   \ start="#|" end="|#"
-  \ contains=ALLBUT,neluaParenError,neluaTodo,neluaSpecial,neluaIfThen,neluaElseifThen,neluaElse,neluaThenEnd,neluaBlock,neluaLoopBlock,neluaIn,neluaStatement
+  \ contains=
+    \ALLBUT,
+    \neluaParenError,
+    \neluaTodo,
+    \neluaSpecial,
+    \neluaIfThen,
+    \neluaElseifThen,
+    \neluaElse,
+    \neluaThenEnd,
+    \neluaBlock,
+    \neluaLoopBlock,
+    \neluaIn,
+    \neluaStatement
 
 syn match neluaKeyword "\(@\)"
 syn match neluaKeyword "\(\$\)"
@@ -74,102 +98,201 @@ syn match neluaComment "\%^#!.*"
 
 " catch errors caused by wrong parenthesis and wrong curly brackets or
 " keywords placed outside their respective blocks
-syn region neluaParen transparent 
-  \ start="(" end=")" 
-  \ contains=ALLBUT,neluaParenError,neluaTodo,neluaSpecial,neluaIfThen,neluaElseifThen,neluaElse,neluaThenEnd,neluaBlock,neluaLoopBlock,neluaIn,neluaStatement
+syn region neluaParen transparent
+  \ start="(" end=")"
+  \ contains=
+    \ALLBUT,
+    \neluaParenError,
+    \neluaTodo,
+    \neluaSpecial,
+    \neluaIfThen,
+    \neluaElseifThen,
+    \neluaElse,
+    \neluaThenEnd,
+    \neluaBlock,
+    \neluaLoopBlock,
+    \neluaIn,
+    \neluaStatement
 
-syn region neluaTableBlock transparent 
-  \ matchgroup=neluaTable 
-  \ start="{" end="}" 
-  \ contains=ALLBUT,neluaBraceError,neluaTodo,neluaSpecial,neluaIfThen,neluaElseifThen,neluaElse,neluaThenEnd,neluaBlock,neluaLoopBlock,neluaIn,neluaStatement
+syn region neluaTableBlock transparent
+  \ matchgroup=neluaTable
+  \ start="{" end="}"
+  \ contains=
+    \ALLBUT,
+    \neluaBraceError,
+    \neluaTodo,
+    \neluaSpecial,
+    \neluaIfThen,
+    \neluaElseifThen,
+    \neluaElse,
+    \neluaThenEnd,
+    \neluaBlock,
+    \neluaLoopBlock,
+    \neluaIn,
+    \neluaStatement
 
 syn match  neluaParenError ")"
 syn match  neluaBraceError "}"
 syn match  neluaError "\<\%(end\|else\|elseif\|then\|until\|in\)\>"
 
 " function ... end
-syn region neluaFunctionBlock transparent 
-  \ matchgroup=neluaFunction 
-  \ start="\<function\>" end="\<end\>" 
-  \ contains=ALLBUT,neluaTodo,neluaSpecial,neluaElseifThen,neluaElse,neluaThenEnd,neluaIn
+syn region neluaFunctionBlock transparent
+  \ matchgroup=neluaFunction
+  \ start="\<function\>" end="\<end\>"
+  \ contains=
+    \ALLBUT,
+    \neluaTodo,
+    \neluaSpecial,
+    \neluaElseifThen,
+    \neluaElse,
+    \neluaThenEnd,
+    \neluaIn
 
 " if ... then
-syn region neluaIfThen transparent 
-  \ matchgroup=neluaCond 
-  \ start="\<if\>" end="\<then\>"me=e-4 
-  \ contains=ALLBUT,neluaTodo,neluaSpecial,neluaElseifThen,neluaElse,neluaIn 
-  \ nextgroup=neluaThenEnd 
-  \ skipwhite 
+syn region neluaIfThen transparent
+  \ matchgroup=neluaCond
+  \ start="\<if\>" end="\<then\>"me=e-4
+  \ nextgroup=neluaThenEnd
+  \ skipwhite
   \ skipempty
+  \ contains=
+    \ALLBUT,
+    \neluaTodo,
+    \neluaSpecial,
+    \neluaElseifThen,
+    \neluaElse,
+    \neluaIn
 
 " switch ... end
-syn region neluaLoopBlock transparent 
-  \ matchgroup=neluaRepeat 
-  \ start="\<switch\>" end="\<end\>"me=e-2 
-  \ contains=ALLBUT,neluaTodo,neluaSpecial,neluaIfThen,neluaElseifThen,neluaElse,neluaThenEnd,neluaIn 
-  \ nextgroup=neluaBlock 
-  \ skipwhite 
+syn region neluaLoopBlock transparent
+  \ matchgroup=neluaRepeat
+  \ nextgroup=neluaBlock
+  \ skipwhite
   \ skipempty
+  \ start="\<switch\>" end="\<end\>"me=e-2
+  \ contains=
+    \ALLBUT,
+    \neluaTodo,
+    \neluaSpecial,
+    \neluaIfThen,
+    \neluaElseifThen,
+    \neluaElse,
+    \neluaThenEnd,
+    \neluaIn
 
 " case ... then
-syn region neluaCaseThen transparent 
-  \ matchgroup=neluaCond 
-  \ start="\<case\>" end="\<then\>"me=e-4 
-  \ contains=ALLBUT,neluaTodo,neluaSpecial,neluaElseifThen,neluaElse,neluaIn 
-  \ nextgroup=neluaThenEnd 
-  \ skipwhite 
+syn region neluaCaseThen transparent
+  \ matchgroup=neluaCond
+  \ nextgroup=neluaThenEnd
+  \ skipwhite
   \ skipempty
+  \ start="\<case\>" end="\<then\>"me=e-4
+  \ contains=
+    \ALLBUT,
+    \neluaTodo,
+    \neluaSpecial,
+    \neluaElseifThen,
+    \neluaElse,
+    \neluaIn
 
 " then ... end
-syn region neluaThenEnd contained transparent 
-  \ matchgroup=neluaCond 
-  \ start="\<then\>" end="\<end\>" 
-  \ contains=ALLBUT,neluaTodo,neluaSpecial,neluaThenEnd,neluaIn
+syn region neluaThenEnd contained transparent
+  \ matchgroup=neluaCond
+  \ start="\<then\>" end="\<end\>"
+  \ contains=
+    \ALLBUT,
+    \neluaTodo,
+    \neluaSpecial,
+    \neluaThenEnd,
+    \neluaIn
 
 " elseif ... then
-syn region neluaElseifThen contained transparent 
-  \ matchgroup=neluaCond 
-  \ start="\<elseif\>" end="\<then\>" 
-  \ contains=ALLBUT,neluaTodo,neluaSpecial,neluaElseifThen,neluaElse,neluaThenEnd,neluaIn
+syn region neluaElseifThen contained transparent
+  \ matchgroup=neluaCond
+  \ start="\<elseif\>" end="\<then\>"
+  \ contains=
+    \ALLBUT,
+    \neluaTodo,
+    \neluaSpecial,
+    \neluaElseifThen,
+    \neluaElse,
+    \neluaThenEnd,
+    \neluaIn
 
 " else
 syn keyword neluaElse contained else
 
 " do ... end
-syn region neluaBlock transparent 
-  \ matchgroup=neluaStatement 
-  \ start="\<do\>" end="\<end\>" 
-  \ contains=ALLBUT,neluaTodo,neluaSpecial,neluaElseifThen,neluaElse,neluaThenEnd,neluaIn
+syn region neluaBlock transparent
+  \ matchgroup=neluaStatement
+  \ start="\<do\>" end="\<end\>"
+  \ contains=
+    \ALLBUT,
+    \neluaTodo,
+    \neluaSpecial,
+    \neluaElseifThen,
+    \neluaElse,
+    \neluaThenEnd,
+    \neluaIn
 
 " defer ... end
-syn region neluaDeferBlock transparent 
-  \ matchgroup=neluaStatement 
-  \ start="\<defer\>" end="\<end\>" 
-  \ contains=ALLBUT,neluaTodo,neluaSpecial,neluaElseifThen,neluaElse,neluaThenEnd,neluaIn
+syn region neluaDeferBlock transparent
+  \ matchgroup=neluaStatement
+  \ start="\<defer\>" end="\<end\>"
+  \ contains=
+    \ALLBUT,
+    \neluaTodo,
+    \neluaSpecial,
+    \neluaElseifThen,
+    \neluaElse,
+    \neluaThenEnd,
+    \neluaIn
 
 " repeat ... until
-syn region neluaLoopBlock transparent 
-  \ matchgroup=neluaRepeat 
-  \ start="\<repeat\>" end="\<until\>" 
-  \ contains=ALLBUT,neluaTodo,neluaSpecial,neluaElseifThen,neluaElse,neluaThenEnd,neluaIn
+syn region neluaLoopBlock transparent
+  \ matchgroup=neluaRepeat
+  \ start="\<repeat\>" end="\<until\>"
+  \ contains=
+    \ALLBUT,
+    \neluaTodo,
+    \neluaSpecial,
+    \neluaElseifThen,
+    \neluaElse,
+    \neluaThenEnd,
+    \neluaIn
 
 " while ... do
-syn region neluaLoopBlock transparent 
-  \ matchgroup=neluaRepeat 
-  \ start="\<while\>" end="\<do\>"me=e-2 
-  \ contains=ALLBUT,neluaTodo,neluaSpecial,neluaIfThen,neluaElseifThen,neluaElse,neluaThenEnd,neluaIn 
-  \ nextgroup=neluaBlock 
-  \ skipwhite 
+syn region neluaLoopBlock transparent
+  \ matchgroup=neluaRepeat
+  \ nextgroup=neluaBlock
+  \ skipwhite
   \ skipempty
+  \ start="\<while\>" end="\<do\>"me=e-2
+  \ contains=
+    \ALLBUT,
+    \neluaTodo,
+    \neluaSpecial,
+    \neluaIfThen,
+    \neluaElseifThen,
+    \neluaElse,
+    \neluaThenEnd,
+    \neluaIn
 
 " for ... do and for ... in ... do
-syn region neluaLoopBlock transparent 
-  \ matchgroup=neluaRepeat 
-  \ start="\<for\>" end="\<do\>"me=e-2 
-  \ contains=ALLBUT,neluaTodo,neluaSpecial,neluaIfThen,neluaElseifThen,neluaElse,neluaThenEnd 
-  \ nextgroup=neluaBlock 
-  \ skipwhite 
+syn region neluaLoopBlock transparent
+  \ matchgroup=neluaRepeat
+  \ nextgroup=neluaBlock
+  \ skipwhite
   \ skipempty
+  \ start="\<for\>" end="\<do\>"me=e-2
+  \ contains=
+    \ALLBUT,
+    \neluaTodo,
+    \neluaSpecial,
+    \neluaIfThen,
+    \neluaElseifThen,
+    \neluaElse,
+    \neluaThenEnd
 
 syn keyword neluaIn contained in
 
@@ -191,21 +314,21 @@ syn keyword neluaStatement      goto
 syn match neluaLabel            "::\I\i*::"
 syn keyword neluaOperator       and or not
 syn keyword neluaConstant       nil nilptr
-syn keyword neluaConstant       true false
+syn keyword neluaBoolean        true false
 
 " Strings
 syn match  neluaspecial contained #\\[\\abfnrtvz'"]\|\\x[[:xdigit:]]\{2}\|\\[[:digit:]]\{,3}#
 
-syn region neluastring2 
-  \ matchgroup=neluastring 
-  \ start="\[\z(=*\)\[" end="\]\z1\]" 
+syn region neluastring2
+  \ matchgroup=neluastring
+  \ start="\[\z(=*\)\[" end="\]\z1\]"
   \ contains=@spell
 
 syn region neluaString  start=+'+ end=+'+ skip=+\\\\\|\\'+ contains=neluaSpecial,@Spell
 syn region neluaString  start=+"+ end=+"+ skip=+\\\\\|\\"+ contains=neluaSpecial,@Spell
 
-" The code below is directly taken from nim.vim plugin.
-" Special thanks go to its original creators / implementors.
+" The code below is directly taken from nim.vim plugin
+" Special thanks go to its original creators / implementors
 "
 " numbers (including longs and complex)
 let s:dec_num = '\d%(_?\d)*'
@@ -330,8 +453,10 @@ syn match   neluaFunc /\<debug\.traceback\>/
 " Only when an item doesn't have highlighting yet
 
 hi def link neluaAnnotation     Identifier
+hi def link neluaBoolean        Boolean
 hi def link neluaBraceError     Error
 hi def link neluaBuiltin        neluaType
+hi def link neluaCharacter      Character
 hi def link neluaComment        Comment
 hi def link neluaCond           Conditional
 hi def link neluaConstant       Constant
@@ -342,6 +467,8 @@ hi def link neluaFor            Repeat
 hi def link neluaFunc           Identifier
 hi def link neluaFunction       Function
 hi def link neluaIn             Operator
+" Any variable name
+hi def link neluaIdentifier     Identifier
 hi def link neluaKeyword        Keyword
 hi def link neluaLabel          Label
 hi def link neluaNumber         Number
