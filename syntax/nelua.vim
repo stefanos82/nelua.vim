@@ -28,6 +28,7 @@ syn sync minlines=100
 
 " Comments
 syn keyword neluaTodo contained TODO FIXME XXX
+
 syn match neluaComment "--.*$" contains=neluaTodo,@Spell
 
 " Comments in Lua 5.1: --[[ ... ]], [=[ ... ]=], [===[ ... ]===], etc.
@@ -102,18 +103,8 @@ syn match neluaComment "\%^#!.*"
 syn region neluaParen transparent
   \ start="(" end=")"
   \ contains=
-    \ALLBUT,
-    \neluaParenError,
-    \neluaTodo,
-    \neluaSpecial,
-    \neluaIfThen,
-    \neluaElseifThen,
-    \neluaElse,
-    \neluaThenEnd,
-    \neluaBlock,
-    \neluaLoopBlock,
-    \neluaIn,
-    \neluaStatement
+    \TOP,
+    \neluaParenError
 
 syn region neluaTableBlock transparent
   \ matchgroup=neluaTable
@@ -140,12 +131,7 @@ syn match  neluaError "\<\%(end\|else\|elseif\|then\|until\|in\)\>"
 syn region neluaFunctionBlock transparent
   \ matchgroup=neluaFunction
   \ start="\<function\>" end="\<end\>"
-  \ contains=
-    \ALLBUT,
-    \neluaTodo,
-    \neluaSpecial,
-    \neluaElseifThen,
-    \neluaElseEnd
+  \ contains=TOP
 
 " if ... then
 syn region neluaIfThen transparent
@@ -236,26 +222,7 @@ syn keyword neluaElse contained else
 syn region neluaBlock transparent
   \ matchgroup=neluaStatement
   \ start="\<do\>" end="\<end\>"
-  \ contains=
-    \ALLBUT,
-    \neluaTodo,
-    \neluaSpecial,
-    \neluaElseifThen,
-    \neluaElseEnd,
-    \neluaIn
-
-" do ... end expression (do end)
-syn region neluaExpressionBlock transparent
-  \ matchgroup=neluaStatement
-  \ start="(" start="\<do\>" end="\<end\>" end=")"
-  \ contains=
-    \ALLBUT,
-    \neluaTodo,
-    \neluaSpecial,
-    \neluaElseifThen,
-    \neluaElseEnd,
-    "\neluaThenEnd,
-    \neluaIn
+  \ contains=TOP
 
 " defer ... end
 syn region neluaDeferBlock transparent
@@ -301,8 +268,10 @@ syn region neluaLoopBlock transparent
     \neluaIn
 
 " for ... do and for ... in ... do
-syn region neluaLoopBlock transparent
+syn region neluaFor transparent
   \ matchgroup=neluaRepeat
+  \ start="\<for\>" end="\<do\>"me=e-2
+  \ contains=TOP
   \ nextgroup=neluaBlock
   \ skipwhite
   \ skipempty
@@ -315,35 +284,24 @@ syn region neluaLoopBlock transparent
     \neluaElseifThen,
     \neluaElseEnd
 
-syn keyword neluaIn contained in
+syn keyword neluaFor contained containedin=neluaFor in
 
 " other keywords
 syn keyword neluaStatement      return local global break continue fallthrough
+
 syn keyword neluaCond           switch
 syn keyword neluaBuiltin        void boolean string integer uinteger number
 syn keyword neluaBuiltin        byte isize int8 int16 int32 int64 int128
 syn keyword neluaBuiltin        usize uint8 uint16 uint32 uint64 uint128
+
 syn keyword neluaBuiltin        float32 float64 float128
-syn keyword neluaBuiltin
-  \ auto
-  \ array
-  \ pointer
-  \ varargs
-  \ type
-  \ niltype
-  \ concept
-  \ close
-  \ linklib
-  \ static_assert
+syn keyword neluaBuiltin        auto array pointer varargs type niltype
+syn keyword neluaBuiltin        concept close linklib static_assert
 
 syn keyword neluaTable          record union enum
 syn keyword neluaAnnotation     noinit nodecl
-syn keyword neluaAnnotation
-  \ cdefine cflags ccinfo
-  \ cint cuint
-  \ cstring 
-  \ cimport cinclude 
-  \ cemit cemitdecl
+syn keyword neluaAnnotation     cdefine cflags ccinfo cint cuint cstring
+syn keyword neluaAnnotation     cimport cinclude cemit cemitdecl
 syn keyword neluaAnnotation     const comptime volatile noinline inline
 syn keyword neluaSelf           self
 
@@ -353,17 +311,11 @@ syn keyword neluaOperator       and or not
 syn keyword neluaConstant       nil nilptr
 syn keyword neluaBoolean        true false
 
-syn keyword neluaMetaMethod 
-  \ __lt __le __eq
-  \ __bor __band __bxor
-  \ __shl __shr __asr
-  \ __bnot __concat
-  \ __add __sub __mul __div
-  \ __idiv __tdiv __mod __tmod
-  \ __pow __unm __len __index __atindex
-  \ __tostring __convert __gc
-  \ __close __next __mnext
-  \ __pairs __mpairs
+syn keyword neluaMetaMethod     __lt __le __eq __bor __band __bxor __shl __shr
+syn keyword neluaMetaMethod     __asr __bnot __concat __add __sub __mul __div
+syn keyword neluaMetaMethod     __idiv __tdiv __mod __tmod __pow __unm __len
+syn keyword neluaMetaMethod     __index __atindex __tostring __convert __gc
+syn keyword neluaMetaMethod     __close __next __mnext __pairs __mpairs
 
 " Strings
 syn match  neluaspecial contained #\\[\\abfnrtvz'"]\|\\x[[:xdigit:]]\{2}\|\\[[:digit:]]\{,3}#
