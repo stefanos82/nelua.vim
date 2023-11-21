@@ -2,6 +2,9 @@
 
 Syntax highlighting for [Nelua](https://nelua.io/) programming language.
 
+![image](https://github.com/stefanos82/nelua.vim/assets/1777466/55219da5-ef44-4f40-8250-678e826a7ba1)
+
+
 ## Contributing
 
 Kindly requesting the help of Vim experts as I'm facing some
