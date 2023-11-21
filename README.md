@@ -15,6 +15,7 @@ If anyone is willing to help, I would be more than grateful.
 ## Credits
 
 This project is based on `lua.vim` found in
-`/usr/share/vim/vim82/syntax/lua.vim` under GNU / Linux Debian distro.
+`/usr/share/vim/vim<X.Y>/syntax/lua.vim` and
+`/usr/share/vim/vim<X.Y>/ftplugin/lua.vim` under GNU / Linux Debian distro.
 
 Special gratitude goes to its original author(s) and current maintainer(s).
