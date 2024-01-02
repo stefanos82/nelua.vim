@@ -1,9 +1,9 @@
 " Vim syntax file
-" Language:     Nelua 0.2.0
+" Language:     Nelua
 " Maintainer:   Stefanos Sofroniou <sofr.stef 'at' cytanet.com.cy>
 " First Author: Stefanos Sofroniou <sofr.stef 'at' cytanet.com.cy>
-" Last Change:  2021-07-02 10:15:10
-" Remark:       Based on /usr/share/vim/vim82/syntax/lua.vim
+" Last Change:  2024-01-02
+" Remark:       Based on /usr/share/vim/vim<XY>/syntax/lua.vim
 
 " quit when a syntax file was already loaded
 if exists("b:current_syntax")
@@ -297,12 +297,19 @@ syn keyword neluaBuiltin        usize uint8 uint16 uint32 uint64 uint128
 syn keyword neluaBuiltin        float32 float64 float128
 syn keyword neluaBuiltin        auto array pointer varargs type niltype
 syn keyword neluaBuiltin        concept close linklib static_assert
+syn keyword neluaBuiltin        clong clonglong
+syn keyword neluaBuiltin        culong culonglong
+syn keyword neluaBuiltin        clongdouble
 
 syn keyword neluaTable          record union enum
-syn keyword neluaAnnotation     noinit nodecl
+syn keyword neluaAnnotation     alwayspoly builtin
 syn keyword neluaAnnotation     cdefine cflags ccinfo cint cuint cstring
-syn keyword neluaAnnotation     cimport cinclude cemit cemitdecl
+syn keyword neluaAnnotation     cimport cexport cinclude cemit cemitdecl cincomplete
+syn keyword neluaAnnotation     codename cqualifier ctypedef
 syn keyword neluaAnnotation     const comptime volatile noinline inline
+syn keyword neluaAnnotation     deprecated entrypoint forwarddecl nickname
+syn keyword neluaAnnotation     noinit nodecl nodce noerror nogcscan noreturn nosideeffect
+syn keyword neluaAnnotation     polymorphic static threadlocal
 syn keyword neluaSelf           self
 
 syn keyword neluaStatement      goto
