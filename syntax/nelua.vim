@@ -310,6 +310,7 @@ syn keyword neluaAnnotation     const comptime volatile noinline inline
 syn keyword neluaAnnotation     deprecated entrypoint forwarddecl nickname
 syn keyword neluaAnnotation     noinit nodecl nodce noerror nogcscan noreturn nosideeffect
 syn keyword neluaAnnotation     polymorphic static threadlocal
+syn keyword neluaAnnotation     using
 syn keyword neluaSelf           self
 
 syn keyword neluaStatement      goto
