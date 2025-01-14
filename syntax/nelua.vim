@@ -2,7 +2,7 @@
 " Language:     Nelua
 " Maintainer:   Stefanos Sofroniou <sofr.stef 'at' cytanet.com.cy>
 " First Author: Stefanos Sofroniou <sofr.stef 'at' cytanet.com.cy>
-" Last Change:  2024-01-02
+" Last Change:  2025-01-14
 " Remark:       Based on /usr/share/vim/vim<XY>/syntax/lua.vim
 
 " quit when a syntax file was already loaded
