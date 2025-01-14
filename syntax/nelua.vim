@@ -297,13 +297,20 @@ syn keyword neluaBuiltin        usize uint8 uint16 uint32 uint64 uint128
 syn keyword neluaBuiltin        float32 float64 float128
 syn keyword neluaBuiltin        auto array pointer varargs type niltype
 syn keyword neluaBuiltin        concept close linklib static_assert
+
+syn keyword neluaBuiltin        cchar cschar cuchar
+syn keyword neluaBuiltin        cshort cushort
+syn keyword neluaBuiltin        cint cuint
 syn keyword neluaBuiltin        clong clonglong
 syn keyword neluaBuiltin        culong culonglong
+syn keyword neluaBuiltin        cptrdiff
+syn keyword neluaBuiltin        csize
 syn keyword neluaBuiltin        clongdouble
+syn keyword neluaBuiltin        cstring
 
 syn keyword neluaTable          record union enum
 syn keyword neluaAnnotation     alwayspoly builtin
-syn keyword neluaAnnotation     cdefine cflags ccinfo cint cuint cstring
+syn keyword neluaAnnotation     cdefine cflags ccinfo
 syn keyword neluaAnnotation     cimport cexport cinclude cemit cemitdecl cincomplete
 syn keyword neluaAnnotation     codename cqualifier ctypedef
 syn keyword neluaAnnotation     const comptime volatile noinline inline
