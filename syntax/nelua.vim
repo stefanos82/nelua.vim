@@ -309,6 +309,7 @@ syn keyword neluaBuiltin        clongdouble
 syn keyword neluaBuiltin        cstring
 
 syn keyword neluaTable          record union enum
+syn keyword neluaAnnotation     atomic
 syn keyword neluaAnnotation     alwayspoly builtin
 syn keyword neluaAnnotation     cdefine cflags ccinfo
 syn keyword neluaAnnotation     cimport cexport cinclude cemit cemitdecl cincomplete
