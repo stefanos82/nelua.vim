@@ -311,7 +311,7 @@ syn keyword neluaBuiltin        cstring
 syn keyword neluaTable          record union enum
 syn keyword neluaAnnotation     atomic
 syn keyword neluaAnnotation     alwayspoly builtin
-syn keyword neluaAnnotation     cdefine cflags ccinfo
+syn keyword neluaAnnotation     cdefine cflags ccinfo ldflags
 syn keyword neluaAnnotation     cimport cexport cinclude cemit cemitdecl cincomplete
 syn keyword neluaAnnotation     codename cqualifier ctypedef
 syn keyword neluaAnnotation     const comptime volatile noinline inline
