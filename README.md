@@ -2,7 +2,7 @@
 
 Syntax highlighting for [Nelua](https://nelua.io/) programming language.
 
-![image](https://github.com/stefanos82/nelua.vim/assets/1777466/55219da5-ef44-4f40-8250-678e826a7ba1)
+<img width="684" height="426" alt="image" src="https://github.com/user-attachments/assets/8d87fefe-f4f9-48e2-88d1-0c75c70ea74f" />
 
 
 ## Contributing
