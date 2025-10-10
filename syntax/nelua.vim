@@ -2,7 +2,7 @@
 " Language:     Nelua
 " Maintainer:   Stefanos Sofroniou <sofr.stef 'at' cytanet.com.cy>
 " First Author: Stefanos Sofroniou <sofr.stef 'at' cytanet.com.cy>
-" Last Change:  2025-01-14
+" Last Change:  2025-10-10
 " Remark:       Based on /usr/share/vim/vim<XY>/syntax/lua.vim
 
 " quit when a syntax file was already loaded
@@ -308,11 +308,23 @@ syn keyword neluaBuiltin        csize
 syn keyword neluaBuiltin        clongdouble
 syn keyword neluaBuiltin        cstring
 
+
+syn keyword neluaBuiltin        _cshort _cushort _cint _cuint
+syn keyword neluaBuiltin        _clong _clonglong _culong _culonglong
+syn keyword neluaBuiltin        _cptrdiff _cchar _cschar _cuchar
+syn keyword neluaBuiltin        _csize _clongdouble _cstring
+
+
+syn keyword neluaBuiltin        require print panic error assert check
+syn keyword neluaBuiltin        likely unlikely _VERSION
+
 syn keyword neluaTable          record union enum
+
 syn keyword neluaAnnotation     atomic
 syn keyword neluaAnnotation     alwayspoly builtin
 syn keyword neluaAnnotation     cdefine cflags ccinfo ldflags
-syn keyword neluaAnnotation     cimport cexport cinclude cemit cemitdecl cincomplete
+syn keyword neluaAnnotation     cimport cexport cinclude
+syn keyword neluaAnnotation     cemit cemitdefn cemitdecl cincomplete
 syn keyword neluaAnnotation     codename cqualifier ctypedef
 syn keyword neluaAnnotation     const comptime volatile noinline inline
 syn keyword neluaAnnotation     deprecated entrypoint forwarddecl nickname
@@ -349,8 +361,9 @@ syn region neluaString  start=+"+ end=+"+ skip=+\\\\\|\\"+ contains=neluaSpecial
 "
 " numbers (including longs and complex)
 let s:dec_num = '\d%(_?\d)*'
-let s:int_suf = '%(_%(%(u)?%(%(i)%(nteger)?)?%(8|16|32|64|128)?))'
-let s:float_suf = '%(_%(%(f%(loat)?)%(32|64|128)))'
+"let s:int_suf = '%(_%(u?%(i|integer)?|%(n|number)|%(b|byte)|%(is|isize)|%(us|usize)|%(i?%(8|16|32|64|128))|%(int)?%(8|16|32|64|128)|%(u?%(8|16|32|64|128)|%(uint?%(8|16|32|64|128)))))'
+let s:int_suf = '%(_%(u?%(i|integer)?|n|number|b|byte|is|isize|us|usize|i?(8|16|32|64|128)|int?(8|16|32|64|128)|u?(8|16|32|64|128)|uint?(8|16|32|64|128)|cshort|cushort|cint|cuint|clong|clonglong|culong|culonglong|csize|cptrdiff))'
+let s:float_suf = '%(_%(%(f%(loat)?)%(32|64|128)|clongdouble))'
 let s:exp = '%([eE][+-]?'.s:dec_num.')'
 exe 'syn match neluaNumber /\v<0[bB][01]%(_?[01])*%('.s:int_suf.'|'.s:float_suf.')?>/'
 exe 'syn match neluaNumber /\v<0[ocC]\o%(_?\o)*%('.s:int_suf.'|'.s:float_suf.')?>/'
@@ -364,13 +377,13 @@ unlet s:dec_num s:int_suf s:float_suf s:exp
 " hex numbers
 syn match neluaNumber "\<0[xX][[:xdigit:].]\+\%([pP][-+]\=\d\+\)\=\>"
 
-syn keyword neluaFunc assert collectgarbage dofile error next
-syn keyword neluaFunc print rawget rawset tonumber tostring _VERSION
+syn keyword neluaFunc collectgarbage dofile next
+syn keyword neluaFunc rawget rawset tonumber tostring
 
 syn keyword neluaFunc getmetatable setmetatable
 syn keyword neluaFunc ipairs pairs
 syn keyword neluaFunc pcall xpcall
-syn keyword neluaFunc _G loadfile rawequal require
+syn keyword neluaFunc _G loadfile rawequal
 syn keyword neluaFunc load select
 syn match   neluaFunc /\<package\.cpath\>/
 syn match   neluaFunc /\<package\.loaded\>/
