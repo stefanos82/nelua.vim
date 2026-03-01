@@ -2,7 +2,7 @@
 " Language:     Nelua
 " Maintainer:   Stefanos Sofroniou <sofr.stef 'at' cytanet.com.cy>
 " First Author: Stefanos Sofroniou <sofr.stef 'at' cytanet.com.cy>
-" Last Change:  2025-10-10
+" Last Change:  2026-03-01
 " Remark:       Based on /usr/share/vim/vim<XY>/syntax/lua.vim
 
 " quit when a syntax file was already loaded
@@ -127,11 +127,60 @@ syn match  neluaParenError ")"
 syn match  neluaBraceError "}"
 syn match  neluaError "\<\%(end\|else\|elseif\|then\|until\|in\)\>"
 
-" function ... end
+" Basic keywords
+syntax keyword neluaFunctionKeyword function
+syntax keyword neluaEnd end
+hi def link neluaFunctionKeyword Keyword
+hi def link neluaEnd Keyword
+
+" Match anonymous 'function' when followed by '(' and optionally a return-type suffix like ': type'
+" Example matches:
+"   function(x: integer): integer
+"   function (x):int
+"   function()
+" The pattern is single-line (non-greedy) to avoid spanning to EOF.
+syntax match neluaAnonFunction /\<function\>\s*(\s*[^)]\{-})\s*\(:\s*[-a-zA-Z0-9_.<>]*\)\=/ containedin=ALL
+hi def link neluaAnonFunction Keyword
+
+" Also match a bare 'function(' without parameters (no closing ')' yet) on the same line
+syntax match neluaAnonFunctionBare /\<function\>\s*(/ containedin=ALL
+hi def link neluaAnonFunctionBare Keyword
+
+" Named / block functions: require either an identifier after 'function' or a line break
+" so we don't capture anonymous inline functions used as arguments.
+" start: function <name>  OR  function<newline>
+" end: matching 'end'
 syn region neluaFunctionBlock transparent
   \ matchgroup=neluaFunction
-  \ start="\<function\>" end="\<end\>"
-  \ contains=TOP
+  \ start=/\v\<function\>\s+([A-Za-z_][A-Za-z0-9_.:]*)|\<function\>\s*$/ end=/\<end\>/
+  \ contains=ALL keepend
+
+" Highlight the keyword itself
+syn match neluaFunction /\<function\>/ contained
+hi def link neluaFunction Keyword
+
+" Add to top cluster
+syntax cluster neluaTop add=neluaFunctionBlock,neluaAnonFunction,neluaAnonFunctionBare,neluaFunction,neluaEnd,neluaDoExprParenHeader,neluaDoExprBlock
+
+" Parenthesized do-expression: (do ... in <expr> end)
+" - Match from "(do" to the "in" that ends the block header, single-line-safe non-greedy.
+" - Then highlight the 'in' keyword and let normal rules handle the trailing expression and 'end'.
+syntax region neluaDoExprParenHeader start=/\v\(\s*do\b/ end=/\bin\b/ contains=NONE transparent keepend containedin=ALL
+hi def link neluaDoExprParenHeader Keyword
+
+" Highlight 'in' when it's part of a do-expression header
+syntax match neluaInKeyword /\<in\>/ containedin=neluaDoExprParenHeader,neluaDoExprBlock
+hi def link neluaInKeyword Keyword
+" Also allow 'in' on its own line inside do-blocks (fallback)
+syntax region neluaDoExprBlock start=/\v^\s*do\b/ end=/\v^\s*in\b/ contains=NONE transparent keepend
+syntax match neluaInKeywordLine /\v^\s*in\b/ containedin=neluaDoExprBlock
+hi def link neluaInKeywordLine Keyword
+
+" function ... end
+"syn region neluaFunctionBlock transparent
+"  \ matchgroup=neluaFunction
+"  \ start="\<function\>" end="\<end\>"
+"  \ contains=TOP
 
 " if ... then
 syn region neluaIfThen transparent
