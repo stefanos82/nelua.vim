@@ -363,7 +363,7 @@ syn keyword neluaBuiltin        _clong _clonglong _culong _culonglong
 syn keyword neluaBuiltin        _cptrdiff _cchar _cschar _cuchar
 syn keyword neluaBuiltin        _csize _clongdouble _cstring
 
-
+syn keyword neluaBuiltin        aligned
 syn keyword neluaBuiltin        require print panic error assert check
 syn keyword neluaBuiltin        likely unlikely _VERSION
 
