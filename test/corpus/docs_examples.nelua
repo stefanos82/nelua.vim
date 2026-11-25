@@ -1,0 +1,3242 @@
+-- Every ```nelua code block from nelua-lang/docs/pages/*.md (extracted verbatim, 2026-11-25).
+-- Source: nelua-lang git a5845056. Used by test/leakcheck.lua; contains no assertions.
+-- ===== clibraries.md block 1 =====
+global C.argc: cint
+-- ===== clibraries.md block 2 =====
+global C.argv: *[0]cstring
+-- ===== clibraries.md block 3 =====
+function C.isalnum(x: cint): cint
+-- ===== clibraries.md block 4 =====
+function C.isalpha(x: cint): cint
+-- ===== clibraries.md block 5 =====
+function C.islower(x: cint): cint
+-- ===== clibraries.md block 6 =====
+function C.isupper(x: cint): cint
+-- ===== clibraries.md block 7 =====
+function C.isdigit(x: cint): cint
+-- ===== clibraries.md block 8 =====
+function C.isxdigit(x: cint): cint
+-- ===== clibraries.md block 9 =====
+function C.iscntrl(x: cint): cint
+-- ===== clibraries.md block 10 =====
+function C.isgraph(x: cint): cint
+-- ===== clibraries.md block 11 =====
+function C.isspace(x: cint): cint
+-- ===== clibraries.md block 12 =====
+function C.isblank(x: cint): cint
+-- ===== clibraries.md block 13 =====
+function C.isprint(x: cint): cint
+-- ===== clibraries.md block 14 =====
+function C.ispunct(x: cint): cint
+-- ===== clibraries.md block 15 =====
+function C.tolower(c: cint): cint
+-- ===== clibraries.md block 16 =====
+function C.toupper(c: cint): cint
+-- ===== clibraries.md block 17 =====
+global C.errno: cint
+-- ===== clibraries.md block 18 =====
+global C.EDOM: cint
+-- ===== clibraries.md block 19 =====
+global C.EILSEQ: cint
+-- ===== clibraries.md block 20 =====
+global C.ERANGE: cint
+-- ===== clibraries.md block 21 =====
+global C.lconv: type = @record{
+  decimal_point: cstring,
+  thousands_sep: cstring,
+  grouping: cstring,
+  int_curr_symbol: cstring,
+  currency_symbol: cstring,
+  mon_decimal_point: cstring,
+  mon_thousands_sep: cstring,
+  mon_grouping: cstring,
+  positive_sign: cstring,
+  negative_sign: cstring,
+  int_frac_digits: cchar,
+  frac_digits: cchar,
+  p_cs_precedes: cchar,
+  p_sep_by_space: cchar,
+  n_cs_precedes: cchar,
+  n_sep_by_space: cchar,
+  p_sign_posn: cchar,
+  n_sign_posn: cchar,
+  int_p_cs_precedes: cchar,
+  int_p_sep_by_space: cchar,
+  int_n_cs_precedes: cchar,
+  int_n_sep_by_space: cchar,
+  int_p_sign_posn: cchar,
+  int_n_sign_posn: cchar
+}
+-- ===== clibraries.md block 22 =====
+function C.setlocale(category: cint, locale: cstring): cstring
+-- ===== clibraries.md block 23 =====
+function C.localeconv(): *C.lconv
+-- ===== clibraries.md block 24 =====
+global C.LC_ALL: cint
+-- ===== clibraries.md block 25 =====
+global C.LC_COLLATE: cint
+-- ===== clibraries.md block 26 =====
+global C.LC_CTYPE: cint
+-- ===== clibraries.md block 27 =====
+global C.LC_MONETARY: cint
+-- ===== clibraries.md block 28 =====
+global C.LC_NUMERIC: cint
+-- ===== clibraries.md block 29 =====
+global C.LC_TIME: cint
+-- ===== clibraries.md block 30 =====
+function C.fabs(x: float64): float64
+-- ===== clibraries.md block 31 =====
+function C.fabsf(x: float32): float32
+-- ===== clibraries.md block 32 =====
+function C.fabsl(x: clongdouble): clongdouble
+-- ===== clibraries.md block 33 =====
+function C.fmod(x: float64, y: float64): float64
+-- ===== clibraries.md block 34 =====
+function C.fmodf(x: float32, y: float32): float32
+-- ===== clibraries.md block 35 =====
+function C.fmodl(x: clongdouble, y: clongdouble): clongdouble
+-- ===== clibraries.md block 36 =====
+function C.remainder(x: float64, y: float64): float64
+-- ===== clibraries.md block 37 =====
+function C.remainderf(x: float32, y: float32): float32
+-- ===== clibraries.md block 38 =====
+function C.remainderl(x: clongdouble, y: clongdouble): clongdouble
+-- ===== clibraries.md block 39 =====
+function C.remquo(x: float64, y: float64, quo: *cint): float64
+-- ===== clibraries.md block 40 =====
+function C.remquof(x: float32, y: float32, quo: *cint): float32
+-- ===== clibraries.md block 41 =====
+function C.remquol(x: clongdouble, y: clongdouble, quo: *cint): clongdouble
+-- ===== clibraries.md block 42 =====
+function C.fma(x: float64, y: float64, z: float64): float64
+-- ===== clibraries.md block 43 =====
+function C.fmaf(x: float32, y: float32, z: float32): float32
+-- ===== clibraries.md block 44 =====
+function C.fmal(x: clongdouble, y: clongdouble, z: clongdouble): clongdouble
+-- ===== clibraries.md block 45 =====
+function C.fmax(x: float64, y: float64): float64
+-- ===== clibraries.md block 46 =====
+function C.fmaxf(x: float32, y: float32): float32
+-- ===== clibraries.md block 47 =====
+function C.fmaxl(x: clongdouble, y: clongdouble): clongdouble
+-- ===== clibraries.md block 48 =====
+function C.fmin(x: float64, y: float64): float64
+-- ===== clibraries.md block 49 =====
+function C.fminf(x: float32, y: float32): float32
+-- ===== clibraries.md block 50 =====
+function C.fminl(x: clongdouble, y: clongdouble): clongdouble
+-- ===== clibraries.md block 51 =====
+function C.fdim(x: float64, y: float64): float64
+-- ===== clibraries.md block 52 =====
+function C.fdimf(x: float32, y: float32): float32
+-- ===== clibraries.md block 53 =====
+function C.fdiml(x: clongdouble, y: clongdouble): clongdouble
+-- ===== clibraries.md block 54 =====
+function C.nan(tagb: cstring): float64
+-- ===== clibraries.md block 55 =====
+function C.nanf(tagb: cstring): float32
+-- ===== clibraries.md block 56 =====
+function C.nanl(tagb: cstring): clongdouble
+-- ===== clibraries.md block 57 =====
+function C.exp(x: float64): float64
+-- ===== clibraries.md block 58 =====
+function C.expf(x: float32): float32
+-- ===== clibraries.md block 59 =====
+function C.expl(x: clongdouble): clongdouble
+-- ===== clibraries.md block 60 =====
+function C.exp2(x: float64): float64
+-- ===== clibraries.md block 61 =====
+function C.exp2f(x: float32): float32
+-- ===== clibraries.md block 62 =====
+function C.exp2l(x: clongdouble): clongdouble
+-- ===== clibraries.md block 63 =====
+function C.expm1(x: float64): float64
+-- ===== clibraries.md block 64 =====
+function C.expm1f(x: float32): float32
+-- ===== clibraries.md block 65 =====
+function C.expm1l(x: clongdouble): clongdouble
+-- ===== clibraries.md block 66 =====
+function C.log(x: float64): float64
+-- ===== clibraries.md block 67 =====
+function C.logf(x: float32): float32
+-- ===== clibraries.md block 68 =====
+function C.logl(x: clongdouble): clongdouble
+-- ===== clibraries.md block 69 =====
+function C.log10(x: float64): float64
+-- ===== clibraries.md block 70 =====
+function C.log10f(x: float32): float32
+-- ===== clibraries.md block 71 =====
+function C.log10l(x: clongdouble): clongdouble
+-- ===== clibraries.md block 72 =====
+function C.log1p(x: float64): float64
+-- ===== clibraries.md block 73 =====
+function C.log1pf(x: float32): float32
+-- ===== clibraries.md block 74 =====
+function C.log1pl(x: clongdouble): clongdouble
+-- ===== clibraries.md block 75 =====
+function C.log2(x: float64): float64
+-- ===== clibraries.md block 76 =====
+function C.log2f(x: float32): float32
+-- ===== clibraries.md block 77 =====
+function C.log2l(x: clongdouble): clongdouble
+-- ===== clibraries.md block 78 =====
+function C.logb(x: float64): float64
+-- ===== clibraries.md block 79 =====
+function C.logbf(x: float32): float32
+-- ===== clibraries.md block 80 =====
+function C.logbl(x: clongdouble): clongdouble
+-- ===== clibraries.md block 81 =====
+function C.pow(x: float64, y: float64): float64
+-- ===== clibraries.md block 82 =====
+function C.powf(x: float32, y: float32): float32
+-- ===== clibraries.md block 83 =====
+function C.powl(x: clongdouble, y: clongdouble): clongdouble
+-- ===== clibraries.md block 84 =====
+function C.sqrt(x: float64): float64
+-- ===== clibraries.md block 85 =====
+function C.sqrtf(x: float32): float32
+-- ===== clibraries.md block 86 =====
+function C.sqrtl(x: clongdouble): clongdouble
+-- ===== clibraries.md block 87 =====
+function C.cbrt(x: float64): float64
+-- ===== clibraries.md block 88 =====
+function C.cbrtf(x: float32): float32
+-- ===== clibraries.md block 89 =====
+function C.cbrtl(x: clongdouble): clongdouble
+-- ===== clibraries.md block 90 =====
+function C.hypot(x: float64, y: float64): float64
+-- ===== clibraries.md block 91 =====
+function C.hypotf(x: float32, y: float32): float32
+-- ===== clibraries.md block 92 =====
+function C.hypotl(x: clongdouble, y: clongdouble): clongdouble
+-- ===== clibraries.md block 93 =====
+function C.cos(x: float64): float64
+-- ===== clibraries.md block 94 =====
+function C.cosf(x: float32): float32
+-- ===== clibraries.md block 95 =====
+function C.cosl(x: clongdouble): clongdouble
+-- ===== clibraries.md block 96 =====
+function C.sin(x: float64): float64
+-- ===== clibraries.md block 97 =====
+function C.sinf(x: float32): float32
+-- ===== clibraries.md block 98 =====
+function C.sinl(x: clongdouble): clongdouble
+-- ===== clibraries.md block 99 =====
+function C.tan(x: float64): float64
+-- ===== clibraries.md block 100 =====
+function C.tanf(x: float32): float32
+-- ===== clibraries.md block 101 =====
+function C.tanl(x: clongdouble): clongdouble
+-- ===== clibraries.md block 102 =====
+function C.acos(x: float64): float64
+-- ===== clibraries.md block 103 =====
+function C.acosf(x: float32): float32
+-- ===== clibraries.md block 104 =====
+function C.acosl(x: clongdouble): clongdouble
+-- ===== clibraries.md block 105 =====
+function C.asin(x: float64): float64
+-- ===== clibraries.md block 106 =====
+function C.asinf(x: float32): float32
+-- ===== clibraries.md block 107 =====
+function C.asinl(x: clongdouble): clongdouble
+-- ===== clibraries.md block 108 =====
+function C.atan(x: float64): float64
+-- ===== clibraries.md block 109 =====
+function C.atanf(x: float32): float32
+-- ===== clibraries.md block 110 =====
+function C.atanl(x: clongdouble): clongdouble
+-- ===== clibraries.md block 111 =====
+function C.atan2(y: float64, x: float64): float64
+-- ===== clibraries.md block 112 =====
+function C.atan2f(y: float32, x: float32): float32
+-- ===== clibraries.md block 113 =====
+function C.atan2l(y: clongdouble, x: clongdouble): clongdouble
+-- ===== clibraries.md block 114 =====
+function C.cosh(x: float64): float64
+-- ===== clibraries.md block 115 =====
+function C.coshf(x: float32): float32
+-- ===== clibraries.md block 116 =====
+function C.coshl(x: clongdouble): clongdouble
+-- ===== clibraries.md block 117 =====
+function C.sinh(x: float64): float64
+-- ===== clibraries.md block 118 =====
+function C.sinhf(x: float32): float32
+-- ===== clibraries.md block 119 =====
+function C.sinhl(x: clongdouble): clongdouble
+-- ===== clibraries.md block 120 =====
+function C.tanh(x: float64): float64
+-- ===== clibraries.md block 121 =====
+function C.tanhf(x: float32): float32
+-- ===== clibraries.md block 122 =====
+function C.tanhl(x: clongdouble): clongdouble
+-- ===== clibraries.md block 123 =====
+function C.acosh(x: float64): float64
+-- ===== clibraries.md block 124 =====
+function C.acoshf(x: float32): float32
+-- ===== clibraries.md block 125 =====
+function C.acoshl(x: clongdouble): clongdouble
+-- ===== clibraries.md block 126 =====
+function C.asinh(x: float64): float64
+-- ===== clibraries.md block 127 =====
+function C.asinhf(x: float32): float32
+-- ===== clibraries.md block 128 =====
+function C.asinhl(x: clongdouble): clongdouble
+-- ===== clibraries.md block 129 =====
+function C.atanh(x: float64): float64
+-- ===== clibraries.md block 130 =====
+function C.atanhf(x: float32): float32
+-- ===== clibraries.md block 131 =====
+function C.atanhl(x: clongdouble): clongdouble
+-- ===== clibraries.md block 132 =====
+function C.erf(x: float64): float64
+-- ===== clibraries.md block 133 =====
+function C.erff(x: float32): float32
+-- ===== clibraries.md block 134 =====
+function C.erfl(x: clongdouble): clongdouble
+-- ===== clibraries.md block 135 =====
+function C.erfc(x: float64): float64
+-- ===== clibraries.md block 136 =====
+function C.erfcf(x: float32): float32
+-- ===== clibraries.md block 137 =====
+function C.erfcl(x: clongdouble): clongdouble
+-- ===== clibraries.md block 138 =====
+function C.tgamma(x: float64): float64
+-- ===== clibraries.md block 139 =====
+function C.tgammaf(x: float32): float32
+-- ===== clibraries.md block 140 =====
+function C.tgammal(x: clongdouble): clongdouble
+-- ===== clibraries.md block 141 =====
+function C.lgamma(x: float64): float64
+-- ===== clibraries.md block 142 =====
+function C.lgammaf(x: float32): float32
+-- ===== clibraries.md block 143 =====
+function C.lgammal(x: clongdouble): clongdouble
+-- ===== clibraries.md block 144 =====
+function C.ceil(x: float64): float64
+-- ===== clibraries.md block 145 =====
+function C.ceilf(x: float32): float32
+-- ===== clibraries.md block 146 =====
+function C.ceill(x: clongdouble): clongdouble
+-- ===== clibraries.md block 147 =====
+function C.floor(x: float64): float64
+-- ===== clibraries.md block 148 =====
+function C.floorf(x: float32): float32
+-- ===== clibraries.md block 149 =====
+function C.floorl(x: clongdouble): clongdouble
+-- ===== clibraries.md block 150 =====
+function C.trunc(x: float64): float64
+-- ===== clibraries.md block 151 =====
+function C.truncf(x: float32): float32
+-- ===== clibraries.md block 152 =====
+function C.truncl(x: clongdouble): clongdouble
+-- ===== clibraries.md block 153 =====
+function C.round(x: float64): float64
+-- ===== clibraries.md block 154 =====
+function C.roundf(x: float32): float32
+-- ===== clibraries.md block 155 =====
+function C.roundl(x: clongdouble): clongdouble
+-- ===== clibraries.md block 156 =====
+function C.lround(x: float64): clong
+-- ===== clibraries.md block 157 =====
+function C.lroundf(x: float32): clong
+-- ===== clibraries.md block 158 =====
+function C.lroundl(x: clongdouble): clong
+-- ===== clibraries.md block 159 =====
+function C.llround(x: float64): clonglong
+-- ===== clibraries.md block 160 =====
+function C.llroundf(x: float32): clonglong
+-- ===== clibraries.md block 161 =====
+function C.llroundl(x: clongdouble): clonglong
+-- ===== clibraries.md block 162 =====
+function C.rint(x: float64): float64
+-- ===== clibraries.md block 163 =====
+function C.rintf(x: float32): float32
+-- ===== clibraries.md block 164 =====
+function C.rintl(x: clongdouble): clongdouble
+-- ===== clibraries.md block 165 =====
+function C.lrint(x: float64): clong
+-- ===== clibraries.md block 166 =====
+function C.lrintf(x: float32): clong
+-- ===== clibraries.md block 167 =====
+function C.lrintl(x: clongdouble): clong
+-- ===== clibraries.md block 168 =====
+function C.llrint(x: float64): clonglong
+-- ===== clibraries.md block 169 =====
+function C.llrintf(x: float32): clonglong
+-- ===== clibraries.md block 170 =====
+function C.llrintl(x: clongdouble): clonglong
+-- ===== clibraries.md block 171 =====
+function C.nearbyint(x: float64): float64
+-- ===== clibraries.md block 172 =====
+function C.nearbyintf(x: float32): float32
+-- ===== clibraries.md block 173 =====
+function C.nearbyintl(x: clongdouble): clongdouble
+-- ===== clibraries.md block 174 =====
+function C.frexp(x: float64, exponent: *cint): float64
+-- ===== clibraries.md block 175 =====
+function C.frexpf(x: float32, exponent: *cint): float32
+-- ===== clibraries.md block 176 =====
+function C.frexpl(x: clongdouble, exponent: *cint): clongdouble
+-- ===== clibraries.md block 177 =====
+function C.ldexp(x: float64, exponent: cint): float64
+-- ===== clibraries.md block 178 =====
+function C.ldexpf(x: float32, exponent: cint): float32
+-- ===== clibraries.md block 179 =====
+function C.ldexpl(x: clongdouble, exponent: cint): clongdouble
+-- ===== clibraries.md block 180 =====
+function C.modf(x: float64, iptr: *float64): float64
+-- ===== clibraries.md block 181 =====
+function C.modff(x: float32, iptr: *float32): float32
+-- ===== clibraries.md block 182 =====
+function C.modfl(x: clongdouble, iptr: *clongdouble): clongdouble
+-- ===== clibraries.md block 183 =====
+function C.scalbln(x: float64, n: clong): float64
+-- ===== clibraries.md block 184 =====
+function C.scalblnf(x: float32, n: clong): float32
+-- ===== clibraries.md block 185 =====
+function C.scalblnl(x: clongdouble, n: clong): clongdouble
+-- ===== clibraries.md block 186 =====
+function C.scalbn(x: float64, n: cint): float64
+-- ===== clibraries.md block 187 =====
+function C.scalbnf(x: float32, n: cint): float32
+-- ===== clibraries.md block 188 =====
+function C.scalbnl(x: clongdouble, n: cint): clongdouble
+-- ===== clibraries.md block 189 =====
+function C.ilogb(x: float64): cint
+-- ===== clibraries.md block 190 =====
+function C.ilogbf(x: float32): cint
+-- ===== clibraries.md block 191 =====
+function C.ilogbl(x: clongdouble): cint
+-- ===== clibraries.md block 192 =====
+function C.nextafter(x: float64, y: float64): float64
+-- ===== clibraries.md block 193 =====
+function C.nextafterf(x: float32, y: float32): float32
+-- ===== clibraries.md block 194 =====
+function C.nextafterl(x: clongdouble, y: clongdouble): clongdouble
+-- ===== clibraries.md block 195 =====
+function C.nexttoward(x: float64, y: clongdouble): float64
+-- ===== clibraries.md block 196 =====
+function C.nexttowardf(x: float32, y: clongdouble): float32
+-- ===== clibraries.md block 197 =====
+function C.nexttowardl(x: clongdouble, y: clongdouble): clongdouble
+-- ===== clibraries.md block 198 =====
+function C.copysign(x: float64, y: float64): float64
+-- ===== clibraries.md block 199 =====
+function C.copysignf(x: float32, y: float32): float32
+-- ===== clibraries.md block 200 =====
+function C.copysignl(x: clongdouble, y: clongdouble): clongdouble
+-- ===== clibraries.md block 201 =====
+function C.fpclassify(x: float64): cint
+-- ===== clibraries.md block 202 =====
+function C.fpclassifyf(x: float32): cint
+-- ===== clibraries.md block 203 =====
+function C.fpclassifyl(x: clongdouble): cint
+-- ===== clibraries.md block 204 =====
+function C.isfinite(x: float64): cint
+-- ===== clibraries.md block 205 =====
+function C.isfinitef(x: float32): cint
+-- ===== clibraries.md block 206 =====
+function C.isfinitel(x: clongdouble): cint
+-- ===== clibraries.md block 207 =====
+function C.isinf(x: float64): cint
+-- ===== clibraries.md block 208 =====
+function C.isinff(x: float32): cint
+-- ===== clibraries.md block 209 =====
+function C.isinfl(x: clongdouble): cint
+-- ===== clibraries.md block 210 =====
+function C.isnan(x: float64): cint
+-- ===== clibraries.md block 211 =====
+function C.isnanf(x: float32): cint
+-- ===== clibraries.md block 212 =====
+function C.isnanl(x: clongdouble): cint
+-- ===== clibraries.md block 213 =====
+function C.isnormal(x: float64): cint
+-- ===== clibraries.md block 214 =====
+function C.isnormalf(x: float32): cint
+-- ===== clibraries.md block 215 =====
+function C.isnormall(x: clongdouble): cint
+-- ===== clibraries.md block 216 =====
+function C.signbit(x: float64): cint
+-- ===== clibraries.md block 217 =====
+function C.signbitf(x: float32): cint
+-- ===== clibraries.md block 218 =====
+function C.signbitl(x: clongdouble): cint
+-- ===== clibraries.md block 219 =====
+function C.isgreater(x: float64, y: float64): cint
+-- ===== clibraries.md block 220 =====
+function C.isgreaterf(x: float32, y: float32): cint
+-- ===== clibraries.md block 221 =====
+function C.isgreaterl(x: clongdouble, y: clongdouble): cint
+-- ===== clibraries.md block 222 =====
+function C.isgreaterequal(x: float64, y: float64): cint
+-- ===== clibraries.md block 223 =====
+function C.isgreaterequalf(x: float32, y: float32): cint
+-- ===== clibraries.md block 224 =====
+function C.isgreaterequall(x: clongdouble, y: clongdouble): cint
+-- ===== clibraries.md block 225 =====
+function C.isless(x: float64, y: float64): cint
+-- ===== clibraries.md block 226 =====
+function C.islessf(x: float32, y: float32): cint
+-- ===== clibraries.md block 227 =====
+function C.islessl(x: clongdouble, y: clongdouble): cint
+-- ===== clibraries.md block 228 =====
+function C.islessequal(x: float64, y: float64): cint
+-- ===== clibraries.md block 229 =====
+function C.islessequalf(x: float32, y: float32): cint
+-- ===== clibraries.md block 230 =====
+function C.islessequall(x: clongdouble, y: clongdouble): cint
+-- ===== clibraries.md block 231 =====
+function C.islessgreater(x: float64, y: float64): cint
+-- ===== clibraries.md block 232 =====
+function C.islessgreaterf(x: float32, y: float32): cint
+-- ===== clibraries.md block 233 =====
+function C.islessgreaterl(x: clongdouble, y: clongdouble): cint
+-- ===== clibraries.md block 234 =====
+function C.isunordered(x: float64, y: float64): cint
+-- ===== clibraries.md block 235 =====
+function C.isunorderedf(x: float32, y: float32): cint
+-- ===== clibraries.md block 236 =====
+function C.isunorderedl(x: clongdouble, y: clongdouble): cint
+-- ===== clibraries.md block 237 =====
+global C.HUGE_VALF: float32
+-- ===== clibraries.md block 238 =====
+global C.HUGE_VAL: float64
+-- ===== clibraries.md block 239 =====
+global C.HUGE_VALL: clongdouble
+-- ===== clibraries.md block 240 =====
+global C.INFINITY: cfloat
+-- ===== clibraries.md block 241 =====
+global C.NAN: cfloat
+-- ===== clibraries.md block 242 =====
+global C.FP_FAST_FMAF: float32
+-- ===== clibraries.md block 243 =====
+global C.FP_FAST_FMA: float64
+-- ===== clibraries.md block 244 =====
+global C.FP_FAST_FMAL: clongdouble
+-- ===== clibraries.md block 245 =====
+global C.FP_ILOGB0: cint
+-- ===== clibraries.md block 246 =====
+global C.FP_ILOGBNAN: cint
+-- ===== clibraries.md block 247 =====
+global C.math_errhandling: cint
+-- ===== clibraries.md block 248 =====
+global C.MATH_ERRNO: cint
+-- ===== clibraries.md block 249 =====
+global C.MATH_ERREXCEPT: cint
+-- ===== clibraries.md block 250 =====
+global C.FP_NORMAL: cint
+-- ===== clibraries.md block 251 =====
+global C.FP_SUBNORMAL: cint
+-- ===== clibraries.md block 252 =====
+global C.FP_ZERO: cint
+-- ===== clibraries.md block 253 =====
+global C.FP_INFINITE: cint
+-- ===== clibraries.md block 254 =====
+global C.FP_NAN: cint
+-- ===== clibraries.md block 255 =====
+function C.signal(sig: cint, handler: function(cint)): function(cint): void
+-- ===== clibraries.md block 256 =====
+function C.raise(sig: cint): cint
+-- ===== clibraries.md block 257 =====
+global C.SIG_DFL: function(cint): void
+-- ===== clibraries.md block 258 =====
+global C.SIG_IGN: function(cint): void
+-- ===== clibraries.md block 259 =====
+global C.SIG_ERR: function(cint): void
+-- ===== clibraries.md block 260 =====
+global C.SIGTERM: cint
+-- ===== clibraries.md block 261 =====
+global C.SIGSEGV: cint
+-- ===== clibraries.md block 262 =====
+global C.SIGINT: cint
+-- ===== clibraries.md block 263 =====
+global C.SIGILL: cint
+-- ===== clibraries.md block 264 =====
+global C.SIGABRT: cint
+-- ===== clibraries.md block 265 =====
+global C.SIGFPE: cint
+-- ===== clibraries.md block 266 =====
+function C.va_start(ap: cvalist, paramN: auto): void
+-- ===== clibraries.md block 267 =====
+function C.va_end(ap: cvalist): void
+-- ===== clibraries.md block 268 =====
+function C.va_arg(ap: *cvalist, T: type): auto
+-- ===== clibraries.md block 269 =====
+global C.FILE: type = @record{}
+-- ===== clibraries.md block 270 =====
+global C.fpos_t: type = @record{}
+-- ===== clibraries.md block 271 =====
+function C.remove(filename: cstring): cint
+-- ===== clibraries.md block 272 =====
+function C.rename(old: cstring, new: cstring): cint
+-- ===== clibraries.md block 273 =====
+function C.tmpfile(): *C.FILE
+-- ===== clibraries.md block 274 =====
+function C.tmpnam(s: cstring): cstring
+-- ===== clibraries.md block 275 =====
+function C.fclose(stream: *C.FILE): cint
+-- ===== clibraries.md block 276 =====
+function C.fflush(stream: *C.FILE): cint
+-- ===== clibraries.md block 277 =====
+function C.fopen(filename: cstring, modes: cstring): *C.FILE
+-- ===== clibraries.md block 278 =====
+function C.freopen(filename: cstring, modes: cstring, stream: *C.FILE): *C.FILE
+-- ===== clibraries.md block 279 =====
+function C.setbuf(stream: *C.FILE, buf: cstring): void
+-- ===== clibraries.md block 280 =====
+function C.setvbuf(stream: *C.FILE, buf: cstring, modes: cint, n: csize): cint
+-- ===== clibraries.md block 281 =====
+function C.scanf(format: cstring, ...: cvarargs): cint
+-- ===== clibraries.md block 282 =====
+function C.fscanf(stream: *C.FILE, format: cstring, ...: cvarargs): cint
+-- ===== clibraries.md block 283 =====
+function C.sscanf(s: cstring, format: cstring, ...: cvarargs): cint
+-- ===== clibraries.md block 284 =====
+function C.vscanf(format: cstring, arg: cvalist): cint
+-- ===== clibraries.md block 285 =====
+function C.vfscanf(stream: *C.FILE, format: cstring, arg: cvalist): cint
+-- ===== clibraries.md block 286 =====
+function C.vsscanf(s: cstring, format: cstring, arg: cvalist): cint
+-- ===== clibraries.md block 287 =====
+function C.printf(format: cstring, ...: cvarargs): cint
+-- ===== clibraries.md block 288 =====
+function C.fprintf(stream: *C.FILE, format: cstring, ...: cvarargs): cint
+-- ===== clibraries.md block 289 =====
+function C.sprintf(s: cstring, format: cstring, ...: cvarargs): cint
+-- ===== clibraries.md block 290 =====
+function C.snprintf(s: cstring, maxlen: csize, format: cstring, ...: cvarargs): cint
+-- ===== clibraries.md block 291 =====
+function C.vprintf(format: cstring, arg: cvalist): cint
+-- ===== clibraries.md block 292 =====
+function C.vfprintf(stream: *C.FILE, format: cstring, arg: cvalist): cint
+-- ===== clibraries.md block 293 =====
+function C.vsprintf(s: cstring, format: cstring, arg: cvalist): cint
+-- ===== clibraries.md block 294 =====
+function C.vsnprintf(s: cstring, maxlen: csize, format: cstring, arg: cvalist): cint
+-- ===== clibraries.md block 295 =====
+function C.getc(stream: *C.FILE): cint
+-- ===== clibraries.md block 296 =====
+function C.putc(c: cint, stream: *C.FILE): cint
+-- ===== clibraries.md block 297 =====
+function C.getchar(): cint
+-- ===== clibraries.md block 298 =====
+function C.putchar(c: cint): cint
+-- ===== clibraries.md block 299 =====
+function C.fgetc(stream: *C.FILE): cint
+-- ===== clibraries.md block 300 =====
+function C.fputc(c: cint, stream: *C.FILE): cint
+-- ===== clibraries.md block 301 =====
+function C.fgets(s: cstring, n: cint, stream: *C.FILE): cstring
+-- ===== clibraries.md block 302 =====
+function C.fputs(s: cstring, stream: *C.FILE): cint
+-- ===== clibraries.md block 303 =====
+function C.gets(s: cstring): cstring
+-- ===== clibraries.md block 304 =====
+function C.puts(s: cstring): cint
+-- ===== clibraries.md block 305 =====
+function C.ungetc(c: cint, stream: *C.FILE): cint
+-- ===== clibraries.md block 306 =====
+function C.fread(ptr: pointer, size: csize, n: csize, stream: *C.FILE): csize
+-- ===== clibraries.md block 307 =====
+function C.fwrite(ptr: pointer, size: csize, n: csize, sream: pointer): csize
+-- ===== clibraries.md block 308 =====
+function C.fgetpos(stream: *C.FILE, pos: *C.fpos_t): cint
+-- ===== clibraries.md block 309 =====
+function C.fsetpos(stream: *C.FILE, pos: *C.fpos_t): cint
+-- ===== clibraries.md block 310 =====
+function C.fseek(stream: *C.FILE, off: clong, whence: cint): cint
+-- ===== clibraries.md block 311 =====
+function C.ftell(stream: *C.FILE): clong
+-- ===== clibraries.md block 312 =====
+function C.rewind(stream: *C.FILE): void
+-- ===== clibraries.md block 313 =====
+function C.clearerr(stream: *C.FILE): void
+-- ===== clibraries.md block 314 =====
+function C.feof(stream: *C.FILE): cint
+-- ===== clibraries.md block 315 =====
+function C.ferror(stream: *C.FILE): cint
+-- ===== clibraries.md block 316 =====
+function C.perror(s: cstring): void
+-- ===== clibraries.md block 317 =====
+global C.stdin: *C.FILE
+-- ===== clibraries.md block 318 =====
+global C.stdout: *C.FILE
+-- ===== clibraries.md block 319 =====
+global C.stderr: *C.FILE
+-- ===== clibraries.md block 320 =====
+global C.EOF: cint
+-- ===== clibraries.md block 321 =====
+global C.BUFSIZ: cint
+-- ===== clibraries.md block 322 =====
+global C.FOPEN_MAX: cint
+-- ===== clibraries.md block 323 =====
+global C.FILENAME_MAX: cint
+-- ===== clibraries.md block 324 =====
+global C._IOFBF: cint
+-- ===== clibraries.md block 325 =====
+global C._IOLBF: cint
+-- ===== clibraries.md block 326 =====
+global C._IONBF: cint
+-- ===== clibraries.md block 327 =====
+global C.SEEK_SET: cint
+-- ===== clibraries.md block 328 =====
+global C.SEEK_CUR: cint
+-- ===== clibraries.md block 329 =====
+global C.SEEK_END: cint
+-- ===== clibraries.md block 330 =====
+global C.TMP_MAX: cint
+-- ===== clibraries.md block 331 =====
+global C.L_tmpnam: cint
+-- ===== clibraries.md block 332 =====
+global C.div_t: type = @record{quot: cint, rem: cint}
+-- ===== clibraries.md block 333 =====
+global C.ldiv_t: type = @record{quot: cint, rem: cint}
+-- ===== clibraries.md block 334 =====
+global C.lldiv_t: type = @record{quot: cint, rem: cint}
+-- ===== clibraries.md block 335 =====
+function C.malloc(size: csize): pointer
+-- ===== clibraries.md block 336 =====
+function C.calloc(nmemb: csize, size: csize): pointer
+-- ===== clibraries.md block 337 =====
+function C.realloc(ptr: pointer, size: csize): pointer
+-- ===== clibraries.md block 338 =====
+function C.free(ptr: pointer): void
+-- ===== clibraries.md block 339 =====
+function C.aligned_alloc(alignment: csize, size: csize): pointer
+-- ===== clibraries.md block 340 =====
+function C.abort(): void
+-- ===== clibraries.md block 341 =====
+function C.exit(status: cint): void
+-- ===== clibraries.md block 342 =====
+function C.quick_exit(status: cint): void
+-- ===== clibraries.md block 343 =====
+function C._Exit(status: cint): void
+-- ===== clibraries.md block 344 =====
+function C.atexit(func: function(): void): cint
+-- ===== clibraries.md block 345 =====
+function C.at_quick_exit(func: function(): void): cint
+-- ===== clibraries.md block 346 =====
+function C.system(command: cstring): cint
+-- ===== clibraries.md block 347 =====
+function C.getenv(name: cstring): cstring
+-- ===== clibraries.md block 348 =====
+function C.bsearch(key: pointer, base: pointer, nmemb: csize, size: csize, compar: function(pointer, pointer): cint): pointer
+-- ===== clibraries.md block 349 =====
+function C.qsort(base: pointer, nmemb: csize, size: csize, compar: function(pointer, pointer): cint): void
+-- ===== clibraries.md block 350 =====
+function C.rand(): cint
+-- ===== clibraries.md block 351 =====
+function C.srand(seed: cuint): void
+-- ===== clibraries.md block 352 =====
+function C.atof(nptr: cstring): float64
+-- ===== clibraries.md block 353 =====
+function C.atoi(nptr: cstring): cint
+-- ===== clibraries.md block 354 =====
+function C.atol(nptr: cstring): clong
+-- ===== clibraries.md block 355 =====
+function C.atoll(nptr: cstring): clonglong
+-- ===== clibraries.md block 356 =====
+function C.strtof(nptr: cstring, endptr: *cstring): float32
+-- ===== clibraries.md block 357 =====
+function C.strtod(nptr: cstring, endptr: *cstring): float64
+-- ===== clibraries.md block 358 =====
+function C.strtold(nptr: cstring, endptr: *cstring): clongdouble
+-- ===== clibraries.md block 359 =====
+function C.strtol(nptr: cstring, endptr: *cstring, base: cint): clong
+-- ===== clibraries.md block 360 =====
+function C.strtoll(nptr: cstring, endptr: *cstring, base: cint): clonglong
+-- ===== clibraries.md block 361 =====
+function C.strtoul(nptr: cstring, endptr: *cstring, base: cint): culong
+-- ===== clibraries.md block 362 =====
+function C.strtoull(nptr: cstring, endptr: *cstring, base: cint): culonglong
+-- ===== clibraries.md block 363 =====
+function C.abs(x: cint): cint
+-- ===== clibraries.md block 364 =====
+function C.labs(x: clong): clong
+-- ===== clibraries.md block 365 =====
+function C.llabs(x: clonglong): clonglong
+-- ===== clibraries.md block 366 =====
+function C.div(numer: cint, denom: cint): C.div_t
+-- ===== clibraries.md block 367 =====
+function C.ldiv(numer: clong, denom: clong): C.ldiv_t
+-- ===== clibraries.md block 368 =====
+function C.lldiv(numer: clonglong, denom: clonglong): C.lldiv_t
+-- ===== clibraries.md block 369 =====
+global C.EXIT_SUCCESS: cint
+-- ===== clibraries.md block 370 =====
+global C.EXIT_FAILURE: cint
+-- ===== clibraries.md block 371 =====
+global C.RAND_MAX: cint
+-- ===== clibraries.md block 372 =====
+function C.memcpy(dest: pointer, src: pointer, n: csize): pointer
+-- ===== clibraries.md block 373 =====
+function C.memmove(dest: pointer, src: pointer, n: csize): pointer
+-- ===== clibraries.md block 374 =====
+function C.memset(s: pointer, c: cint, n: csize): pointer
+-- ===== clibraries.md block 375 =====
+function C.memcmp(s1: pointer, s2: pointer, n: csize): cint
+-- ===== clibraries.md block 376 =====
+function C.memchr(s: pointer, c: cint, n: csize): pointer
+-- ===== clibraries.md block 377 =====
+function C.strcpy(dest: cstring, src: cstring): cstring
+-- ===== clibraries.md block 378 =====
+function C.strncpy(dest: cstring, src: cstring, n: csize): cstring
+-- ===== clibraries.md block 379 =====
+function C.strcat(dest: cstring, src: cstring): cstring
+-- ===== clibraries.md block 380 =====
+function C.strncat(dest: cstring, src: cstring, n: csize): cstring
+-- ===== clibraries.md block 381 =====
+function C.strcmp(s1: cstring, s2: cstring): cint
+-- ===== clibraries.md block 382 =====
+function C.strncmp(s1: cstring, s2: cstring, n: csize): cint
+-- ===== clibraries.md block 383 =====
+function C.strcoll(s1: cstring, s2: cstring): cint
+-- ===== clibraries.md block 384 =====
+function C.strxfrm(dest: cstring, src: cstring, n: csize): csize
+-- ===== clibraries.md block 385 =====
+function C.strchr(s: cstring, c: cint): cstring
+-- ===== clibraries.md block 386 =====
+function C.strrchr(s: cstring, c: cint): cstring
+-- ===== clibraries.md block 387 =====
+function C.strcspn(s: cstring, reject: cstring): csize
+-- ===== clibraries.md block 388 =====
+function C.strspn(s: cstring, accept: cstring): csize
+-- ===== clibraries.md block 389 =====
+function C.strpbrk(s: cstring, accept: cstring): cstring
+-- ===== clibraries.md block 390 =====
+function C.strstr(haystack: cstring, needle: cstring): cstring
+-- ===== clibraries.md block 391 =====
+function C.strlen(s: cstring): csize
+-- ===== clibraries.md block 392 =====
+function C.strerror(errnum: cint): cstring
+-- ===== clibraries.md block 393 =====
+function C.memccpy(dest: pointer, src: pointer, c: cint, n: csize): pointer
+-- ===== clibraries.md block 394 =====
+function C.strdup(s: cstring): cstring
+-- ===== clibraries.md block 395 =====
+function C.strndup(string: cstring, n: csize): cstring
+-- ===== clibraries.md block 396 =====
+global C.clock_t: type = @cclock_t
+-- ===== clibraries.md block 397 =====
+global C.time_t: type = @ctime_t
+-- ===== clibraries.md block 398 =====
+global C.tm: type = @record{
+  tm_sec: cint,
+  tm_min: cint,
+  tm_hour: cint,
+  tm_mday: cint,
+  tm_mon: cint,
+  tm_year: cint,
+  tm_wday: cint,
+  tm_yday: cint,
+  tm_isdst: cint
+}
+-- ===== clibraries.md block 399 =====
+global C.timespec: type = @record{
+  tv_sec: C.time_t,
+  tv_nsec: clong
+}
+-- ===== clibraries.md block 400 =====
+function C.clock(): C.clock_t
+-- ===== clibraries.md block 401 =====
+function C.difftime(time1: C.time_t, time0: C.time_t): float64
+-- ===== clibraries.md block 402 =====
+function C.mktime(tp: *C.tm): C.time_t
+-- ===== clibraries.md block 403 =====
+function C.strftime(s: cstring, maxsize: csize, format: cstring, tp: *C.tm): csize
+-- ===== clibraries.md block 404 =====
+function C.time(timer: *C.time_t): C.time_t
+-- ===== clibraries.md block 405 =====
+function C.asctime(tp: *C.tm): cstring
+-- ===== clibraries.md block 406 =====
+function C.ctime(timer: *C.time_t): cstring
+-- ===== clibraries.md block 407 =====
+function C.gmtime(timer: *C.time_t): *C.tm
+-- ===== clibraries.md block 408 =====
+function C.localtime(timer: *C.time_t): *C.tm
+-- ===== clibraries.md block 409 =====
+function C.timespec_get(ts: *C.timespec, base: cint): cint
+-- ===== clibraries.md block 410 =====
+global C.CLOCKS_PER_SEC: C.clock_t
+-- ===== clibraries.md block 411 =====
+global C.TIME_UTC: cint
+-- ===== clibraries.md block 412 =====
+function C.asctime_r(tp: *C.tm, buf: cstring): cstring
+-- ===== clibraries.md block 413 =====
+function C.ctime_r(timer: *C.time_t, buf: cstring): cstring
+-- ===== clibraries.md block 414 =====
+function C.gmtime_r(timer: *C.time_t, tp: *C.tm): *C.tm
+-- ===== clibraries.md block 415 =====
+function C.localtime_r(timer: *C.time_t, tp: *C.tm): *C.tm
+-- ===== clibraries.md block 416 =====
+global C.tss_dtor_t: type = @function(pointer): void
+-- ===== clibraries.md block 417 =====
+global C.thrd_start_t: type = @function(pointer): cint
+-- ===== clibraries.md block 418 =====
+global C.tss_t: type = @record{}
+-- ===== clibraries.md block 419 =====
+global C.thrd_t: type = @record{}
+-- ===== clibraries.md block 420 =====
+global C.once_flag: type = @record{}
+-- ===== clibraries.md block 421 =====
+global C.mtx_t: type = @record{}
+-- ===== clibraries.md block 422 =====
+global C.cnd_t: type = @record{}
+-- ===== clibraries.md block 423 =====
+function C.thrd_create(thr: *C.thrd_t, func: C.thrd_start_t, arg: pointer): cint
+-- ===== clibraries.md block 424 =====
+function C.thrd_equal(lhs: C.thrd_t, rhs: C.thrd_t): cint
+-- ===== clibraries.md block 425 =====
+function C.thrd_current(): C.thrd_t
+-- ===== clibraries.md block 426 =====
+function C.thrd_sleep(time_point: *C.timespec, remaining: *C.timespec): cint
+-- ===== clibraries.md block 427 =====
+function C.thrd_exit(res: cint)
+-- ===== clibraries.md block 428 =====
+function C.thrd_detach(thr: C.thrd_t): cint
+-- ===== clibraries.md block 429 =====
+function C.thrd_join(thr: C.thrd_t, res: *cint): cint
+-- ===== clibraries.md block 430 =====
+function C.thrd_yield()
+-- ===== clibraries.md block 431 =====
+function C.mtx_init(mutex: *C.mtx_t, type: cint): cint
+-- ===== clibraries.md block 432 =====
+function C.mtx_lock(mutex: *C.mtx_t): cint
+-- ===== clibraries.md block 433 =====
+function C.mtx_timedlock(mutex: *C.mtx_t, time_point: *C.timespec): cint
+-- ===== clibraries.md block 434 =====
+function C.mtx_trylock(mutex: *C.mtx_t): cint
+-- ===== clibraries.md block 435 =====
+function C.mtx_unlock(mutex: *C.mtx_t): cint
+-- ===== clibraries.md block 436 =====
+function C.mtx_destroy(mutex: *C.mtx_t): void
+-- ===== clibraries.md block 437 =====
+function C.call_once(flag: *C.once_flag, func: function(): void)
+-- ===== clibraries.md block 438 =====
+function C.cnd_init(cond: *C.cnd_t): cint
+-- ===== clibraries.md block 439 =====
+function C.cnd_signal(cond: *C.cnd_t): cint
+-- ===== clibraries.md block 440 =====
+function C.cnd_broadcast(cond: *C.cnd_t): cint
+-- ===== clibraries.md block 441 =====
+function C.cnd_wait(cond: *C.cnd_t, mutex: *C.mtx_t): cint
+-- ===== clibraries.md block 442 =====
+function C.cnd_timedwait(cond: *C.cnd_t, mutex: *C.mtx_t, time_point: *C.timespec): cint
+-- ===== clibraries.md block 443 =====
+function C.cnd_destroy(COND: *C.cnd_t)
+-- ===== clibraries.md block 444 =====
+function C.tss_create(tss_id: *C.tss_t, destructor: C.tss_dtor_t): cint
+-- ===== clibraries.md block 445 =====
+function C.tss_get(tss_id: C.tss_t): pointer
+-- ===== clibraries.md block 446 =====
+function C.tss_set(tss_id: C.tss_t, val: pointer): cint
+-- ===== clibraries.md block 447 =====
+function C.tss_delete(tss_id: C.tss_t)
+-- ===== clibraries.md block 448 =====
+global C.thrd_success: cint
+-- ===== clibraries.md block 449 =====
+global C.thrd_busy: cint
+-- ===== clibraries.md block 450 =====
+global C.thrd_error: cint
+-- ===== clibraries.md block 451 =====
+global C.thrd_nomem: cint
+-- ===== clibraries.md block 452 =====
+global C.thrd_timedout: cint
+-- ===== clibraries.md block 453 =====
+global C.mtx_plain: cint
+-- ===== clibraries.md block 454 =====
+global C.mtx_recursive: cint
+-- ===== clibraries.md block 455 =====
+global C.mtx_timed: cint
+-- ===== clibraries.md block 456 =====
+global C.ONCE_FLAG_INIT: C.once_flag
+-- ===== clibraries.md block 457 =====
+global C.TSS_DTOR_ITERATIONS: cint
+-- ===== clibraries.md block 458 =====
+global C.memory_order: type = @cint
+-- ===== clibraries.md block 459 =====
+global C.memory_order_relaxed: C.memory_order
+-- ===== clibraries.md block 460 =====
+global C.memory_order_consume: C.memory_order
+-- ===== clibraries.md block 461 =====
+global C.memory_order_acquire: C.memory_order
+-- ===== clibraries.md block 462 =====
+global C.memory_order_release: C.memory_order
+-- ===== clibraries.md block 463 =====
+global C.memory_order_acq_rel: C.memory_order
+-- ===== clibraries.md block 464 =====
+global C.memory_order_seq_cst: C.memory_order
+-- ===== clibraries.md block 465 =====
+global C.atomic_flag: type = @record{__val: boolean}
+-- ===== clibraries.md block 466 =====
+function C.kill_dependency(y: is_atomicable): #[y.type]#
+-- ===== clibraries.md block 467 =====
+function C.atomic_flag_test_and_set(object: *C.atomic_flag <volatile>): boolean
+-- ===== clibraries.md block 468 =====
+function C.atomic_flag_test_and_set_explicit(object: *C.atomic_flag <volatile>, order: C.memory_order): boolean
+-- ===== clibraries.md block 469 =====
+function C.atomic_flag_clear(object: *C.atomic_flag <volatile>): void
+-- ===== clibraries.md block 470 =====
+function C.atomic_flag_clear_explicit(object: *C.atomic_flag <volatile>, order: C.memory_order): void
+-- ===== clibraries.md block 471 =====
+function C.atomic_init(obj: is_atomicable_ptr <volatile>, value: is_atomicable): void
+-- ===== clibraries.md block 472 =====
+function C.atomic_is_lock_free(obj: is_atomicable_ptr <const,volatile>): boolean
+-- ===== clibraries.md block 473 =====
+function C.atomic_store(object: is_atomicable_ptr <volatile>, desired: is_atomicable): void
+-- ===== clibraries.md block 474 =====
+function C.atomic_store_explicit(object: is_atomicable_ptr <volatile>, desired: is_atomicable, order: C.memory_order): void
+-- ===== clibraries.md block 475 =====
+function C.atomic_load(object: is_atomicable_ptr <volatile>): #[object.type.subtype]#
+-- ===== clibraries.md block 476 =====
+function C.atomic_load_explicit(object: is_atomicable_ptr <volatile>, order: C.memory_order): #[object.type.subtype]#
+-- ===== clibraries.md block 477 =====
+function C.atomic_exchange(object: is_atomicable_ptr <volatile>, desired: is_atomicable): #[object.type.subtype]#
+-- ===== clibraries.md block 478 =====
+function C.atomic_exchange_explicit(object: is_atomicable_ptr <volatile>, desired: is_atomicable, order: C.memory_order): #[object.type.subtype]#
+-- ===== clibraries.md block 479 =====
+function C.atomic_compare_exchange_strong(object: is_atomicable_ptr <volatile>, expected: is_atomicable_ptr, desired: is_atomicable): boolean
+-- ===== clibraries.md block 480 =====
+function C.atomic_compare_exchange_strong_explicit(object: is_atomicable_ptr <volatile>, expected: is_atomicable_ptr, desired: is_atomicable, success: C.memory_order, failure: C.memory_order): boolean
+-- ===== clibraries.md block 481 =====
+function C.atomic_compare_exchange_weak(object: is_atomicable_ptr <volatile>, expected: is_atomicable_ptr, desired: is_atomicable): boolean
+-- ===== clibraries.md block 482 =====
+function C.atomic_compare_exchange_weak_explicit(object: is_atomicable_ptr <volatile>, expected: is_atomicable_ptr, desired: is_atomicable, success: C.memory_order, failure: C.memory_order): boolean
+-- ===== clibraries.md block 483 =====
+function C.atomic_fetch_add(object: is_atomicable_ptr <volatile>, arg: is_atomicable): #[object.type.subtype]#
+-- ===== clibraries.md block 484 =====
+function C.atomic_fetch_add_explicit(object: is_atomicable_ptr <volatile>, arg: is_atomicable, order: C.memory_order): #[object.type.subtype]#
+-- ===== clibraries.md block 485 =====
+function C.atomic_fetch_sub(object: is_atomicable_ptr <volatile>, arg: is_atomicable): #[object.type.subtype]#
+-- ===== clibraries.md block 486 =====
+function C.atomic_fetch_sub_explicit(object: is_atomicable_ptr <volatile>, arg: is_atomicable, order: C.memory_order): #[object.type.subtype]#
+-- ===== clibraries.md block 487 =====
+function C.atomic_fetch_or(object: is_atomicable_ptr <volatile>, arg: is_atomicable): #[object.type.subtype]#
+-- ===== clibraries.md block 488 =====
+function C.atomic_fetch_or_explicit(object: is_atomicable_ptr <volatile>, arg: is_atomicable, order: C.memory_order): #[object.type.subtype]#
+-- ===== clibraries.md block 489 =====
+function C.atomic_fetch_and(object: is_atomicable_ptr <volatile>, arg: is_atomicable): #[object.type.subtype]#
+-- ===== clibraries.md block 490 =====
+function C.atomic_fetch_and_explicit(object: is_atomicable_ptr <volatile>, arg: is_atomicable, order: C.memory_order): #[object.type.subtype]#
+-- ===== clibraries.md block 491 =====
+function C.atomic_thread_fence(order: C.memory_order): void
+-- ===== clibraries.md block 492 =====
+function C.atomic_signal_fence(order: C.memory_order): void
+-- ===== clibraries.md block 493 =====
+global C.ATOMIC_BOOL_LOCK_FREE: cint
+-- ===== clibraries.md block 494 =====
+global C.ATOMIC_CHAR_LOCK_FREE: cint
+-- ===== clibraries.md block 495 =====
+global C.ATOMIC_CHAR16_T_LOCK_FREE: cint
+-- ===== clibraries.md block 496 =====
+global C.ATOMIC_CHAR32_T_LOCK_FREE: cint
+-- ===== clibraries.md block 497 =====
+global C.ATOMIC_WCHAR_T_LOCK_FREE: cint
+-- ===== clibraries.md block 498 =====
+global C.ATOMIC_SHORT_LOCK_FREE: cint
+-- ===== clibraries.md block 499 =====
+global C.ATOMIC_INT_LOCK_FREE: cint
+-- ===== clibraries.md block 500 =====
+global C.ATOMIC_LONG_LOCK_FREE: cint
+-- ===== clibraries.md block 501 =====
+global C.ATOMIC_LLONG_LOCK_FREE: cint
+-- ===== clibraries.md block 502 =====
+global C.ATOMIC_POINTER_LOCK_FREE: cint
+-- ===== clibraries.md block 503 =====
+global C.ATOMIC_FLAG_INIT: C.atomic_flag
+-- ===== libraries.md block 504 =====
+global function require(modname: string <comptime>)
+-- ===== libraries.md block 505 =====
+global function print(...: varargs): void
+-- ===== libraries.md block 506 =====
+global function panic(message: string): void
+-- ===== libraries.md block 507 =====
+global function error(msg: string): void
+-- ===== libraries.md block 508 =====
+global function assert(v: auto, message: facultative(string))
+-- ===== libraries.md block 509 =====
+global function check(cond: boolean, message: facultative(string)): void
+-- ===== libraries.md block 510 =====
+global function likely(cond: boolean): boolean
+-- ===== libraries.md block 511 =====
+global function unlikely(cond: boolean): boolean
+-- ===== libraries.md block 512 =====
+global _VERSION: string
+-- ===== libraries.md block 513 =====
+global arg: sequence(string, GeneralAllocator)
+-- ===== libraries.md block 514 =====
+global function ipairs(a: container_reference_concept): (auto, auto, integer)
+-- ===== libraries.md block 515 =====
+for i,v in ipairs(a) do body end
+-- ===== libraries.md block 516 =====
+global function mipairs(a: container_reference_concept): (auto, auto, integer)
+-- ===== libraries.md block 517 =====
+global function next(a: container_reference_concept, k: auto): (auto, auto, auto)
+-- ===== libraries.md block 518 =====
+global function mnext(a: container_reference_concept, k: auto): (auto, auto, auto)
+-- ===== libraries.md block 519 =====
+global function pairs(a: container_reference_concept): (auto, auto, auto)
+-- ===== libraries.md block 520 =====
+for k,v in pairs(a) do body end
+-- ===== libraries.md block 521 =====
+global function mpairs(a: container_reference_concept): (auto, auto, auto)
+-- ===== libraries.md block 522 =====
+global function select(index: auto <comptime>, ...: varargs)
+-- ===== libraries.md block 523 =====
+global io: type = @record{}
+-- ===== libraries.md block 524 =====
+global io.stderr: filestream
+-- ===== libraries.md block 525 =====
+global io.stdout: filestream
+-- ===== libraries.md block 526 =====
+global io.stdin: filestream
+-- ===== libraries.md block 527 =====
+function io.open(filename: string, mode: facultative(string)) : (filestream, string, integer)
+-- ===== libraries.md block 528 =====
+function io.popen(prog: string, mode: facultative(string)) : (filestream, string, integer)
+-- ===== libraries.md block 529 =====
+function io.close(file: facultative(filestream)): (boolean, string, integer)
+-- ===== libraries.md block 530 =====
+function io.flush(): (boolean, string, integer)
+-- ===== libraries.md block 531 =====
+function io.input(file: overload(string,filestream,niltype)): filestream
+-- ===== libraries.md block 532 =====
+function io.output(file: overload(string,filestream,niltype)): filestream
+-- ===== libraries.md block 533 =====
+function io.tmpfile(): (filestream, string, integer)
+-- ===== libraries.md block 534 =====
+function io.read(fmt: overload(integer,string,niltype)): (string, string, integer)
+-- ===== libraries.md block 535 =====
+function io.write(...: varargs): (boolean, string, integer)
+-- ===== libraries.md block 536 =====
+function io.writef(fmt: string, ...: varargs): (boolean, string, integer)
+-- ===== libraries.md block 537 =====
+function io.printf(...: varargs): void
+-- ===== libraries.md block 538 =====
+function io.print(...: varargs): void
+-- ===== libraries.md block 539 =====
+function io.type(obj: auto): auto
+-- ===== libraries.md block 540 =====
+function io.lines(filename: facultative(string), fmt: overload(integer,string,niltype))
+-- ===== libraries.md block 541 =====
+global filestream: type = @record{
+  fs: *FStream
+}
+-- ===== libraries.md block 542 =====
+function filestream._fromfp(fp: *FILE, closef: function(fp: *FILE): cint): filestream
+-- ===== libraries.md block 543 =====
+function filestream:_getfp(): *FILE
+-- ===== libraries.md block 544 =====
+function filestream.open(filename: string, mode: facultative(string)) : (filestream, string, integer)
+-- ===== libraries.md block 545 =====
+function filestream:flush(): (boolean, string, integer)
+-- ===== libraries.md block 546 =====
+function filestream:close(): (boolean, string, integer)
+-- ===== libraries.md block 547 =====
+function filestream:destroy(): void
+-- ===== libraries.md block 548 =====
+function filestream:__close(): void
+-- ===== libraries.md block 549 =====
+function filestream:seek(whence: facultative(string), offset: facultative(integer)): (integer, string, integer)
+-- ===== libraries.md block 550 =====
+function filestream:setvbuf(mode: string, size: facultative(integer)): (boolean, string, integer)
+-- ===== libraries.md block 551 =====
+function filestream:read(fmt: overload(integer,string,niltype)): (string, string, integer)
+-- ===== libraries.md block 552 =====
+function filestream:write(...: varargs): (boolean, string, integer)
+-- ===== libraries.md block 553 =====
+function filestream:writef(fmt: string, ...: varargs): (boolean, string, integer)
+-- ===== libraries.md block 554 =====
+function filestream:printf(...: varargs): void
+-- ===== libraries.md block 555 =====
+function filestream:print(...: varargs): void
+-- ===== libraries.md block 556 =====
+function filestream:lines(fmt: overload(integer,string,niltype)): (auto, auto, string)
+-- ===== libraries.md block 557 =====
+for c in filestream:lines(1) do body end
+-- ===== libraries.md block 558 =====
+function filestream:isopen(): boolean
+-- ===== libraries.md block 559 =====
+function filestream:__tostring(): string
+-- ===== libraries.md block 560 =====
+global math: type = @record{}
+-- ===== libraries.md block 561 =====
+function math.abs(x: an_scalar): auto
+-- ===== libraries.md block 562 =====
+function math.floor(x: an_scalar): auto
+-- ===== libraries.md block 563 =====
+function math.ifloor(x: an_scalar): integer
+-- ===== libraries.md block 564 =====
+function math.ceil(x: an_scalar): auto
+-- ===== libraries.md block 565 =====
+function math.iceil(x: an_scalar): integer
+-- ===== libraries.md block 566 =====
+function math.round(x: an_scalar): auto
+-- ===== libraries.md block 567 =====
+function math.iround(x: an_scalar): integer
+-- ===== libraries.md block 568 =====
+function math.trunc(x: an_scalar): auto
+-- ===== libraries.md block 569 =====
+function math.itrunc(x: an_scalar): integer
+-- ===== libraries.md block 570 =====
+function math.sqrt(x: an_scalar): auto
+-- ===== libraries.md block 571 =====
+function math.cbrt(x: an_scalar): auto
+-- ===== libraries.md block 572 =====
+function math.exp(x: an_scalar): auto
+-- ===== libraries.md block 573 =====
+function math.exp2(x: an_scalar): auto
+-- ===== libraries.md block 574 =====
+function math.pow(x: an_scalar, y: an_scalar): auto
+-- ===== libraries.md block 575 =====
+function math.log(x: an_scalar, base: an_optional_scalar): auto
+-- ===== libraries.md block 576 =====
+function math.cos(x: an_scalar): auto
+-- ===== libraries.md block 577 =====
+function math.sin(x: an_scalar): auto
+-- ===== libraries.md block 578 =====
+function math.tan(x: an_scalar): auto
+-- ===== libraries.md block 579 =====
+function math.acos(x: an_scalar): auto
+-- ===== libraries.md block 580 =====
+function math.asin(x: an_scalar): auto
+-- ===== libraries.md block 581 =====
+function math.atan(y: an_scalar, x: an_optional_scalar): auto
+-- ===== libraries.md block 582 =====
+function math.atan2(y: an_scalar, x: an_optional_scalar): auto
+-- ===== libraries.md block 583 =====
+function math.cosh(x: an_scalar): auto
+-- ===== libraries.md block 584 =====
+function math.sinh(x: an_scalar): auto
+-- ===== libraries.md block 585 =====
+function math.tanh(x: an_scalar): auto
+-- ===== libraries.md block 586 =====
+function math.log10(x: an_scalar): auto
+-- ===== libraries.md block 587 =====
+function math.log2(x: an_scalar): auto
+-- ===== libraries.md block 588 =====
+function math.acosh(x: an_scalar): auto
+-- ===== libraries.md block 589 =====
+function math.asinh(x: an_scalar): auto
+-- ===== libraries.md block 590 =====
+function math.atanh(x: an_scalar): auto
+-- ===== libraries.md block 591 =====
+function math.deg(x: an_scalar): auto
+-- ===== libraries.md block 592 =====
+function math.rad(x: an_scalar): auto
+-- ===== libraries.md block 593 =====
+function math.sign(x: an_scalar): auto
+-- ===== libraries.md block 594 =====
+function math.fract(x: an_scalar): auto
+-- ===== libraries.md block 595 =====
+function math.mod(x: an_scalar, y: an_scalar): auto
+-- ===== libraries.md block 596 =====
+function math.modf(x: an_scalar): (auto, auto)
+-- ===== libraries.md block 597 =====
+function math.fmod(x: an_scalar, y: an_scalar): auto
+-- ===== libraries.md block 598 =====
+function math.frexp(x: an_scalar): (auto, int32)
+-- ===== libraries.md block 599 =====
+function math.ldexp(m: an_scalar, e: int32): auto
+-- ===== libraries.md block 600 =====
+function math.min(...: varargs): auto
+-- ===== libraries.md block 601 =====
+function math.max(...: varargs): auto
+-- ===== libraries.md block 602 =====
+function math.clamp(x: an_scalar, min: an_scalar, max: an_scalar): auto
+-- ===== libraries.md block 603 =====
+function math.ult(m: an_scalar, n: an_scalar): boolean
+-- ===== libraries.md block 604 =====
+function math.tointeger(x: an_scalar): auto
+-- ===== libraries.md block 605 =====
+function math.type(x: auto): auto
+-- ===== libraries.md block 606 =====
+function math.randomseed(x: an_optional_integral, y: an_optional_integral): (integer, integer)
+-- ===== libraries.md block 607 =====
+function math.random(m: an_optional_scalar, n: an_optional_scalar): auto
+-- ===== libraries.md block 608 =====
+function math.isnan(x: an_scalar): boolean
+-- ===== libraries.md block 609 =====
+function math.isinf(x: an_scalar): boolean
+-- ===== libraries.md block 610 =====
+function math.isfinite(x: an_scalar): boolean
+-- ===== libraries.md block 611 =====
+global math.pi: number
+-- ===== libraries.md block 612 =====
+global math.huge: number
+-- ===== libraries.md block 613 =====
+global math.mininteger: integer
+-- ===== libraries.md block 614 =====
+global math.maxinteger: integer
+-- ===== libraries.md block 615 =====
+global math.maxuinteger: uinteger
+-- ===== libraries.md block 616 =====
+global memory: type = @record{}
+-- ===== libraries.md block 617 =====
+function memory.copy(dest: pointer, src: pointer, n: usize): void
+-- ===== libraries.md block 618 =====
+function memory.move(dest: pointer, src: pointer, n: usize): void
+-- ===== libraries.md block 619 =====
+function memory.set(dest: pointer, x: byte, n: usize): void
+-- ===== libraries.md block 620 =====
+function memory.zero(dest: pointer, n: usize): void
+-- ===== libraries.md block 621 =====
+function memory.compare(a: pointer, b: pointer, n: usize): int32
+-- ===== libraries.md block 622 =====
+function memory.equals(a: pointer, b: pointer, n: usize): boolean
+-- ===== libraries.md block 623 =====
+function memory.scan(src: pointer, x: byte, n: usize): pointer
+-- ===== libraries.md block 624 =====
+function memory.find(haystack: pointer, haystacksize: usize, needle: pointer, needlesize: usize): pointer
+-- ===== libraries.md block 625 =====
+function memory.spancopy(dest: an_span, src: an_span): void
+-- ===== libraries.md block 626 =====
+function memory.spanmove(dest: an_span, src: an_span): void
+-- ===== libraries.md block 627 =====
+function memory.spanset(dest: an_span, x: auto): void
+-- ===== libraries.md block 628 =====
+function memory.spanzero(dest: an_span): void
+-- ===== libraries.md block 629 =====
+function memory.spancompare(a: an_span, b: an_span): int32
+-- ===== libraries.md block 630 =====
+function memory.spanequals(a: an_span, b: an_span): boolean
+-- ===== libraries.md block 631 =====
+function memory.spanfind(s: an_span, x: auto): isize
+-- ===== libraries.md block 632 =====
+global os: type = @record{}
+-- ===== libraries.md block 633 =====
+function os.execute(command: facultative(string)): (boolean, string, integer)
+-- ===== libraries.md block 634 =====
+function os.exit(code: overload(integer,boolean,niltype)): void
+-- ===== libraries.md block 635 =====
+function os.setenv(varname: string, value: facultative(string)): (boolean, string, integer)
+-- ===== libraries.md block 636 =====
+function os.getenv(varname: string): string
+-- ===== libraries.md block 637 =====
+function os.remove(filename: string): (boolean, string, integer)
+-- ===== libraries.md block 638 =====
+function os.rename(oldname: string, newname: string): (boolean, string, integer)
+-- ===== libraries.md block 639 =====
+function os.setlocale(locale: facultative(string), category: facultative(string)): string
+-- ===== libraries.md block 640 =====
+function os.tmpname(): string
+-- ===== libraries.md block 641 =====
+function os.date(format: facultative(string), formattime: facultative(integer)): string
+-- ===== libraries.md block 642 =====
+function os.clock(): number
+-- ===== libraries.md block 643 =====
+function os.difftime(t2: integer, t1: integer): number
+-- ===== libraries.md block 644 =====
+global os.timedesc: type = @record{
+  year: integer, month: integer, day: integer,
+  hour: integer, min: integer, sec: integer,
+  isdst: boolean
+}
+-- ===== libraries.md block 645 =====
+function os.time(desc: facultative(os.timedesc)): integer
+-- ===== libraries.md block 646 =====
+function os.realtime(): (integer, integer)
+-- ===== libraries.md block 647 =====
+function os.now(): number
+-- ===== libraries.md block 648 =====
+function os.sleep(secs: number): boolean
+-- ===== libraries.md block 649 =====
+local spanT: type = @record{
+    data: *[0]T,
+    size: usize
+  }
+-- ===== libraries.md block 650 =====
+function spanT.empty(self: spanT): boolean
+-- ===== libraries.md block 651 =====
+function spanT.valid(self: spanT): boolean
+-- ===== libraries.md block 652 =====
+function spanT.sub(self: spanT, i: usize, j: usize): spanT
+-- ===== libraries.md block 653 =====
+function spanT.__atindex(self: spanT, i: usize): *T
+-- ===== libraries.md block 654 =====
+function spanT.__len(self: spanT): isize
+-- ===== libraries.md block 655 =====
+function spanT.sizebytes(self: spanT): usize
+-- ===== libraries.md block 656 =====
+function spanT.__convert(values: spanT_convertible_concept): spanT
+-- ===== libraries.md block 657 =====
+function spanT.as(self: spanT, U: type): auto
+-- ===== libraries.md block 658 =====
+global span: type
+-- ===== libraries.md block 659 =====
+global string = @record{
+  data: *[0]byte,
+  size: usize,
+}
+-- ===== libraries.md block 660 =====
+function string.create(size: usize): string
+-- ===== libraries.md block 661 =====
+function string:destroy(): void
+-- ===== libraries.md block 662 =====
+function string.copy(s: string): string
+-- ===== libraries.md block 663 =====
+function string.byte(s: string, i: facultative(isize)): byte
+-- ===== libraries.md block 664 =====
+function string.sub(s: string, i: isize, j: facultative(isize)): string
+-- ===== libraries.md block 665 =====
+function string.subview(s: string, i: isize, j: facultative(isize)): string
+-- ===== libraries.md block 666 =====
+function string.rep(s: string, n: isize, sep: facultative(string)): string
+-- ===== libraries.md block 667 =====
+function string.reverse(s: string): string
+-- ===== libraries.md block 668 =====
+function string.upper(s: string): string
+-- ===== libraries.md block 669 =====
+function string.lower(s: string): string
+-- ===== libraries.md block 670 =====
+function string.char(...: varargs): string
+-- ===== libraries.md block 671 =====
+function string.format(fmt: string, ...: varargs): string
+-- ===== libraries.md block 672 =====
+function string.len(s: string): isize
+-- ===== libraries.md block 673 =====
+function string.fillcstring(s: string, buf: *[0]cchar, buflen: usize): boolean
+-- ===== libraries.md block 674 =====
+function string.span(s: string): span(byte)
+-- ===== libraries.md block 675 =====
+function string.concat(list: span(string), sep: facultative(string)): string
+-- ===== libraries.md block 676 =====
+function string:__close(): void
+-- ===== libraries.md block 677 =====
+function string.__atindex(s: string, i: usize): *byte
+-- ===== libraries.md block 678 =====
+function string.__len(a: string): isize
+-- ===== libraries.md block 679 =====
+function string.__concat(a: auto, b: auto): string
+-- ===== libraries.md block 680 =====
+function string.__eq(a: string, b: string): boolean
+-- ===== libraries.md block 681 =====
+function string.__lt(a: string, b: string): boolean
+-- ===== libraries.md block 682 =====
+function string.__le(a: string, b: string): boolean
+-- ===== libraries.md block 683 =====
+function string.__add(a: scalar_coercion_concept, b: scalar_coercion_concept): number
+-- ===== libraries.md block 684 =====
+function string.__sub(a: scalar_coercion_concept, b: scalar_coercion_concept): number
+-- ===== libraries.md block 685 =====
+function string.__mul(a: scalar_coercion_concept, b: scalar_coercion_concept): number
+-- ===== libraries.md block 686 =====
+function string.__div(a: scalar_coercion_concept, b: scalar_coercion_concept): number
+-- ===== libraries.md block 687 =====
+function string.__idiv(a: scalar_coercion_concept, b: scalar_coercion_concept): number
+-- ===== libraries.md block 688 =====
+function string.__tdiv(a: scalar_coercion_concept, b: scalar_coercion_concept): number
+-- ===== libraries.md block 689 =====
+function string.__mod(a: scalar_coercion_concept, b: scalar_coercion_concept): number
+-- ===== libraries.md block 690 =====
+function string.__tmod(a: scalar_coercion_concept, b: scalar_coercion_concept): number
+-- ===== libraries.md block 691 =====
+function string.__pow(a: scalar_coercion_concept, b: scalar_coercion_concept): number
+-- ===== libraries.md block 692 =====
+function string.__unm(a: scalar_coercion_concept): number
+-- ===== libraries.md block 693 =====
+function string.__band(a: scalar_coercion_concept, b: scalar_coercion_concept): integer
+-- ===== libraries.md block 694 =====
+function string.__bor(a: scalar_coercion_concept, b: scalar_coercion_concept): integer
+-- ===== libraries.md block 695 =====
+function string.__bxor(a: scalar_coercion_concept, b: scalar_coercion_concept): integer
+-- ===== libraries.md block 696 =====
+function string.__shl(a: scalar_coercion_concept, b: scalar_coercion_concept): integer
+-- ===== libraries.md block 697 =====
+function string.__shr(a: scalar_coercion_concept, b: scalar_coercion_concept): integer
+-- ===== libraries.md block 698 =====
+function string.__asr(a: scalar_coercion_concept, b: scalar_coercion_concept): integer
+-- ===== libraries.md block 699 =====
+function string.__bnot(a: scalar_coercion_concept): integer
+-- ===== libraries.md block 700 =====
+function string.find(s: string, pattern: string, init: facultative(isize), plain: facultative(boolean)): (isize, isize)
+-- ===== libraries.md block 701 =====
+function string.gmatch(s: string, pattern: string, init: facultative(isize)): (auto, auto, string)
+-- ===== libraries.md block 702 =====
+function string.gmatchview(s: string, pattern: string, init: facultative(isize)): (auto, auto, string)
+-- ===== libraries.md block 703 =====
+function string.gsub(s: string, pattern: string, repl: auto, maxn: facultative(isize)): (string, isize)
+-- ===== libraries.md block 704 =====
+function string.match(s: string, pattern: string, init: facultative(isize)): (boolean, sequence(string))
+-- ===== libraries.md block 705 =====
+function string.matchview(s: string, pattern: string, init: facultative(isize)): (boolean, sequence(string))
+-- ===== libraries.md block 706 =====
+function string.pack(fmt: string, ...: varargs): string
+-- ===== libraries.md block 707 =====
+function string.unpack(fmt: string <comptime>, s: string, init: facultative(isize))
+-- ===== libraries.md block 708 =====
+function string.packsize(fmt: string): isize
+-- ===== libraries.md block 709 =====
+global function tostring(x: auto): string
+-- ===== libraries.md block 710 =====
+global function tostringview(x: auto): string
+-- ===== libraries.md block 711 =====
+global function tonumber(x: auto, base: facultative(integer)): auto
+-- ===== libraries.md block 712 =====
+global function tointeger(x: auto, base: facultative(integer)): integer
+-- ===== libraries.md block 713 =====
+local stringbuilderT: type = @record{
+    data: span(byte),
+    size: usize,
+    allocator: Allocator
+  }
+-- ===== libraries.md block 714 =====
+function stringbuilderT.make(allocator: Allocator): stringbuilderT
+-- ===== libraries.md block 715 =====
+function stringbuilderT:destroy(): void
+-- ===== libraries.md block 716 =====
+function stringbuilderT:__close(): void
+-- ===== libraries.md block 717 =====
+function stringbuilderT:clear(): void
+-- ===== libraries.md block 718 =====
+function stringbuilderT:prepare(n: usize): span(byte)
+-- ===== libraries.md block 719 =====
+function stringbuilderT:commit(n: usize): void
+-- ===== libraries.md block 720 =====
+function stringbuilderT:rollback(n: usize): void
+-- ===== libraries.md block 721 =====
+function stringbuilderT:resize(n: usize): boolean
+-- ===== libraries.md block 722 =====
+function stringbuilderT:writebyte(c: byte, n: facultative(usize)): boolean
+-- ===== libraries.md block 723 =====
+function stringbuilderT:write(...: varargs): (boolean, usize)
+-- ===== libraries.md block 724 =====
+function stringbuilderT:writef(fmt: string, ...: varargs): (boolean, usize)
+-- ===== libraries.md block 725 =====
+function stringbuilderT:view(): string
+-- ===== libraries.md block 726 =====
+function stringbuilderT:__tostringview(): string
+-- ===== libraries.md block 727 =====
+function stringbuilderT:promote(): string
+-- ===== libraries.md block 728 =====
+function stringbuilderT:__len(): isize
+-- ===== libraries.md block 729 =====
+function stringbuilderT:__tostring(): string
+-- ===== libraries.md block 730 =====
+global stringbuilder: type
+-- ===== libraries.md block 731 =====
+global traits: type = @record{}
+-- ===== libraries.md block 732 =====
+global traits.typeid: type = @uint32
+-- ===== libraries.md block 733 =====
+global traits.typeinfo: type = @record{
+  id: traits.typeid,
+  name: string,
+  nickname: string,
+  codename: string
+}
+-- ===== libraries.md block 734 =====
+function traits.typeidof(v: auto): traits.typeid
+-- ===== libraries.md block 735 =====
+function traits.typeinfoof(v: auto): traits.typeinfo
+-- ===== libraries.md block 736 =====
+global function type(v: auto): string
+-- ===== libraries.md block 737 =====
+global utf8: type = @record{}
+-- ===== libraries.md block 738 =====
+global utf8.charpattern: string
+-- ===== libraries.md block 739 =====
+function utf8.char(...: varargs): string
+-- ===== libraries.md block 740 =====
+function utf8.codes(s: string, relax: facultative(boolean))
+  : (function(string, isize): (boolean, isize, uint32), string, isize)
+-- ===== libraries.md block 741 =====
+for p, c in utf8.codes(s) do end
+-- ===== libraries.md block 742 =====
+function utf8.codepoint(s: string, i: facultative(isize), relax: facultative(boolean)): uint32
+-- ===== libraries.md block 743 =====
+function utf8.offset(s: string, n: isize, i: facultative(isize)): isize
+-- ===== libraries.md block 744 =====
+function utf8.len(s: string, i: facultative(isize), j: facultative(isize), relax: facultative(boolean)): (isize, isize)
+-- ===== libraries.md block 745 =====
+global coroutine: type = @*minicoro.Coro
+-- ===== libraries.md block 746 =====
+function coroutine.destroy(co: coroutine): (boolean, string)
+-- ===== libraries.md block 747 =====
+function coroutine:__close(): void
+-- ===== libraries.md block 748 =====
+function coroutine.create(f: function_concept): (coroutine, string)
+-- ===== libraries.md block 749 =====
+function coroutine.push(co: coroutine, ...: varargs): (boolean, string)
+-- ===== libraries.md block 750 =====
+function coroutine.pop(co: coroutine, ...: varargs): (boolean, string)
+-- ===== libraries.md block 751 =====
+function coroutine.isyieldable(co: coroutine): boolean
+-- ===== libraries.md block 752 =====
+function coroutine.resume(co: coroutine, ...: varargs): (boolean, string)
+-- ===== libraries.md block 753 =====
+function coroutine.spawn(f: function_concept, ...: varargs): (coroutine, string)
+-- ===== libraries.md block 754 =====
+function coroutine.yield(...: varargs): (boolean, string)
+-- ===== libraries.md block 755 =====
+function coroutine.running(): (coroutine, boolean)
+-- ===== libraries.md block 756 =====
+function coroutine.status(co: coroutine): string
+-- ===== libraries.md block 757 =====
+global hash: type = @record{}
+-- ===== libraries.md block 758 =====
+function hash.short(data: span(byte)): usize
+-- ===== libraries.md block 759 =====
+function hash.long(data: span(byte)): usize
+-- ===== libraries.md block 760 =====
+function hash.combine(seed: usize, value: usize): usize
+-- ===== libraries.md block 761 =====
+function hash.hash(v: auto): usize
+-- ===== libraries.md block 762 =====
+local vectorT: type = @record{
+    data: span(T),
+    size: usize,
+    allocator: Allocator
+  }
+-- ===== libraries.md block 763 =====
+function vectorT.make(allocator: Allocator): vectorT
+-- ===== libraries.md block 764 =====
+function vectorT:clear(): void
+-- ===== libraries.md block 765 =====
+function vectorT:destroy(): void
+-- ===== libraries.md block 766 =====
+function vectorT:__close(): void
+-- ===== libraries.md block 767 =====
+function vectorT:reserve(n: usize): void
+-- ===== libraries.md block 768 =====
+function vectorT:resize(n: usize): void
+-- ===== libraries.md block 769 =====
+function vectorT:copy(): vectorT
+-- ===== libraries.md block 770 =====
+function vectorT:push(v: T): void
+-- ===== libraries.md block 771 =====
+function vectorT:pop(): T
+-- ===== libraries.md block 772 =====
+function vectorT:insert(pos: usize, v: T): void
+-- ===== libraries.md block 773 =====
+function vectorT:remove(pos: usize): T
+-- ===== libraries.md block 774 =====
+function vectorT:removevalue(v: T): boolean
+-- ===== libraries.md block 775 =====
+function vectorT:removeif(pred: function(v: T): boolean): void
+-- ===== libraries.md block 776 =====
+function vectorT:capacity(): isize
+-- ===== libraries.md block 777 =====
+function vectorT:__atindex(pos: usize): *T
+-- ===== libraries.md block 778 =====
+function vectorT:__len(): isize
+-- ===== libraries.md block 779 =====
+function vectorT.__convert(values: an_arrayT): vectorT
+-- ===== libraries.md block 780 =====
+global vector: type
+-- ===== libraries.md block 781 =====
+local sequenceT: type = @record{
+    impl: *sequenceimplT,
+    allocator: Allocator
+  }
+-- ===== libraries.md block 782 =====
+function sequenceT:_init(): void
+-- ===== libraries.md block 783 =====
+function sequenceT.make(allocator: Allocator): sequenceT
+-- ===== libraries.md block 784 =====
+function sequenceT:clear(): void
+-- ===== libraries.md block 785 =====
+function sequenceT:destroy(): void
+-- ===== libraries.md block 786 =====
+function sequenceT:__close(): void
+-- ===== libraries.md block 787 =====
+function sequenceT:reserve(n: usize): void
+-- ===== libraries.md block 788 =====
+function sequenceT:resize(n: usize): void
+-- ===== libraries.md block 789 =====
+function sequenceT:copy(): sequenceT
+-- ===== libraries.md block 790 =====
+function sequenceT:push(v: T): void
+-- ===== libraries.md block 791 =====
+function sequenceT:pop(): T
+-- ===== libraries.md block 792 =====
+function sequenceT:insert(pos: usize, v: T): void
+-- ===== libraries.md block 793 =====
+function sequenceT:remove(pos: usize): T
+-- ===== libraries.md block 794 =====
+function sequenceT:removevalue(v: T): boolean
+-- ===== libraries.md block 795 =====
+function sequenceT:removeif(pred: function(v: T): boolean): void
+-- ===== libraries.md block 796 =====
+function sequenceT:capacity(): isize
+-- ===== libraries.md block 797 =====
+function sequenceT:__atindex(pos: usize): *T
+-- ===== libraries.md block 798 =====
+function sequenceT:__len(): isize
+-- ===== libraries.md block 799 =====
+function sequenceT.__convert(values: an_arrayT): sequenceT
+-- ===== libraries.md block 800 =====
+function sequenceT:unpack(i: isize <comptime>, j: isize <comptime>)
+-- ===== libraries.md block 801 =====
+global sequence: type
+-- ===== libraries.md block 802 =====
+local listnodeT: type = @record{
+    prev: *listnodeT,
+    next: *listnodeT,
+    value: T
+  }
+-- ===== libraries.md block 803 =====
+local listT: type = @record{
+    front: *listnodeT, -- list begin
+    back: *listnodeT, -- list end
+    allocator: Allocator
+  }
+-- ===== libraries.md block 804 =====
+function listT.make(allocator: Allocator): listT
+-- ===== libraries.md block 805 =====
+function listT:clear(): void
+-- ===== libraries.md block 806 =====
+function listT:destroy(): void
+-- ===== libraries.md block 807 =====
+function listT:__close(): void
+-- ===== libraries.md block 808 =====
+function listT:pushfront(value: T): void
+-- ===== libraries.md block 809 =====
+function listT:pushback(value: T): void
+-- ===== libraries.md block 810 =====
+function listT:insert(pos: *listnodeT, value: T): *listnodeT
+-- ===== libraries.md block 811 =====
+function listT:popfront(): T
+-- ===== libraries.md block 812 =====
+function listT:popback(): T
+-- ===== libraries.md block 813 =====
+function listT:find(value: T): *listnodeT
+-- ===== libraries.md block 814 =====
+function listT:erase(node: *listnodeT): *listnodeT
+-- ===== libraries.md block 815 =====
+function listT:empty(): boolean
+-- ===== libraries.md block 816 =====
+function listT:__len(): isize
+-- ===== libraries.md block 817 =====
+function listT:__next(node: *listnodeT): (boolean, *listnodeT, T)
+-- ===== libraries.md block 818 =====
+function listT:__mnext(node: *listnodeT): (boolean, *listnodeT, *T)
+-- ===== libraries.md block 819 =====
+function listT:__pairs(): (auto, *listT, *listnodeT)
+-- ===== libraries.md block 820 =====
+function listT:__mpairs(): (auto, *listT, *listnodeT)
+-- ===== libraries.md block 821 =====
+function listT.__convert(values: an_arrayT): listT
+-- ===== libraries.md block 822 =====
+global list: type
+-- ===== libraries.md block 823 =====
+local hashnodeT: type = @record{
+    key: K,
+    value: V,
+    filled: boolean,
+    next: usize,
+  }
+-- ===== libraries.md block 824 =====
+local hashmapT: type = @record{
+    buckets: span(usize),
+    nodes: span(hashnodeT),
+    size: usize,
+    free_index: usize,
+    allocator: Allocator
+  }
+-- ===== libraries.md block 825 =====
+function hashmapT.make(allocator: Allocator): hashmapT
+-- ===== libraries.md block 826 =====
+function hashmapT:destroy(): void
+-- ===== libraries.md block 827 =====
+function hashmapT:__close(): void
+-- ===== libraries.md block 828 =====
+function hashmapT:clear(): void
+-- ===== libraries.md block 829 =====
+function hashmapT:_find(key: K): (usize, usize, usize)
+-- ===== libraries.md block 830 =====
+function hashmapT:rehash(bucket_count: usize): void
+-- ===== libraries.md block 831 =====
+function hashmapT:reserve(count: usize): void
+-- ===== libraries.md block 832 =====
+function hashmapT:_at(key: K): usize
+-- ===== libraries.md block 833 =====
+function hashmapT:__atindex(key: K): *V
+-- ===== libraries.md block 834 =====
+function hashmapT:peek(key: K): *V
+-- ===== libraries.md block 835 =====
+function hashmapT:has(key: K): boolean
+-- ===== libraries.md block 836 =====
+function hashmapT:has_and_get(key: K): (boolean, V)
+-- ===== libraries.md block 837 =====
+function hashmapT:remove(key: K): V
+-- ===== libraries.md block 838 =====
+function hashmapT:erase(key: K): boolean
+-- ===== libraries.md block 839 =====
+function hashmapT:loadfactor(): number
+-- ===== libraries.md block 840 =====
+function hashmapT:bucketcount(): usize
+-- ===== libraries.md block 841 =====
+function hashmapT:capacity(): usize
+-- ===== libraries.md block 842 =====
+function hashmapT:__len(): isize
+-- ===== libraries.md block 843 =====
+function hashmapT:__pairs(): (auto, hashmap_iteratorT, K)
+-- ===== libraries.md block 844 =====
+function hashmapT:__mpairs(): (auto, hashmap_iteratorT, K)
+-- ===== libraries.md block 845 =====
+function hashmapT:_next_node(key: facultative(K)): *hashnodeT
+-- ===== libraries.md block 846 =====
+function hashmapT:__next(key: facultative(K)): (boolean, K, V)
+-- ===== libraries.md block 847 =====
+function hashmapT:__mnext(key: facultative(K)): (boolean, K, *V)
+-- ===== libraries.md block 848 =====
+global hashmap: type
+-- ===== libraries.md block 849 =====
+global function new(what: auto, size: facultative(usize), flags: facultative(usize)): auto
+-- ===== libraries.md block 850 =====
+global function delete(v: auto): void
+-- ===== libraries.md block 851 =====
+global AllocatorFlags: type = @enum(usize){
+  GCRoot = 1 << 17, -- Allocation always scanned and never collected.
+  GCLeaf = 1 << 18, -- Allocation never scanned (contains no pointers).
+  GCBranch = 1 << 19, -- Allocation should be scanned despite being detected as leaf (contains pointers).
+  GCExtern = 1 << 20, -- External allocation, finalizers should be called, however deallocation is disabled.
+}
+-- ===== libraries.md block 852 =====
+local Allocator: type
+-- ===== libraries.md block 853 =====
+function Allocator:alloc(size: usize, flags: facultative(usize)): pointer
+-- ===== libraries.md block 854 =====
+function Allocator:xalloc(size: usize, flags: facultative(usize)): pointer
+-- ===== libraries.md block 855 =====
+function Allocator:alloc0(size: usize, flags: facultative(usize)): pointer
+-- ===== libraries.md block 856 =====
+function Allocator:xalloc0(size: usize, flags: facultative(usize)): pointer
+-- ===== libraries.md block 857 =====
+function Allocator:dealloc(p: pointer): void
+-- ===== libraries.md block 858 =====
+function Allocator:realloc(p: pointer, newsize: usize, oldsize: usize): pointer
+-- ===== libraries.md block 859 =====
+function Allocator:xrealloc(p: pointer, newsize: usize, oldsize: usize): pointer
+-- ===== libraries.md block 860 =====
+function Allocator:realloc0(p: pointer, newsize: usize, oldsize: usize): pointer
+-- ===== libraries.md block 861 =====
+function Allocator:xrealloc0(p: pointer, newsize: usize, oldsize: usize): pointer
+-- ===== libraries.md block 862 =====
+function Allocator:spanalloc(T: type, size: usize, flags: facultative(usize)): auto
+-- ===== libraries.md block 863 =====
+function Allocator:xspanalloc(T: type, size: usize, flags: facultative(usize)): auto
+-- ===== libraries.md block 864 =====
+function Allocator:spanalloc0(T: type, size: usize, flags: facultative(usize)): auto
+-- ===== libraries.md block 865 =====
+function Allocator:xspanalloc0(T: type, size: usize, flags: facultative(usize)): auto
+-- ===== libraries.md block 866 =====
+function Allocator:spandealloc(s: span_concept): void
+-- ===== libraries.md block 867 =====
+function Allocator:spanrealloc(s: span_concept, size: usize): auto
+-- ===== libraries.md block 868 =====
+function Allocator:xspanrealloc(s: span_concept, size: usize): auto
+-- ===== libraries.md block 869 =====
+function Allocator:spanrealloc0(s: span_concept, size: usize): auto
+-- ===== libraries.md block 870 =====
+function Allocator:xspanrealloc0(s: span_concept, size: usize): auto
+-- ===== libraries.md block 871 =====
+function Allocator:new(what: auto, size: facultative(usize), flags: facultative(usize)): auto
+-- ===== libraries.md block 872 =====
+function Allocator:delete(v: deleteable_concept): void
+-- ===== libraries.md block 873 =====
+global GeneralAllocator: type = @record{}
+-- ===== libraries.md block 874 =====
+global general_allocator: GeneralAllocator
+-- ===== libraries.md block 875 =====
+function GeneralAllocator:alloc(size: usize, flags: facultative(usize)): pointer
+-- ===== libraries.md block 876 =====
+function GeneralAllocator:alloc0(size: usize, flags: facultative(usize)): pointer
+-- ===== libraries.md block 877 =====
+function GeneralAllocator:dealloc(p: pointer): void
+-- ===== libraries.md block 878 =====
+function GeneralAllocator:realloc(p: pointer, newsize: usize, oldsize: usize): pointer
+-- ===== libraries.md block 879 =====
+global GCFlags: type = @enum(usize) {
+  MARK = 1 << 16, -- Marked for collection (used only internally).
+  FINALIZE = 1 << 17, -- Finalizer should be called before deallocating.
+  ROOT = AllocatorFlags.GCRoot, -- Allocation always scanned and never collected.
+  LEAF = AllocatorFlags.GCLeaf, -- Allocation never scanned (contains no pointers).
+  BRANCH = AllocatorFlags.GCBranch, -- Allocation should be scanned despite being detected as leaf (contains pointers).
+  EXTERN = AllocatorFlags.GCExtern, -- External allocation, finalizers should be called, however deallocation is disabled.
+}
+-- ===== libraries.md block 880 =====
+global GC: type = @record{
+  running: boolean,  -- Whether the collector is running.
+  collecting: boolean, -- Whether a collecting cycle is actively running.
+  pause: usize, -- The collector pause (default 200).
+  membytes: usize, -- Total allocated memory currently being tracked by the GC (in bytes).
+  lastmembytes: usize, -- Total allocated memory tracked just after the last collection cycle.
+  addrormask: usize, -- OR bit mask for pointer address being tracked by the GC.
+  addrandmask: usize, -- AND bit mask for pointer address being tracked by the GC.
+  stacktop: usize, -- Stack top address.
+  stackbottom: usize, -- Stack bottom address.
+  finalizeitems: vector(pointer, GeneralAllocator), -- List of pointers to be finalized.
+  scanranges: vector(GCScanRange, GeneralAllocator), -- List of ranges to be scanned.
+  items: hashmap(pointer, GCItem, nil, nil, GeneralAllocator), -- Map of all tracked allocations.
+  rootitems: hashmap(pointer, usize, nil, nil, GeneralAllocator), -- Map of all tracked root allocations.
+}
+-- ===== libraries.md block 881 =====
+global gc: GC
+-- ===== libraries.md block 882 =====
+function GC:unregister(ptr: pointer, finalize: facultative(boolean)): void
+-- ===== libraries.md block 883 =====
+function GC:collect(): void
+-- ===== libraries.md block 884 =====
+function GC:step(): boolean
+-- ===== libraries.md block 885 =====
+function GC:register(ptr: pointer, size: usize, flags: usize,
+                     finalizer: function(pointer, pointer): void, userdata: pointer): void
+-- ===== libraries.md block 886 =====
+function GC:reregister(oldptr: pointer, newptr: pointer, newsize: usize): void
+-- ===== libraries.md block 887 =====
+function GC:setstacktop(stacktop: facultative(usize)): usize
+-- ===== libraries.md block 888 =====
+function GC:count(): number
+-- ===== libraries.md block 889 =====
+function GC:stop(): void
+-- ===== libraries.md block 890 =====
+function GC:restart(): void
+-- ===== libraries.md block 891 =====
+function GC:setpause(pause: integer): integer
+-- ===== libraries.md block 892 =====
+function GC:isrunning(): boolean
+-- ===== libraries.md block 893 =====
+function GC:init(stack: pointer): void
+-- ===== libraries.md block 894 =====
+function GC:destroy(): void
+-- ===== libraries.md block 895 =====
+global function collectgarbage(opt: overload(string,number,niltype) <comptime>,
+                               arg: facultative(integer))
+-- ===== libraries.md block 896 =====
+global GCAllocator: type = @record{}
+-- ===== libraries.md block 897 =====
+global gc_allocator: GCAllocator
+-- ===== libraries.md block 898 =====
+function GCAllocator:alloc(size: usize,
+                           flags: facultative(usize),
+                           finalizer: facultative(function(pointer, pointer): void),
+                           userdata: facultative(pointer)): pointer
+-- ===== libraries.md block 899 =====
+function GCAllocator:alloc0(size: usize,
+                            flags: facultative(usize),
+                            finalizer: facultative(function(pointer, pointer): void),
+                            userdata: facultative(pointer)): pointer
+-- ===== libraries.md block 900 =====
+function GCAllocator:dealloc(ptr: pointer): void
+-- ===== libraries.md block 901 =====
+function GCAllocator:realloc(ptr: pointer, newsize: usize, oldsize: usize): pointer
+-- ===== libraries.md block 902 =====
+function GCAllocator:spanalloc(T: type, size: usize,
+                               flags: facultative(usize),
+                               finalizer: facultative(function(pointer, pointer): void),
+                               userdata: facultative(pointer)): auto
+-- ===== libraries.md block 903 =====
+function GCAllocator:spanalloc0(T: type, size: usize,
+                                flags: facultative(usize),
+                                finalizer: facultative(function(pointer, pointer): void),
+                                userdata: facultative(pointer)): auto
+-- ===== libraries.md block 904 =====
+function GCAllocator:new(what: auto, size: facultative(usize), flags: facultative(usize)): auto
+-- ===== libraries.md block 905 =====
+local ArenaAllocatorT: type = @record{
+    prev_offset: usize,
+    curr_offset: usize,
+    buffer: [SIZE]byte
+  }
+-- ===== libraries.md block 906 =====
+function ArenaAllocatorT:alloc(size: usize, flags: facultative(usize)): pointer
+-- ===== libraries.md block 907 =====
+function ArenaAllocatorT:dealloc(p: pointer): void
+-- ===== libraries.md block 908 =====
+function ArenaAllocatorT:deallocall(): void
+-- ===== libraries.md block 909 =====
+function ArenaAllocatorT:realloc(p: pointer, newsize: usize, oldsize: usize): pointer
+-- ===== libraries.md block 910 =====
+global ArenaAllocator: type
+-- ===== libraries.md block 911 =====
+local StackAllocatorT: type = @record{
+    prev_offset: usize,
+    curr_offset: usize,
+    buffer: [SIZE]byte
+  }
+-- ===== libraries.md block 912 =====
+function StackAllocatorT:alloc(size: usize, flags: facultative(usize)): pointer
+-- ===== libraries.md block 913 =====
+function StackAllocatorT:dealloc(p: pointer): void
+-- ===== libraries.md block 914 =====
+function StackAllocatorT:deallocall(): void
+-- ===== libraries.md block 915 =====
+function StackAllocatorT:realloc(p: pointer, newsize: usize, oldsize: usize): pointer
+-- ===== libraries.md block 916 =====
+global StackAllocator: type
+-- ===== libraries.md block 917 =====
+local PoolAllocatorT: type = @record{
+    initialized: boolean,
+    head: *PoolFreeNode,
+    buffer: [SIZE]PoolChunkT
+  }
+-- ===== libraries.md block 918 =====
+function PoolAllocatorT:alloc(size: usize, flags: facultative(usize)): pointer
+-- ===== libraries.md block 919 =====
+function PoolAllocatorT:dealloc(p: pointer): void
+-- ===== libraries.md block 920 =====
+function PoolAllocatorT:deallocall(): void
+-- ===== libraries.md block 921 =====
+function PoolAllocatorT:realloc(p: pointer, newsize: usize, oldsize: usize): pointer
+-- ===== libraries.md block 922 =====
+global PoolAllocator: type
+-- ===== libraries.md block 923 =====
+local HeapAllocatorT: type = @record{
+    initialized: boolean,
+    heap: Heap,
+    buffer: [SIZE]byte
+  }
+-- ===== libraries.md block 924 =====
+function HeapAllocatorT:init(): void
+-- ===== libraries.md block 925 =====
+function HeapAllocatorT:alloc(size: usize, flags: facultative(usize)): pointer
+-- ===== libraries.md block 926 =====
+function HeapAllocatorT:dealloc(p: pointer): void
+-- ===== libraries.md block 927 =====
+function HeapAllocatorT:deallocall(): void
+-- ===== libraries.md block 928 =====
+function HeapAllocatorT:realloc(p: pointer, newsize: usize, oldsize: usize): pointer
+-- ===== libraries.md block 929 =====
+global HeapAllocator: type
+-- ===== overview.md block 930 =====
+-- one line comment
+--[[
+  multi-line comment
+]]
+--[=[
+  multi line comment. `=` can be placed multiple times
+  in case you have `[[` `]]` tokens inside the comment.
+  it will always match its corresponding token
+]=]
+-- ===== overview.md block 931 =====
+local b = false -- of deduced type 'boolean', initialized to false
+local s = 'test' -- of deduced type 'string', initialized to 'test'
+local one = 1 --  of type 'integer', initialized to 1
+local pi: number = 3.14 --  local pi: number = 3.14 --  of type 'number', initialized to 3.14
+print(b,s,one,pi) -- outputs: false test 1 3.14
+-- ===== overview.md block 932 =====
+local a -- type will be deduced at scope end
+a = 1
+a = 2
+print(a) -- outputs: 2
+-- end of scope, compiler deduced 'a' to be of type 'integer'
+-- ===== overview.md block 933 =====
+local b: boolean -- variable of type 'boolean', initialized to 'false'
+local i: integer -- variable of type 'integer', initialized to 0
+print(b, i) -- outputs: false 0
+-- ===== overview.md block 934 =====
+local a: auto = 1 -- a is deduced to be of type 'integer'
+
+-- uncommenting the following will trigger the compile error:
+--   constant value `1.0` is fractional which is invalid for the type 'int64'
+--a = 1.0
+
+print(a) -- outputs: 1
+-- ===== overview.md block 935 =====
+local a <comptime> = 1 + 2 -- constant variable of value '3' evaluated and known at compile-time
+print(a) -- outputs: 3
+-- ===== overview.md block 936 =====
+local x <const> = 1
+local a <const> = x
+print(a) -- outputs: 1
+
+-- uncommenting the following will trigger the compile error:
+--   error: cannot assign a constant variable
+--a = 2
+-- ===== overview.md block 937 =====
+local AbstractFile = @record{
+  name: string
+}
+
+function AbstractFile.open(name: string): AbstractFile
+  local file = AbstractFile{name=name}
+  print('opened', file.name)
+  return file
+end
+
+function AbstractFile:__close() -- define __close metamethod
+  print('closed', self.name)
+end
+
+do
+  local file <close> = AbstractFile.open('dummy') -- prints 'opened dummy'
+  -- when scope ends, AbstractFile:__close() is called and prints 'closed dummy'
+end
+-- ===== overview.md block 938 =====
+local a, b = 1, 2
+print(a, b) -- outputs: 1 2
+b, a = a, b -- swap values
+print(a, b) -- outputs: 2 1
+-- ===== overview.md block 939 =====
+do
+  local a = 1
+  do
+    print(a) -- outputs: 1
+  end
+end
+-- uncommenting this would trigger a compiler error because `a` is not visible:
+-- a = 1
+-- ===== overview.md block 940 =====
+global global_a = 1
+global function global_f()
+  return 'f'
+end
+-- ===== overview.md block 941 =====
+require 'globals'
+print(global_a) -- outputs: 1
+print(global_f()) -- outputs: f
+-- ===== overview.md block 942 =====
+local π = 3.14
+print(π) -- outputs 3.14
+-- ===== overview.md block 943 =====
+local a = 1 -- change this to 2 or 3 to trigger other ifs
+if a == 1 then
+  print 'is one'
+elseif a == 2 then
+  print 'is two'
+else
+  print('not one or two')
+end
+-- ===== overview.md block 944 =====
+local a = 1 -- change this to 2 or 3 to trigger other ifs
+switch a do
+case 1 then
+  print 'is 1'
+case 2, 3 then
+  print 'is 2 or 3'
+else
+  print 'else'
+end
+-- ===== overview.md block 945 =====
+do
+  local a = 0
+  print(a) -- outputs: 0
+end
+do
+  local a = 1 -- can declare variable named a again
+  print(a) -- outputs: 1
+end
+-- ===== overview.md block 946 =====
+do
+  defer
+    print 'world'
+  end
+  print 'hello'
+end
+-- outputs 'hello' then 'world'
+-- ===== overview.md block 947 =====
+local haserr = true
+if haserr then
+  goto getout -- get out of the loop
+end
+print 'success'
+::getout::
+print 'fail'
+-- outputs only 'fail'
+-- ===== overview.md block 948 =====
+local a = 1
+while a <= 5 do
+  print(a) -- outputs 1 2 3 4 5
+  a = a + 1
+end
+-- ===== overview.md block 949 =====
+local a = 0
+repeat
+  a = a + 1
+  print(a) -- outputs 1 2 3 4 5
+  local stop = a == 5
+until stop
+-- ===== overview.md block 950 =====
+for i = 0,5 do
+  -- i is deduced to 'integer'
+  print(i) -- outputs 0 1 2 3 4 5
+end
+-- ===== overview.md block 951 =====
+for i=0,<5 do
+  print(i) -- outputs 0 1 2 3 4
+end
+-- ===== overview.md block 952 =====
+for i=5,0,-1 do
+  print(i) -- outputs 5 4 3 2 1 0
+end
+-- ===== overview.md block 953 =====
+require 'iterators'
+
+local a: [4]string = {"a","b","c","d"}
+for i,v in ipairs(a) do
+  print(i,v) -- outputs: 0 a, 1 b, 2 c, 3 d
+end
+-- ===== overview.md block 954 =====
+for i=1,10 do
+  if i<=5 then
+    continue
+  end
+  print(i) -- outputs: 6 7 8 9 10
+end
+-- ===== overview.md block 955 =====
+local a = 1
+switch a do
+case 1 then
+  print '1'
+  fallthrough -- next case block will be executed
+case 2 then
+  print '2'
+end
+-- outputs '1' followed by '2'
+-- ===== overview.md block 956 =====
+for i=1,10 do
+  if i>5 then
+    break
+  end
+  print(i) -- outputs: 1 2 3 4 5
+end
+-- ===== overview.md block 957 =====
+local i = 2
+local s = (do
+  local res: string
+  if i == 1 then
+    res = 'one'
+  elseif i == 2 then
+    res = 'two'
+  else
+    res = 'other'
+  end
+  in res -- injects final expression result
+end)
+print(s) -- outputs: two
+-- ===== overview.md block 958 =====
+local a: boolean -- variable of type 'boolean' initialized to 'false'
+local b = false
+local c = true
+print(a,b,c) -- outputs: false false true
+-- ===== overview.md block 959 =====
+local dec = 1234 -- variable of type 'integer'
+local bin = 0b1010 -- variable of type 'uint8', set from binary number
+local hex = 0xff -- variable of type 'integer', set from hexadecimal number
+local char = 'A'_u8 -- variable of type 'uint8' set from ASCII character
+local exp = 1.2e-100 -- variable of type 'number' set using scientific notation
+local frac = 1.41 -- variable of type 'number'
+print(dec,bin,hex,char,exp,frac)
+
+local pi = 0x1.921FB54442D18p+1 -- hexadecimal with fractional and exponent
+print(pi) -- outputs: 3.1415926535898
+-- ===== overview.md block 960 =====
+local a = 1234_u32 -- variable of type 'int32'
+local b = 1_f32 -- variable of type 'float32'
+local c = -1_isize -- variable of type `isize`
+print(a,b,c) --outputs: 1234 1.0 -1
+-- ===== overview.md block 961 =====
+local str1: string -- empty string
+local str2 = "string 2" -- variable of type 'string'
+local str3: string = 'string 3' -- also a 'string'
+local str4 = [[
+multi
+line
+string
+]]
+print(str1, str2, str3) -- outputs: "" "string 2" "string 3"
+print(str4) -- outputs the multi line string
+-- ===== overview.md block 962 =====
+local ctr = "\n\t\r\a\b\v\f" -- escape control characters
+local utf = "\u{03C0}" -- escape UTF-8 code
+local hex = "\x41" -- escape hexadecimal byte
+local dec = "\65" -- escape decimal byte
+local multiline1 = "my\z
+                    text1" -- trim spaces and newlines after '\z'
+local multiline2 = "my\
+text2" -- escape new lines after '\' to '\n'
+print(utf, hex, dec, multiline1) -- outputs: π A A mytext1
+print(multiline2) -- outputs "my" and "text2" on a new line
+-- ===== overview.md block 963 =====
+local a: [4]integer = {1,2,3,4}
+print(a[0], a[1], a[2], a[3]) -- outputs: 1 2 3 4
+
+local b: [4]integer
+print(b[0], b[1], b[2], b[3]) -- outputs: 0 0 0 0
+local len = #b -- get the length of the array, should be 4
+print(len) -- outputs: 4
+-- ===== overview.md block 964 =====
+local a: []integer = {1,2,3,4} -- array size will be 4
+print(#a) -- outputs: 4
+-- ===== overview.md block 965 =====
+local m: [2][2]number = {
+  {1.0, 2.0},
+  {3.0, 4.0}
+}
+print(m[0][0], m[0][1]) -- outputs: 1.0 2.0
+print(m[1][0], m[1][1]) -- outputs: 3.0 4.0
+-- ===== overview.md block 966 =====
+local Weeks = @enum{
+  Sunday = 0,
+  Monday,
+  Tuesday,
+  Wednesday,
+  Thursday,
+  Friday,
+  Saturday
+}
+print(Weeks.Sunday) -- outputs: 0
+
+local a: Weeks = Weeks.Monday
+print(a) -- outputs: 1
+-- ===== overview.md block 967 =====
+local Person = @record{
+  name: string,
+  age: integer
+}
+
+-- typed initialization
+local a: Person = {name = "Mark", age = 20}
+print(a.name, a.age)
+
+-- casting initialization
+local b = (@Person){name = "Paul", age = 21}
+print(b.name, b.age)
+
+-- ordered fields initialization
+local c = (@Person){"Eric", 21}
+print(c.name, c.age)
+
+-- late initialization
+local d: Person
+d.name = "John"
+d.age  = 22
+print(d.name, d.age)
+-- ===== overview.md block 968 =====
+local IntOrFloat = @union{
+  i: int64,
+  f: float64,
+}
+local u: IntOrFloat = {i=1}
+print(u.i) -- outputs: 1
+u.f = 1
+print(u.f) -- outputs: 1.0f
+print(u.i) -- outputs some garbage integer
+-- ===== overview.md block 969 =====
+local n = nilptr -- a generic pointer, initialized to nilptr
+local p: pointer -- a generic pointer to anything, initialized to nilptr
+local i: *integer -- pointer to an integer
+-- ===== overview.md block 970 =====
+local a: [4]integer = {1,2,3,4}
+
+-- unbounded array only makes sense when used with pointer
+local a_ptr: *[0]integer
+a_ptr = &a -- takes the reference of 'a'
+print(a_ptr[1])
+-- ===== overview.md block 971 =====
+local function add_impl(x: integer, y: integer): integer
+  return x + y
+end
+
+local function double_add_impl(x: integer, y: integer): integer
+  return 2*(x + y)
+end
+
+local add: function(x: integer, y: integer): integer
+add = add_impl
+print(add(1,2)) -- outputs 3
+add = double_add_impl
+print(add(1,2)) -- outputs 6
+-- ===== overview.md block 972 =====
+require 'span'
+local arr = (@[4]integer) {1,2,3,4}
+local s: span(integer) = &arr
+print(s[0], s[1]) -- outputs: 1 2
+print(#s) -- outputs 4
+-- ===== overview.md block 973 =====
+local function myprint(): void
+  print 'hello'
+end
+myprint() -- outputs: hello
+-- ===== overview.md block 974 =====
+local MyInt: type = @integer -- a symbol of type 'type' holding the type 'integer'
+local a: MyInt -- variable of type 'MyInt' (actually an 'integer')
+print(a) -- outputs: 0
+-- ===== overview.md block 975 =====
+local Vec2 = @record{x: int32, y: int32}
+print(#Vec2) -- outputs: 8
+-- ===== overview.md block 976 =====
+local i: integer = 1
+local u: uinteger = i
+print(u) -- outputs: 1
+-- ===== overview.md block 977 =====
+local i = 1
+local f = (@number)(i) -- convert 'i' to the type 'number'
+print(i, f) -- outputs: 1 1.0
+-- ===== overview.md block 978 =====
+local MyNumber = @number
+local i = 1
+local f = MyNumber(i) -- convert 'i' to the type 'number'
+print(i, f) -- outputs: 1 1.0
+-- ===== overview.md block 979 =====
+local ni: integer = -1
+-- the following would crash with "narrow casting from int64 to uint64 failed"
+--local nu: uinteger = ni
+
+local nu: uinteger = (@uinteger)(ni) -- explicit cast works, no checks are done
+print(nu) -- outputs: 18446744073709551615
+-- ===== overview.md block 980 =====
+print(2 ^ 2) -- pow, outputs: 4.0
+print(5 // 2) -- integer division, outputs: 2
+print(5 / 2) -- float division, outputs: 2.5
+-- ===== overview.md block 981 =====
+local function add(a: integer, b: integer): integer
+  return a + b
+end
+print(add(1, 2)) -- outputs 3
+-- ===== overview.md block 982 =====
+local function add(a: integer, b: integer)
+  return a + b -- return is of deduced type 'integer'
+end
+print(add(1, 2)) -- outputs 3
+-- ===== overview.md block 983 =====
+local function fib(n: integer): integer
+  if n < 2 then return n end
+  return fib(n - 2) + fib(n - 1)
+end
+print(fib(10)) -- outputs: 55
+-- ===== overview.md block 984 =====
+local function get_multiple()
+  return false, 1
+end
+
+local a, b = get_multiple()
+-- a is of type 'boolean' with value 'false'
+-- b is of type 'integer' with value '1'
+print(a,b) -- outputs: false 1
+-- ===== overview.md block 985 =====
+local function get_multiple(): (boolean, integer)
+  return false, 1
+end
+
+local a, b = get_multiple()
+print(a,b) -- outputs: false 1
+-- ===== overview.md block 986 =====
+local function g(x: integer, f: function(x: integer): integer)
+  return f(x)
+end
+
+local y = g(1, function(x: integer): integer
+  return 2*x
+end)
+
+print(y) -- outputs: 2
+-- ===== overview.md block 987 =====
+local function f()
+  local function g()
+    return 'hello from g'
+  end
+  return g()
+end
+
+print(f()) -- outputs: hello from g
+-- ===== overview.md block 988 =====
+local counter = 1 -- 'a' lives in the heap because it's on the top scope
+local function increment() -- a top scope closure
+  -- counter is an upvalue for this function, we can access and modify it
+  counter = counter + 1
+end
+print(counter) -- outputs 1
+increment()
+print(counter) -- outputs 2
+-- ===== overview.md block 989 =====
+local function f(...: varargs)
+  print(...)
+end
+f(1, true) -- outputs: 1 true
+
+local function sum(...: varargs)
+  local s: integer
+  ## for i=1,select('#', ...) do -- iterate over all arguments
+    s = s + #[select(i, ...)]# -- select argument at index `i`
+  ## end
+  return s
+end
+print(sum(1, 2, 3)) -- outputs: 6
+-- ===== overview.md block 990 =====
+local function add(a: auto, b: auto)
+  return a + b
+end
+
+local a = add(1,2)
+-- call to 'add', a function 'add(a: integer, b: integer): integer' is defined
+print(a) -- outputs: 3
+local b = add(1.0, 2.0)
+-- call to 'add' with different types, function 'add(a: number, b: number): number' is defined
+print(b) -- outputs: 3.0
+-- ===== overview.md block 991 =====
+local Vec2 = @record{x: number, y: number}
+
+function Vec2.create(x: integer, y: integer): Vec2
+  return (@Vec2){x, y}
+end
+
+local v = Vec2.create(1,2)
+print(v.x, v.y) -- outputs: 1.0 2.0
+-- ===== overview.md block 992 =====
+local Rect = @record{x: number, y: number, w: number, h: number}
+
+function Rect:translate(x: number, y: number)
+  -- 'self' here is of the type '*Rect'
+  self.x = self.x + x
+  self.y = self.y + y
+end
+
+function Rect:area()
+  -- 'self' here is of the type '*Rect'
+  return self.w * self.h
+end
+
+local v = Rect{0,0,2,3}
+v:translate(2,2)
+print(v.x, v.y) -- outputs: 2.0 2.0
+print(v:area()) -- outputs: 6.0
+-- ===== overview.md block 993 =====
+require 'math'
+
+local Vec2 = @record{x: number, y: number}
+
+-- Called on the binary operator '+'
+function Vec2.__add(a: Vec2, b: Vec2)
+  return (@Vec2){a.x+b.x, a.y+b.y}
+end
+
+-- Called on the unary operator '#'
+function Vec2:__len()
+  return math.sqrt(self.x*self.x + self.y*self.y)
+end
+
+local a: Vec2 = {1, 2}
+local b: Vec2 = {3, 4}
+local c = a + b -- calls the __add metamethod
+print(c.x, c.y) -- outputs: 4.0 6.0
+local len = #c -- calls the __len metamethod
+print(len) -- outputs: 7.211102550928
+-- ===== overview.md block 994 =====
+global Globals = @record{} -- record used just for name spacing
+global Globals.AppName: string
+Globals.AppName = "My App"
+print(Globals.AppName) -- outputs: My App
+-- ===== overview.md block 995 =====
+local WindowConfig = @record{
+  title: string,
+  pos: record{
+    x: integer,
+    y: integer
+  },
+  size: record{
+    x: integer,
+    y: integer
+  }
+}
+local function create_window(config: WindowConfig)
+  print(config.title, config.pos.x, config.pos.y)
+end
+
+-- the compiler knows that the argument should be parsed as WindowConfig
+-- notice that 'size' field is not set, so its initialized to zeros
+create_window({title="hi", pos={x=1, y=2}})
+-- ===== overview.md block 996 =====
+## pragmas.nogc = true -- tells the compiler that we don't want to use the GC
+require 'string' -- the string class will be implemented without GC code
+local str = tostring(1) -- tostring needs to allocates a new string
+print(str) -- outputs: 1
+## if pragmas.nogc then -- the GC is disabled, must manually deallocate memory
+str:destroy() -- deallocates the string
+## end
+print(str) -- the string was destroyed and is now empty, outputs nothing
+-- ===== overview.md block 997 =====
+require 'string'
+require 'memory'
+
+-- this will actually require 'allocators.gc' because GC is enabled
+require 'allocators.default'
+
+local Person = @record{name: string, age: integer}
+local p: *Person = default_allocator:new(@Person)
+p.name = "John"
+p.age = 20
+print(p.name, p.age)
+p = nilptr
+-- we don't need to deallocate, the GC will do this on its own when needed!
+-- ===== overview.md block 998 =====
+## pragmas.nogc = true -- disables the GC
+require 'string'
+require 'memory'
+require 'allocators.general'
+
+local Person = @record{name: string, age: integer}
+local p: *Person = general_allocator:new(@Person) -- allocate the appropriate size for Person
+p.name = tostring("John") -- another allocation here
+p.age = 20
+print(p.name, p.age)
+p.name:destroy() -- free the string allocation
+general_allocator:delete(p) -- free the Person allocation
+p = nilptr
+-- ===== overview.md block 999 =====
+local a = 1
+local ap = &a -- ap is a pointer to a
+$ap = 2
+print(a) -- outputs: 2
+a = 3
+print($ap) -- outputs: 3
+print(ap) -- outputs memory address of a
+-- ===== overview.md block 1000 =====
+local Person = @record{name: string, age: integer}
+
+local function print_info_byref(p: *Person)
+  print(p.name, p.age)
+end
+local function print_info_bycopy(p: Person)
+  print(p.name, p.age)
+end
+
+local p: Person = {"John", 20}
+print_info_byref(p) -- the referencing with `&` is implicit here
+local pref: *Person = &p
+print_info_bycopy(pref) -- the dereferencing with `$` is implicit here
+-- ===== overview.md block 1001 =====
+local Person = @record{name: string, age: integer}
+
+local function print_info_byref(p: *Person)
+  print(p.name, p.age)
+end
+local function print_info_bycopy(p: Person)
+  print(p.name, p.age)
+end
+
+local p: Person = {"John", 20}
+print_info_byref(&p)
+local pref: *Person = &p
+print_info_bycopy($pref)
+-- ===== overview.md block 1002 =====
+local Person = @record{name: string, age: integer}
+
+-- note that this function only accept pointers
+function Person.print_info(self: *Person)
+  print(self.name, self.age)
+end
+
+local p: Person = {"John", 20}
+p:print_info() -- perform auto referencing of 'p' when calling here
+Person.print_info(p) -- equivalent, also performs auto referencing
+-- ===== overview.md block 1003 =====
+local a = 0
+## for i = 1,4 do
+  a = a + 1 -- unroll this line 4 times
+## end
+print(a) -- outputs 4
+
+##[[
+local something = false
+if something then
+]]
+  print('hello') -- prints hello when compiling with "something" defined
+##[[ end ]]
+-- ===== overview.md block 1004 =====
+local a = 0
+a = a + 1
+a = a + 1
+a = a + 1
+a = a + 1
+print(a)
+-- ===== overview.md block 1005 =====
+##[[
+-- create a macro that injects a custom node when called
+local function print_macro(str)
+  local node = aster.Call{{aster.String{str}}, aster.Id{"print"}}
+  -- inject the node where this macro is being called from
+  inject_statement(node)
+end
+]]
+
+## print_macro('hello')
+-- ===== overview.md block 1006 =====
+print('hello')
+-- ===== overview.md block 1007 =====
+local a = #[aster.Number{1}]#
+print(a) -- outputs: 1
+-- ===== overview.md block 1008 =====
+local a = 1
+print(a) -- outputs: 1
+-- ===== overview.md block 1009 =====
+local deg2rad = #[math.pi/180.0]#
+local hello = #['hello' .. 'world']#
+local mybool = #[false]#
+print(deg2rad, hello, mybool) -- outputs: 0.017453 helloworld false
+-- ===== overview.md block 1010 =====
+local deg2rad = 0.017453292519943
+local hello = 'helloworld'
+local mybool = false
+print(deg2rad, hello, mybool)
+-- ===== overview.md block 1011 =====
+local #|'my' .. 'var'|# = 1
+print(myvar) -- outputs: 1
+
+local function foo1() print 'foo' end
+#|'foo' .. 1|#() -- outputs: foo
+
+local Weekends = @enum{ Friday=0, Saturday, Sunday }
+print(Weekends.#|'S'..string.lower('UNDAY')|#)
+-- ===== overview.md block 1012 =====
+local myvar = 1
+print(myvar)
+
+local function foo1() print 'foo' end
+foo1()
+
+local Weekends = @enum{ Friday=0, Saturday, Sunday }
+print(Weekends.Sunday)
+-- ===== overview.md block 1013 =====
+## function increment(a, amount)
+  -- 'a' in the preprocessor context is a symbol, we need to use its name
+  -- 'amount' in the preprocessor context is a lua number
+  #|a.name|# = #|a.name|# + #[amount]#
+## end
+local x = 0
+## increment(x, 4)
+print(x)
+-- ===== overview.md block 1014 =====
+local x = 0
+x = x + 4
+print(x)
+-- ===== overview.md block 1015 =====
+## local function mul(res, a, b)
+  #[res]# = #[a]# * #[b]#
+## end
+
+local a, b = 2, 3
+local res = 0
+#[mul]#(res, a, b)
+print(res) -- outputs: 6
+-- ===== overview.md block 1016 =====
+local a, b = 2, 3
+local res = 0
+res = a * b
+print(res) -- outputs: 6
+-- ===== overview.md block 1017 =====
+## local function mul(a, b)
+  in #[a]# * #[b]#
+## end
+
+local a, b = 2, 3
+local res = #[mul]#(a, b)
+print(res) -- outputs: 6
+-- ===== overview.md block 1018 =====
+local a, b = 2, 3
+local res = a * b
+print(res) -- outputs: 6
+-- ===== overview.md block 1019 =====
+##[[
+-- Create a fixed array initializing to 1,2,3,4...n
+local function create_sequence(attr_or_type, n)
+  local type
+  if traits.is_type(attr_or_type) then -- already a type
+    type = attr_or_type
+  elseif traits.is_attr(attr_or_type) then -- get a type from a symbol
+    type = attr_or_type.value
+  end
+  -- check if the inputs are valid, in case of wrong input
+  static_assert(traits.is_type(type), 'expected a type or a symbol to a type')
+  static_assert(traits.is_number(n) and n > 0, 'expected n > 0')
+  -- create the InitList ASTNode, it's used for any braces {} expression
+  local initlist = aster.InitList{pattr = {
+    -- hint the compiler what type this braces should be evaluated
+    desiredtype = types.ArrayType(type, n)}
+  }
+  -- fill expressions
+  for i=1,n do
+    -- convert any Lua value to the proper ASTNode
+    initlist[i] = aster.value(i)
+  end
+  return initlist
+end
+]]
+
+local a = #[create_sequence(integer, 10)]#
+-- ===== overview.md block 1020 =====
+local a = (@[10]integer){1,2,3,4,5,6,7,8,9,10}
+-- ===== overview.md block 1021 =====
+##[[
+function unroll(count, block)
+  for i=1,count do
+    block()
+  end
+end
+]]
+
+local counter = 1
+## unroll(4, function()
+  print(counter) -- outputs: 1 2 3 4
+  counter = counter + 1
+## end)
+-- ===== overview.md block 1022 =====
+local counter = 1
+print(counter)
+counter = counter + 1
+print(counter)
+counter = counter + 1
+print(counter)
+counter = counter + 1
+print(counter)
+counter = counter + 1
+-- ===== overview.md block 1023 =====
+## function Point(PointT, T)
+  local #|PointT|# = @record{x: #|T|#, y: #|T|#}
+  function #|PointT|#:squaredlength()
+    return self.x*self.x + self.y*self.y
+  end
+## end
+
+## Point('PointFloat', 'float64')
+## Point('PointInt', 'int64')
+
+local pa: PointFloat = {x=1,y=2}
+print(pa:squaredlength()) -- outputs: 5.0
+
+local pb: PointInt = {x=1,y=2}
+print(pb:squaredlength()) -- outputs: 5
+-- ===== overview.md block 1024 =====
+local Weekends = @enum{ Friday=0, Saturday, Sunda }
+## for i,field in ipairs(Weekends.value.fields) do
+  print(#[field.name .. ' ' .. tostring(field.value)]#)
+## end
+-- ===== overview.md block 1025 =====
+local Weekends = @enum{ Friday=0, Saturday, Sunday }
+print 'Friday 0'
+print 'Saturday 1'
+print 'Sunday 2'
+-- ===== overview.md block 1026 =====
+local Person = @record{name: string}
+## Person.value:add_field('age', primtypes.integer) -- add field 'age' to 'Person'
+local p: Person = {name='Joe', age=21}
+print(p.age) -- outputs '21'
+-- ===== overview.md block 1027 =====
+local Person = @record{name: string, age: integer}
+local p: Person = {name='Joe', age=21}
+print(p.age) -- outputs '21'
+-- ===== overview.md block 1028 =====
+local function pow(x: auto, n: integer)
+## static_assert(x.type.is_scalar, 'cannot pow variable of type "%s"', x.type)
+## if x.type.is_integral then
+  -- x is an integral type (any unsigned/signed integer)
+  local r: #[x.type]# = 1
+  for i=1,n do
+    r = r * x
+  end
+  return r
+## elseif x.type.is_float then
+  -- x is a floating point type
+  return x ^ n
+## end
+end
+
+local a = pow(2, 2) -- use specialized implementation for integers
+local b = pow(2.0, 2) -- use pow implementation for floats
+print(a,b) -- outputs: 4 4.0
+
+-- uncommenting the following will trigger the compile error:
+--   error: cannot pow variable of type "string"
+--pow('a', 2)
+-- ===== overview.md block 1029 =====
+-- this is a preprocessor code block
+##[[
+function my_compiletime_function(str)
+  print(str) -- print at compile time
+end
+]]
+
+-- call the function defined in the block above
+## my_compiletime_function('hello from preprocessor')
+-- ===== overview.md block 1030 =====
+##[[
+-- this function is declared as global, so it'll be available on module_B.nelua
+function foo()
+  print "bar"
+end
+]]
+-- ===== overview.md block 1031 =====
+require 'module_A'
+-- even though foo is not declared in this file, since it's global, it'll be available here
+## foo()
+-- ===== overview.md block 1032 =====
+local function bar()
+  print "bar"
+end
+
+return { bar = bar }
+-- ===== overview.md block 1033 =====
+## local foo = require "foo"
+
+## foo.bar()
+-- ===== overview.md block 1034 =====
+##[[
+-- check the current Lua version in the preprocessor
+if _VERSION ~= 'Lua 5.4' then
+  static_error('not using Lua 5.4, got %s', _VERSION)
+end
+]]
+-- ===== overview.md block 1035 =====
+-- check the current Lua version in the preprocessor
+## static_assert(_VERSION == 'Lua 5.4', 'not using Lua 5.4, got %s', _VERSION)
+-- ===== overview.md block 1036 =====
+-- Define a generic type for creating a specialized FixedStackArray
+## local make_FixedStackArray = generalize(function(T, maxsize)
+  -- alias compile-time parameters visible in the preprocessor to local symbols
+  local T = #[T]#
+  local MaxSize <comptime> = #[maxsize]#
+
+  -- Define a record using T and MaxSize compile-time parameters.
+  local FixedStackArrayT = @record{
+    data: [MaxSize]T,
+    size: isize
+  }
+
+  -- Push a value into the stack array.
+  function FixedStackArrayT:push(v: T)
+    if self.size >= MaxSize then error('stack overflow') end
+    self.data[self.size] = v
+    self.size = self.size + 1
+  end
+
+  -- Pop a value from the stack array.
+  function FixedStackArrayT:pop(): T
+    if self.size == 0 then error('stack underflow') end
+    self.size = self.size - 1
+    return self.data[self.size]
+  end
+
+  -- Return the length of the stack array.
+  function FixedStackArrayT:__len(): isize
+    return self.size
+  end
+
+  -- return the new defined type to the compiler
+  ## return FixedStackArrayT
+## end)
+
+-- define FixedStackArray generic type in the scope
+local FixedStackArray: type = #[make_FixedStackArray]#
+
+do -- test with 'integer' type
+  local v: FixedStackArray(integer, 3)
+
+  -- push elements
+  v:push(1)
+  v:push(2)
+  v:push(3)
+  -- uncommenting would trigger a stack overflow error:
+  -- v:push(4)
+
+  -- check the stack array length
+  assert(#v == 3)
+
+  -- pop elements checking the values
+  assert(v:pop() == 3)
+  assert(v:pop() == 2)
+  assert(v:pop() == 1)
+  -- uncommenting would trigger a stack underflow error:
+  -- v:pop()
+end
+
+do -- test with 'number' type
+  local v: FixedStackArray(number, 3)
+
+  -- push elements
+  v:push(1.5)
+  v:push(2.5)
+  v:push(3.5)
+  -- uncommenting would trigger a stack overflow error:
+  -- v:push(4.5)
+
+  -- check the stack array length
+  assert(#v == 3)
+
+  -- pop elements checking the values
+  assert(v:pop() == 3.5)
+  assert(v:pop() == 2.5)
+  assert(v:pop() == 1.5)
+  -- uncommenting would trigger a stack underflow error:
+  -- v:pop()
+end
+-- ===== overview.md block 1037 =====
+local an_scalar = #[concept(function(attr)
+  -- the first argument of the concept function is an Attr,
+  -- attr are stores different attributes for the incoming symbol, variable or node,
+  -- we want to check if the incoming attr type matches the concept
+  if attr.type.is_scalar then
+    -- the attr is an arithmetic type (can add, subtract, etc)
+    return true
+  end
+  -- the attr type does not match this concept
+  return false
+end)]#
+
+local function add(x: an_scalar, y: an_scalar)
+  return x + y
+end
+
+print(add(1, 2)) -- outputs 3
+
+-- uncommenting the following will trigger the compile error:
+--   type 'boolean' could not match concept 'an_scalar'
+-- add(1, true)
+-- ===== overview.md block 1038 =====
+require 'string'
+
+local an_scalar_or_string = #[concept(function(attr)
+  if attr.type.is_stringy then
+    -- we accept strings
+    return true
+  elseif attr.type.is_scalar then
+    -- we accept scalars
+    return true
+  end
+  return false
+end)]#
+
+local function add(x: an_scalar_or_string,
+                   y: an_scalar_or_string)
+  ## if x.type.is_stringy and y.type.is_stringy then
+    return x .. y
+  ## else
+    return x + y
+  ## end
+end
+
+-- add will be specialized for scalar types
+print(add(1, 2)) -- outputs 3
+-- add will be specialized for string types
+print(add('1', '2')) -- outputs 12
+-- ===== overview.md block 1039 =====
+local Vec2 = @record{x: number, y: number}
+-- Vec2 is an attr of the "type" type, Vec2.value is it's holded type
+-- we set here is_Vec2 at compile-time to use later for checking whether a attr is a Vec2
+## Vec2.value.is_Vec2 = true
+
+local Vec2_or_scalar_concept = #[concept(function(attr)
+  -- match in case of scalar or Vec2
+  return attr.type.is_scalar or attr.type.is_Vec2
+end)]#
+
+-- we use a concepts on the metamethod __add to allow adding Vec2 with numbers
+function Vec2.__add(a: Vec2_or_scalar_concept, b: Vec2_or_scalar_concept)
+  -- specialize the function at compile-time based on the argument type
+  ## if a.type.is_Vec2 and b.type.is_Vec2 then
+    return (@Vec2){a.x + b.x, a.y + b.y}
+  ## elseif a.type.is_Vec2 then
+    return (@Vec2){a.x + b, a.y + b}
+  ## elseif b.type.is_Vec2  then
+    return (@Vec2){a + b.x, a + b.y}
+  ## end
+end
+
+local a: Vec2 = {1, 2}
+local v: Vec2
+v = a + 1 -- Vec2 + scalar
+print(v.x, v.y) -- outputs: 2 3
+v = 1 + a -- scalar + Vec2
+print(v.x, v.y) -- outputs: 2 3
+v = a + a -- Vec2 + Vec2
+print(v.x, v.y) -- outputs: 2 4
+-- ===== overview.md block 1040 =====
+-- Concept to check whether a type is indexable.
+local indexable_concept = #[concept(function(attr)
+  local type = attr.type
+  if type.is_pointer then -- accept pointer to containers
+    type = type.subtype
+  end
+  -- we accept arrays
+  if type.is_array then
+    return true
+  end
+  -- we expect a record
+  if not type.is_record then
+    return false, 'the container is not a record'
+  end
+  -- the record must have a __index metamethod
+  if not type.metafields.__index then
+    return false, 'the container must have the __index metamethod'
+  end
+  -- the record must have a __len metamethod
+  if not type.metafields.__len then
+    return false, 'the container must have the __len metamethod'
+  end
+  -- concept matched all the imposed requirements
+  return true
+end)]#
+
+-- Sum all elements of any container with index beginning at 0.
+local function sum_container(container: indexable_concept)
+  local v: integer = 0
+  for i=0,<#container do
+    v = v + container[i]
+  end
+  return v
+end
+
+-- We create our customized array type.
+local MyArray = @record{data: [10]integer}
+function MyArray:__index(i: integer)
+  return self.data[i]
+end
+function MyArray:__len()
+  return #self.data
+end
+
+local a: [10]integer = {1,2,3,4,5,6,7,8,9,10}
+local b: MyArray = {data = a}
+
+-- sum_container can be called with 'a' because it matches the concept
+-- we pass as reference using & here to avoid an unnecessary copy
+print(sum_container(&a)) -- outputs: 55
+
+-- sum_container can also be called with 'b' because it matches the concept
+-- we pass as reference using & here to avoid an unnecessary copy
+print(sum_container(&b)) -- outputs: 55
+-- ===== overview.md block 1041 =====
+local facultative_number_concept = #[concept(function(attr)
+  if attr.type.is_niltype then
+    -- niltype is the type when the argument is missing or when we use 'nil'
+    -- we accept it because the number is facultative
+    return true
+  end
+  -- instead of returning true, we return the desired type to be implemented,
+  -- the compiler will take care to implicitly cast the incoming attr to the desired type,
+  -- or throw an error if not possible,
+  -- here we want to force the function using this concept to implement as a 'number'
+  return primtypes.number
+end)]#
+
+local function get_number(x: facultative_number_concept)
+  ## if x.type.is_niltype then
+    return 0.0
+  ## else
+    return x
+  ## end
+end
+
+print(get_number(nil)) -- prints 0.0
+print(get_number(2)) -- prints 2.0
+-- ===== overview.md block 1042 =====
+local function get_number(x: facultative(number))
+  ## if x.type.is_niltype then
+    return 0
+  ## else
+    return x
+  ## end
+end
+
+print(get_number(nil)) -- prints 0
+print(get_number(2)) -- prints 2
+-- ===== overview.md block 1043 =====
+local function foo(x: overload(integer,string,niltype))
+  ## if x.type.is_integral then
+    print('got integer ', x)
+  ## elseif x.type.is_string then
+    print('got string ', x)
+  ## else
+    print('got nothing')
+  ## end
+end
+
+foo(2) -- outputs: got integer 2
+foo('hello') -- outputs: got string hello
+foo(nil) -- outputs: got nothing
+-- ===== overview.md block 1044 =====
+local function sum(a: integer, b: integer) <inline> -- C inline function
+  return a + b
+end
+print(sum(1,2)) -- outputs: 3
+-- ===== overview.md block 1045 =====
+local a: integer <noinit>-- don't initialize variable to zero
+a = 0 -- manually initialize to zero
+print(a) -- outputs: 0
+
+local b <volatile> = 1 -- C volatile variable
+print(b) -- outputs: 1
+-- ===== overview.md block 1046 =====
+-- import "puts" from C library
+local function puts(s: cstring <const>): cint <cimport>
+  -- cannot have any code here, because this function is imported
+end
+
+puts('hello') -- outputs: hello
+-- ===== overview.md block 1047 =====
+-- `nodecl` is used because this function doesn't need to be declared by Nelua,
+-- as it will be declared in <stdio.h> header
+-- `cinclude` is used to make the compiler include the header when using the function
+local function puts(s: cstring <const>): cint <cimport, nodecl, cinclude '<stdio.h>'>
+end
+
+puts('hello') -- outputs: hello
+-- ===== overview.md block 1048 =====
+-- link SDL2 library
+## linklib 'SDL2'
+-- define SDL_MAIN_HANDLED before including SDL2
+## cdefine 'SDL_MAIN_HANDLED'
+-- include SDL2 header
+## cinclude '<SDL2/SDL.h>'
+
+-- import some constants defined in SDL2 header
+local SDL_INIT_VIDEO: uint32 <cimport, nodecl>
+
+-- import functions defined in SDL2 header
+local function SDL_Init(flags: uint32): int32 <cimport, nodecl> end
+local function SDL_Quit() <cimport, nodecl> end
+
+SDL_Init(SDL_INIT_VIDEO)
+SDL_Quit()
+-- ===== overview.md block 1049 =====
+-- we pass the C function name as a parameter for `cimport`
+local function c_puts(s: cstring): cint <cimport 'puts', nodecl, cinclude '<stdio.h>'>
+end
+
+c_puts('hello') -- outputs: hello
+-- ===== overview.md block 1050 =====
+-- link the SDL2 library when compiling
+## linklib 'SDL2'
+
+local function SDL_GetPlatform(): cstring <cimport> end
+
+print(SDL_GetPlatform()) -- outputs your platform name (Linux, Windows, ...)
+-- ===== overview.md block 1051 =====
+##[[
+if FAST then -- release build
+  cflags '-Ofast' -- C compiler flags
+  ldflags '-s' -- link flags
+else -- debug build
+  cflags '-Og'
+end
+]]
+-- ===== overview.md block 1052 =====
+local function do_stuff()
+  -- make sure `<stdio.h>` is included
+  ## cinclude '<stdio.h>'
+
+  -- emits in the directives section of the generated C file
+  ## cinclude [[#define HELLO_MESSAGE "hello from C"]]
+
+  -- emits in the declarations section of the generated C file
+  ## cemitdecl [[static const char* get_hello_message();]]
+
+  -- emits in the definitions section of the generated C file
+  ## cemitdefn [[const char* get_hello_message() { return HELLO_MESSAGE; }]]
+
+  -- emits inside this function in the generated C file
+  ##[==[ cemit [[
+    printf("%s\n", get_hello_message());
+  ]] ]==]
+end
+
+do_stuff()
+-- ===== overview.md block 1053 =====
+-- `cexport` marks this function to be exported
+-- `codename` fix the generated C code name
+local function foo() <cexport, codename 'mylib_foo'>
+  return 1
+end
+-- ===== tutorial.md block 1054 =====
+print 'Hello world'

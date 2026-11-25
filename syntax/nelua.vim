@@ -1,11 +1,27 @@
 " Vim syntax file
-" Language:     Nelua
-" Maintainer:   Stefanos Sofroniou <sofr.stef 'at' cytanet.com.cy>
-" First Author: Stefanos Sofroniou <sofr.stef 'at' cytanet.com.cy>
-" Last Change:  2026-04-16
-" Remark:       Based on /usr/share/vim/vim<XY>/syntax/lua.vim
+" Language:     Nelua (https://nelua.io)
+" Filenames:    *.nelua, scripts with a "#!... nelua" first line
+" Last Change:  2026-11-25
+" Remark:       Rewritten for Vim and Neovim. See README.md for credits, sources and design notes.
+"
+" Design (why it looks like this):
+"   * Regions are used ONLY for constructs that delimit themselves lexically:
+"     comments, strings, long brackets, the four preprocessor forms and
+"     one-line annotations. There are no if/then/end or function/end regions:
+"     Nelua's preprocessor freely splits blocks ("## if x then" ... "## end"),
+"     and block regions would leak across them. Statement-level context is
+"     expressed with look-around patterns instead.
+"   * Preprocessor spans embed Nelua itself (contains=TOP,...) with keepend,
+"     like Nelua.sublime-syntax does with "embed: scope:source.nelua" + escape.
+"   * Word lists use :syn keyword (hash lookup); look-behinds are byte-bounded.
+"   * Every group links to a standard highlight group, so any colour scheme works.
+"
+" Options (set before the file is loaded):
+"   g:nelua_no_builtin_highlight  1 = don't highlight builtin functions/modules
+"   g:nelua_minlines              lines to look back when syncing (default 3000;
+"                                 nelua-lang's lib/ has 2,060-line ##[[ ]] blocks)
+"   g:nelua_sync_fromstart        1 = always sync from the start of the file
 
-" quit when a syntax file was already loaded
 if exists("b:current_syntax")
   finish
 endif
@@ -13,559 +29,228 @@ endif
 let s:cpo_save = &cpo
 set cpo&vim
 
-if !exists("nelua_version")
-  let nelua_version = 0
-  let nelua_subversion = 2
-elseif !exists("nelua_subversion")
-  " nelua_version exists, but nelua_subversion doesn't. So, set it to 0
-  let nelua_subversion = 0
+syn case match
+syn spell notoplevel
+
+" ---------------------------------------------------------------------------
+" Operators (defined first: anything more specific defined later wins when it
+" starts at the same column, e.g. comments over "-", varargs over "..").
+syn match neluaOperator "[-+*/%^#&|~<>=$?@]"
+syn match neluaOperator "\%(\.\.\|//\|<<\|>>\|[=~<>]=\)"
+syn match neluaOperator "\%(///\|%%%\|>>>\)"
+syn match neluaVarargs  "\.\.\."
+syn keyword neluaOperatorWord and or not
+
+" ---------------------------------------------------------------------------
+" Keywords (reserved words of syntaxdefs.lua; "in" is handled below)
+syn keyword neluaConditional if then elseif else switch case
+syn keyword neluaRepeat      for while repeat until
+syn keyword neluaKeyword     do end function
+syn keyword neluaStatement   return break continue fallthrough defer
+syn keyword neluaGoto        goto nextgroup=neluaGotoLabel skipwhite
+syn keyword neluaStorageClass local global
+syn keyword neluaConstant    nil nilptr
+syn keyword neluaBoolean     true false
+syn keyword neluaSelf        self
+" "in" starts a statement at the beginning of a line (returns a value from a
+" do-expression or a preprocessor macro), otherwise it belongs to "for ... in".
+syn match neluaRepeat    "\<in\>"
+syn match neluaStatement "\%(^\s*\)\@<=in\>"
+
+" ---------------------------------------------------------------------------
+" Types. Builtin type names (typedefs.lua primtypes + common stdlib generics).
+syn keyword neluaType integer uinteger number byte isize usize
+syn keyword neluaType int8 int16 int32 int64 int128 uint8 uint16 uint32 uint64 uint128
+syn keyword neluaType float32 float64 float128 boolean string void auto any
+syn keyword neluaType niltype type table pointer array span varargs varanys
+syn keyword neluaType facultative overload decltype stringview
+syn keyword neluaType cstring cchar cschar cshort cint clong clonglong cptrdiff
+syn keyword neluaType cuchar cushort cuint culong culonglong csize clongdouble
+syn keyword neluaType cfloat cdouble cvarargs cvalist cclock_t ctime_t cwchar_t
+syn keyword neluaType vector hashmap stringbuilder
+
+" Any name in a type position, found with nextgroup chains (no look-behind):
+"   ": " + type     declarations, parameters, record fields, return types
+"   ":" + type      without a space, unless it is a method call  obj:method(...)
+"   "@" + type      type expressions
+" with optional prefixes  *  ?  [N]  between, which keep their own colours.
+syn match neluaTypeColonSp ":\@1<!:\%(:\)\@!\ze\s" nextgroup=neluaTypePrefix,neluaTypeArray,neluaTypeAny skipwhite
+syn match neluaTypeColon   ":\@1<!:\%(:\)\@!\ze\S" nextgroup=neluaTypePrefix,neluaTypeArray,neluaTypeNoCall
+syn match neluaTypeAt      "@" nextgroup=neluaTypePrefix,neluaTypeArray,neluaTypeAny skipwhite
+syn match neluaTypePrefix  "[*?]" contained nextgroup=neluaTypePrefix,neluaTypeArray,neluaTypeAny skipwhite
+syn match neluaTypeArray   "\[[^]]*\]" contained contains=neluaNumber,neluaPPExpr,neluaOperator nextgroup=neluaTypePrefix,neluaTypeArray,neluaTypeAny skipwhite
+syn match neluaTypeAny     "\%(\%(record\|union\|enum\|variant\|function\)\>\)\@!\h\w*\%(\.\h\w*\)*" contained
+syn match neluaTypeNoCall  "\%(\%(record\|union\|enum\|variant\|function\)\>\)\@!\h\w*\%(\.\h\w*\)*\>\%(\s*\%([(\"'{]\|\[=*\[\)\)\@!" contained
+
+" ---------------------------------------------------------------------------
+" Calls and definitions
+syn match neluaFunctionCall "\<\h\w*\ze\s*\%((\|\"\|'\|{\|\[=*\[\)"
+syn match neluaFunctionDef  "\<\h\w*\ze\s*=\s*function\>"
+syn match neluaStructure    "\<\%(record\|union\|enum\|variant\)\>\ze\s*[{(]"
+syn match neluaMacroCall    "\<\h\w*!\ze\s*\%((\|\"\|'\|{\|\[=*\[\)"
+
+if !get(g:, "nelua_no_builtin_highlight", 0)
+  " Global functions of lib/builtins.nelua and the stdlib, plus the Lua
+  " builtins commonly used inside the preprocessor. Only when called.
+  syn match neluaBuiltin "\<\%(require\|print\|panic\|error\|assert\|check\|likely\|unlikely\|pairs\|ipairs\|mpairs\|next\|mnext\|select\|pcall\|xpcall\|tostring\|tonumber\|setmetatable\|getmetatable\|rawget\|rawset\|rawequal\|rawlen\|load\|loadfile\|dofile\|collectgarbage\|unpack\|static_assert\|static_error\)\ze\s*\%((\|\"\|'\|{\|\[=*\[\)"
+  syn match neluaModule  "\<\%(coroutine\|io\|math\|os\|utf8\|debug\|package\|memory\|bit32\)\ze\s*\."
+  syn keyword neluaBuiltinConst _VERSION _G
 endif
 
-syn case match
+" ---------------------------------------------------------------------------
+" Labels
+syn match neluaLabel     "::\s*\h\w*\s*::"
+syn match neluaGotoLabel "\h\w*" contained
 
-" syncing method
-syn sync minlines=100
+" ---------------------------------------------------------------------------
+" Numbers (NUMBER rule of syntaxdefs.lua). A literal may carry a type suffix
+" such as 1234_u32, 1_f32 or 10u8. Later definitions win at the same column,
+" so the decimal form comes first and hexadecimal last.
+syn match neluaNumber "\<\d\+\%(\.\d*\)\=\%([eE][-+]\=\d\+\)\=" nextgroup=neluaNumberSuffix
+syn match neluaNumber "\%(\.\|\w\)\@1<!\.\d\+\%([eE][-+]\=\d\+\)\=" nextgroup=neluaNumberSuffix
+syn match neluaNumber "\<0[bB]\%([01]\+\%(\.[01]*\)\=\|\.[01]\+\)\%([pP][-+]\=\d\+\)\=" nextgroup=neluaNumberSuffix
+syn match neluaNumber "\<0[xX]\%(\x\+\%(\.\x*\)\=\|\.\x\+\)\%([pP][-+]\=\d\+\)\=" nextgroup=neluaNumberSuffix
+syn match neluaNumberSuffix "\h\w*" contained
 
-" Comments
-syn keyword neluaTodo contained TODO FIXME XXX
+" ---------------------------------------------------------------------------
+" Strings (STRING rule). Escapes follow the ESCAPE rule exactly: anything else
+" after a backslash is an error. A backslash at the end of the line (or \z)
+" continues the string on the next line; otherwise an unclosed string stops at
+" the end of its line instead of colouring the rest of the file.
+syn match neluaEscapeError contained "\\."
+syn match neluaEscape contained "\\[abfnrtv\\'\"]"
+syn match neluaEscape contained "\\x\x\x"
+syn match neluaEscape contained "\\\%([012]\d\d\|\d\d\=\d\@!\)"
+syn match neluaEscape contained "\\u{\x\+}"
+syn match neluaEscape contained "\\z\s*"
+syn match neluaEscape contained "\\$"
+" The line continues only if it ends in an odd number of backslashes
+" (optionally followed by z and blanks): "a\\" at the end of a line is an
+" escaped backslash, so that string is unclosed. (A skip pattern cannot do
+" this: the contained \z escape would consume the text the skip needs.)
+syn region neluaString matchgroup=neluaStringDelim start=+"+ skip=+\\\\\|\\"+ end=+"+ end=+\%(\%(^\|[^\\]\)\%(\\\\\)*\\\%(z\s*\)\=\)\@16<!$+ contains=neluaEscape,neluaEscapeError,@Spell nextgroup=neluaStringSuffix
+syn region neluaString matchgroup=neluaStringDelim start=+'+ skip=+\\\\\|\\'+ end=+'+ end=+\%(\%(^\|[^\\]\)\%(\\\\\)*\\\%(z\s*\)\=\)\@16<!$+ contains=neluaEscape,neluaEscapeError,@Spell nextgroup=neluaStringSuffix
+syn region neluaLongString matchgroup=neluaStringDelim start="\[\z(=*\)\[" end="\]\z1\]" contains=@Spell nextgroup=neluaStringSuffix
+syn match neluaStringSuffix "\h\w*" contained
 
-syn match neluaComment "--.*$" contains=neluaTodo,@Spell
+" ---------------------------------------------------------------------------
+" Comments (after the operators, so "--" beats "-")
+syn keyword neluaTodo contained TODO FIXME XXX NOTE HACK BUG
+syn match  neluaComment "--.*$" contains=neluaTodo,@Spell
+syn region neluaComment start="--\[\z(=*\)\[" end="\]\z1\]" contains=neluaTodo,@Spell
+syn match  neluaShebang "\%^#!.*$"
 
-" Comments in Lua 5.1: --[[ ... ]], [=[ ... ]=], [===[ ... ]===], etc.
-syn region neluaComment
-  \ matchgroup=neluaComment
-  \ start="--\[\z(=*\)\[" end="\]\z1\]"
-  \ contains=neluaTodo,@Spell
+" ---------------------------------------------------------------------------
+" Annotations:  local x <comptime> = 1   function f() <inline, nodecl>
+" Recognised when "<" is followed by a known annotation name (typedefs.lua)
+" and the closing ">" is on the same line; otherwise "<" stays an operator.
+let s:annots = 'comptime\|const\|close\|cimport\|cexport\|cinclude\|codename\|cqualifier\|cpostqualifier\|cattribute\|deprecated\|inline\|noreturn\|noinline\|volatile\|nodecl\|nodce\|nosideeffect\|nosideffect\|entrypoint\|polymorphic\|alwayspoly\|forwarddecl\|aligned\|static\|register\|restrict\|atomic\|threadlocal\|noinit\|nogcscan\|ctopinit\|nickname\|ctypedef\|cincomplete\|packed\|using\|nocopy\|builtin'
+exe 'syn region neluaAnnotation matchgroup=neluaAnnotationDelim start="<\ze\s*\%(' . s:annots . '\)\>" end=">" oneline contains=neluaString,neluaLongString,neluaNumber,neluaBoolean,neluaConstant,neluaPPExpr,neluaComment'
+unlet s:annots
 
-syn match neluaPreProc "\(#\)"
+" ---------------------------------------------------------------------------
+" Preprocessor (PREPROCESS, PreprocessExpr, PreprocessName). The contents are
+" highlighted as Nelua (Lua-compatible) code; plain names use the PreProc
+" colour, so preprocessor code stands out from the code it generates.
+syn cluster neluaPPRegions contains=neluaPPLine,neluaPPBlock,neluaPPExpr,neluaPPName,neluaShebang
+syn region neluaPPLine  matchgroup=neluaPPDelim start="##\%(\[=*\[\)\@!" end="$" keepend contains=TOP,@neluaPPRegions
+syn region neluaPPBlock matchgroup=neluaPPDelim start="##\[\z(=*\)\[" end="\]\z1\]" keepend contains=TOP,@neluaPPRegions
+syn region neluaPPExpr  matchgroup=neluaPPDelim start="#\[" end="\]#" keepend contains=TOP,@neluaPPRegions
+syn region neluaPPName  matchgroup=neluaPPDelim start="#|" end="|#" keepend contains=TOP,@neluaPPRegions
 
-syn region neluaPreProcCodeBlock
-  \ matchgroup=Include
-  \ start="##\[\z(=*\)\[" end="\]\z1\]"
-  \ contains=ALL
+" ---------------------------------------------------------------------------
+" Syncing
+if get(g:, "nelua_sync_fromstart", 0)
+  syn sync fromstart
+else
+  exe "syn sync minlines=" . get(g:, "nelua_minlines", 3000)
+endif
 
-syn region neluaPreProcExpression
-  \ matchgroup=neluaPreProc
-  \ start="#\[" end="\]#"
-  \ contains=
-    \ALLBUT,
-    \neluaParenError,
-    \neluaTodo,
-    \neluaSpecial,
-    \neluaIfThen,
-    \neluaElseifThen,
-    \neluaElse,
-    \neluaThenEnd,
-    \neluaBlock,
-    \neluaLoopBlock,
-    \neluaIn,
-    \neluaStatement
-
-syn region neluaPreProcNameReplacement
-  \ matchgroup=neluaPreProc
-  \ start="#|" end="|#"
-  \ contains=
-    \ALLBUT,
-    \neluaParenError,
-    \neluaTodo,
-    \neluaSpecial,
-    \neluaIfThen,
-    \neluaElseifThen,
-    \neluaElse,
-    \neluaThenEnd,
-    \neluaBlock,
-    \neluaLoopBlock,
-    \neluaIn,
-    \neluaStatement
-
-syn match neluaKeyword "\(@\)"
-syn match neluaKeyword "\(\$\)"
-syn match neluaKeyword "\(&\)"
-syn match neluaKeyword "\(*\)"
-syn match neluaKeyword "\(+\)"
-syn match neluaKeyword "\(=\)"
-syn match neluaKeyword "\(>\)"
-syn match neluaKeyword "\(<\)"
-syn match neluaKeyword "\(\~\)"
-syn match neluaKeyword "\(\/\)"
-syn match neluaKeyword "\(<=\)"
-syn match neluaKeyword "\(=>\)"
-syn match neluaKeyword "\(:\)"
-syn match neluaKeyword "\(\^\)"
-syn match neluaKeyword "\(\~=\)"
-syn match neluaKeyword "\V."
-
-" First line may start with #!
-syn match neluaComment "\%^#!.*"
-
-" catch errors caused by wrong parenthesis and wrong curly brackets or
-" keywords placed outside their respective blocks
-syn region neluaParen transparent
-  \ start="(" end=")"
-  \ contains=
-    \TOP,
-    \neluaParenError
-
-syn region neluaTableBlock transparent
-  \ matchgroup=neluaTable
-  \ start="{" end="}"
-  \ contains=
-    \ALLBUT,
-    \neluaBraceError,
-    \neluaTodo,
-    \neluaSpecial,
-    \neluaIfThen,
-    \neluaElseifThen,
-    \neluaElse,
-    \neluaThenEnd,
-    \neluaBlock,
-    \neluaLoopBlock,
-    \neluaIn,
-    \neluaStatement
-
-syn match  neluaParenError ")"
-syn match  neluaBraceError "}"
-syn match  neluaError "\<\%(end\|else\|elseif\|then\|until\|in\)\>"
-
-" Basic keywords
-syntax keyword neluaFunctionKeyword function
-syntax keyword neluaEnd end
-hi def link neluaFunctionKeyword Keyword
-hi def link neluaEnd Keyword
-
-" Match anonymous 'function' when followed by '(' and optionally a return-type suffix like ': type'
-" Example matches:
-"   function(x: integer): integer
-"   function (x):int
-"   function()
-" The pattern is single-line (non-greedy) to avoid spanning to EOF.
-syntax match neluaAnonFunction /\<function\>\s*(\s*[^)]\{-})\s*\(:\s*[-a-zA-Z0-9_.<>]*\)\=/ containedin=ALL
-hi def link neluaAnonFunction Keyword
-
-" Also match a bare 'function(' without parameters (no closing ')' yet) on the same line
-syntax match neluaAnonFunctionBare /\<function\>\s*(/ containedin=ALL
-hi def link neluaAnonFunctionBare Keyword
-
-" Named / block functions: require either an identifier after 'function' or a line break
-" so we don't capture anonymous inline functions used as arguments.
-" start: function <name>  OR  function<newline>
-" end: matching 'end'
-syn region neluaFunctionBlock transparent
-  \ matchgroup=neluaFunction
-  \ start=/\v\<function\>\s+([A-Za-z_][A-Za-z0-9_.:]*)|\<function\>\s*$/ end=/\<end\>/
-  \ contains=ALL keepend
-
-" Highlight the keyword itself
-syn match neluaFunction /\<function\>/ contained
-hi def link neluaFunction Keyword
-
-" Add to top cluster
-syntax cluster neluaTop add=neluaFunctionBlock,neluaAnonFunction,neluaAnonFunctionBare,neluaFunction,neluaEnd,neluaDoExprParenHeader,neluaDoExprBlock
-
-" Parenthesized do-expression: (do ... in <expr> end)
-" - Match from "(do" to the "in" that ends the block header, single-line-safe non-greedy.
-" - Then highlight the 'in' keyword and let normal rules handle the trailing expression and 'end'.
-syntax region neluaDoExprParenHeader start=/\v\(\s*do\b/ end=/\bin\b/ contains=NONE transparent keepend containedin=ALL
-hi def link neluaDoExprParenHeader Keyword
-
-" Highlight 'in' when it's part of a do-expression header
-syntax match neluaInKeyword /\<in\>/ containedin=neluaDoExprParenHeader,neluaDoExprBlock
-hi def link neluaInKeyword Keyword
-" Also allow 'in' on its own line inside do-blocks (fallback)
-syntax region neluaDoExprBlock start=/\v^\s*do\b/ end=/\v^\s*in\b/ contains=NONE transparent keepend
-syntax match neluaInKeywordLine /\v^\s*in\b/ containedin=neluaDoExprBlock
-hi def link neluaInKeywordLine Keyword
-
-" function ... end
-"syn region neluaFunctionBlock transparent
-"  \ matchgroup=neluaFunction
-"  \ start="\<function\>" end="\<end\>"
-"  \ contains=TOP
-
-" if ... then
-syn region neluaIfThen transparent
-  \ matchgroup=neluaCond
-  \ start="\<if\>" end="\<then\>"me=e-4
-  \ nextgroup=neluaThenEnd
-  \ skipwhite
-  \ skipempty
-  \ contains=
-    \ALLBUT,
-    \neluaTodo,
-    \neluaSpecial,
-    \neluaElseifThen,
-    \neluaElseEnd,
-    \neluaIn
-
-" switch ... end
-syn region neluaLoopBlock transparent
-  \ matchgroup=neluaRepeat
-  \ nextgroup=neluaBlock
-  \ skipwhite
-  \ skipempty
-  \ start="\<switch\>" end="\<end\>"me=e-2
-  \ contains=
-    \ALLBUT,
-    \neluaTodo,
-    \neluaSpecial,
-    \neluaIfThen,
-    \neluaElseifThen,
-    \neluaElse,
-    \neluaThenEnd,
-    \neluaIn
-
-" case ... then
-syn region neluaCaseThen transparent
-  \ matchgroup=neluaCond
-  \ nextgroup=neluaThenEnd
-  \ skipwhite
-  \ skipempty
-  \ start="\<case\>" end="\<then\>"me=e-4
-  \ contains=
-    \ALLBUT,
-    \neluaTodo,
-    \neluaSpecial,
-    \neluaElseifThen,
-    \neluaElse,
-    \neluaIn
-
-" then ... end
-syn region neluaThenEnd contained transparent
-  \ matchgroup=neluaCond
-  \ start="\<then\>" end="\<end\>"
-  \ contains=
-    \ALLBUT,
-    \neluaTodo,
-    \neluaSpecial,
-    \neluaThenEnd,
-    \neluaIn
-
-" elseif ... then
-syn region neluaElseifThen contained transparent
-  \ matchgroup=neluaCond
-  \ start="\<elseif\>" end="\<then\>"
-  \ contains=
-    \ALLBUT,
-    \neluaTodo,
-    \neluaSpecial,
-    \neluaElseifThen,
-    \neluaElse,
-    \neluaThenEnd,
-    \neluaIn
-
-" else ... end
-syn region neluaElseEnd contained transparent
-  \ matchgroup=neluaCond
-  \ start="\<else\>" end="\<end\>"
-  \ contains=
-    \ALLBUT,
-    \neluaTodo,
-    \neluaSpecial,
-    \neluaThenEnd,
-    \neluaIn
-
-" else
-syn keyword neluaElse contained else
-
-" do ... end
-syn region neluaBlock transparent
-  \ matchgroup=neluaStatement
-  \ start="\<do\>" end="\<end\>"
-  \ contains=TOP
-
-" defer ... end
-syn region neluaDeferBlock transparent
-  \ matchgroup=neluaStatement
-  \ start="\<defer\>" end="\<end\>"
-  \ contains=
-    \ALLBUT,
-    \neluaTodo,
-    \neluaSpecial,
-    \neluaElseifThen,
-    \neluaElse,
-    \neluaThenEnd,
-    \neluaIn
-
-" repeat ... until
-syn region neluaLoopBlock transparent
-  \ matchgroup=neluaRepeat
-  \ start="\<repeat\>" end="\<until\>"
-  \ contains=
-    \ALLBUT,
-    \neluaTodo,
-    \neluaSpecial,
-    \neluaElseifThen,
-    \neluaElse,
-    \neluaThenEnd,
-    \neluaIn
-
-" while ... do
-syn region neluaLoopBlock transparent
-  \ matchgroup=neluaRepeat
-  \ nextgroup=neluaBlock
-  \ skipwhite
-  \ skipempty
-  \ start="\<while\>" end="\<do\>"me=e-2
-  \ contains=
-    \ALLBUT,
-    \neluaTodo,
-    \neluaSpecial,
-    \neluaIfThen,
-    \neluaElseifThen,
-    \neluaElse,
-    \neluaThenEnd,
-    \neluaIn
-
-" for ... do and for ... in ... do
-syn region neluaFor transparent
-  \ matchgroup=neluaRepeat
-  \ start="\<for\>" end="\<do\>"me=e-2
-  \ contains=TOP
-  \ nextgroup=neluaBlock
-  \ skipwhite
-  \ skipempty
-  \ start="\<for\>" end="\<do\>"me=e-2
-  \ contains=
-    \ALLBUT,
-    \neluaTodo,
-    \neluaSpecial,
-    \neluaIfThen,
-    \neluaElseifThen,
-    \neluaElseEnd
-
-syn keyword neluaFor contained containedin=neluaFor in
-
-" other keywords
-syn keyword neluaStatement      return local global break continue fallthrough
-
-syn keyword neluaCond           switch
-syn keyword neluaBuiltin        void boolean string integer uinteger number
-syn keyword neluaBuiltin        byte isize int8 int16 int32 int64 int128
-syn keyword neluaBuiltin        usize uint8 uint16 uint32 uint64 uint128
-
-syn keyword neluaBuiltin        float32 float64 float128
-syn keyword neluaBuiltin        auto array pointer varargs type niltype
-syn keyword neluaBuiltin        concept close linklib static_assert
-
-syn keyword neluaBuiltin        cchar cschar cuchar
-syn keyword neluaBuiltin        cshort cushort
-syn keyword neluaBuiltin        cint cuint
-syn keyword neluaBuiltin        clong clonglong
-syn keyword neluaBuiltin        culong culonglong
-syn keyword neluaBuiltin        cptrdiff
-syn keyword neluaBuiltin        csize
-syn keyword neluaBuiltin        clongdouble
-syn keyword neluaBuiltin        cstring
-
-
-syn keyword neluaBuiltin        _cshort _cushort _cint _cuint
-syn keyword neluaBuiltin        _clong _clonglong _culong _culonglong
-syn keyword neluaBuiltin        _cptrdiff _cchar _cschar _cuchar
-syn keyword neluaBuiltin        _csize _clongdouble _cstring
-
-syn keyword neluaBuiltin        aligned
-syn keyword neluaBuiltin        require print panic error assert check
-syn keyword neluaBuiltin        likely unlikely _VERSION
-
-syn keyword neluaTable          record union enum
-
-syn keyword neluaAnnotation     atomic
-syn keyword neluaAnnotation     alwayspoly builtin
-syn keyword neluaAnnotation     cdefine cflags ccinfo ldflags
-syn keyword neluaAnnotation     cimport cexport cinclude
-syn keyword neluaAnnotation     cemit cemitdefn cemitdecl cincomplete
-syn keyword neluaAnnotation     codename cqualifier ctypedef
-syn keyword neluaAnnotation     const comptime volatile noinline inline
-syn keyword neluaAnnotation     deprecated entrypoint forwarddecl nickname
-syn keyword neluaAnnotation     noinit nodecl nodce noerror nogcscan noreturn nosideeffect
-syn keyword neluaAnnotation     polymorphic static threadlocal
-syn keyword neluaAnnotation     using
-syn keyword neluaSelf           self
-
-syn keyword neluaStatement      goto
-syn match neluaLabel            "::\I\i*::"
-syn keyword neluaOperator       and or not
-syn keyword neluaConstant       nil nilptr
-syn keyword neluaBoolean        true false
-
-syn keyword neluaMetaMethod     __lt __le __eq __bor __band __bxor __shl __shr
-syn keyword neluaMetaMethod     __asr __bnot __concat __add __sub __mul __div
-syn keyword neluaMetaMethod     __idiv __tdiv __mod __tmod __pow __unm __len
-syn keyword neluaMetaMethod     __index __atindex __tostring __convert __gc
-syn keyword neluaMetaMethod     __close __next __mnext __pairs __mpairs
-
-" Strings
-syn match  neluaspecial contained #\\[\\abfnrtvz'"]\|\\x[[:xdigit:]]\{2}\|\\[[:digit:]]\{,3}#
-
-syn region neluastring2
-  \ matchgroup=neluastring
-  \ start="\[\z(=*\)\[" end="\]\z1\]"
-  \ contains=@spell
-
-syn region neluaString  start=+'+ end=+'+ skip=+\\\\\|\\'+ contains=neluaSpecial,@Spell
-syn region neluaString  start=+"+ end=+"+ skip=+\\\\\|\\"+ contains=neluaSpecial,@Spell
-
-" The code below is directly taken from nim.vim plugin
-" Special thanks go to its original creators / implementors
-"
-" numbers (including longs and complex)
-let s:dec_num = '\d%(_?\d)*'
-"let s:int_suf = '%(_%(u?%(i|integer)?|%(n|number)|%(b|byte)|%(is|isize)|%(us|usize)|%(i?%(8|16|32|64|128))|%(int)?%(8|16|32|64|128)|%(u?%(8|16|32|64|128)|%(uint?%(8|16|32|64|128)))))'
-let s:int_suf = '%(_%(u?%(i|integer)?|n|number|b|byte|is|isize|us|usize|i?(8|16|32|64|128)|int?(8|16|32|64|128)|u?(8|16|32|64|128)|uint?(8|16|32|64|128)|cshort|cushort|cint|cuint|clong|clonglong|culong|culonglong|csize|cptrdiff))'
-let s:float_suf = '%(_%(%(f%(loat)?)%(32|64|128)|clongdouble))'
-let s:exp = '%([eE][+-]?'.s:dec_num.')'
-exe 'syn match neluaNumber /\v<0[bB][01]%(_?[01])*%('.s:int_suf.'|'.s:float_suf.')?>/'
-exe 'syn match neluaNumber /\v<0[ocC]\o%(_?\o)*%('.s:int_suf.'|'.s:float_suf.')?>/'
-exe 'syn match neluaNumber /\v<0[xX]\x%(_?\x)*%('.s:int_suf.'|'.s:float_suf.')?>/'
-exe 'syn match neluaNumber /\v<'.s:dec_num.'%('.s:int_suf.'|'.s:exp.'?'.s:float_suf.'?)>/'
-exe 'syn match neluaNumber /\v<'.s:dec_num.'\.'.s:dec_num.s:exp.'?'.s:float_suf.'?>/'
-unlet s:dec_num s:int_suf s:float_suf s:exp
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
-" hex numbers
-syn match neluaNumber "\<0[xX][[:xdigit:].]\+\%([pP][-+]\=\d\+\)\=\>"
-
-syn keyword neluaFunc collectgarbage dofile next
-syn keyword neluaFunc rawget rawset tonumber tostring
-
-syn keyword neluaFunc getmetatable setmetatable
-syn keyword neluaFunc ipairs pairs
-syn keyword neluaFunc pcall xpcall
-syn keyword neluaFunc _G loadfile rawequal
-syn keyword neluaFunc load select
-syn match   neluaFunc /\<package\.cpath\>/
-syn match   neluaFunc /\<package\.loaded\>/
-syn match   neluaFunc /\<package\.loadlib\>/
-syn match   neluaFunc /\<package\.path\>/
-syn match   neluaFunc /\<coroutine\.running\>/
-syn match   neluaFunc /\<coroutine\.create\>/
-syn match   neluaFunc /\<coroutine\.resume\>/
-syn match   neluaFunc /\<coroutine\.status\>/
-syn match   neluaFunc /\<coroutine\.wrap\>/
-syn match   neluaFunc /\<coroutine\.yield\>/
-syn match   neluaFunc /\<string\.byte\>/
-syn match   neluaFunc /\<string\.char\>/
-syn match   neluaFunc /\<string\.dump\>/
-syn match   neluaFunc /\<string\.find\>/
-syn match   neluaFunc /\<string\.format\>/
-syn match   neluaFunc /\<string\.gsub\>/
-syn match   neluaFunc /\<string\.len\>/
-syn match   neluaFunc /\<string\.lower\>/
-syn match   neluaFunc /\<string\.rep\>/
-syn match   neluaFunc /\<string\.sub\>/
-syn match   neluaFunc /\<string\.upper\>/
-syn match   neluaFunc /\<string\.gmatch\>/
-syn match   neluaFunc /\<string\.match\>/
-syn match   neluaFunc /\<string\.reverse\>/
-syn match   neluaFunc /\<table\.pack\>/
-syn match   neluaFunc /\<table\.unpack\>/
-syn match   neluaFunc /\<table\.concat\>/
-syn match   neluaFunc /\<table\.sort\>/
-syn match   neluaFunc /\<table\.insert\>/
-syn match   neluaFunc /\<table\.remove\>/
-syn match   neluaFunc /\<math\.abs\>/
-syn match   neluaFunc /\<math\.acos\>/
-syn match   neluaFunc /\<math\.asin\>/
-syn match   neluaFunc /\<math\.atan\>/
-syn match   neluaFunc /\<math\.atan2\>/
-syn match   neluaFunc /\<math\.ceil\>/
-syn match   neluaFunc /\<math\.sin\>/
-syn match   neluaFunc /\<math\.cos\>/
-syn match   neluaFunc /\<math\.tan\>/
-syn match   neluaFunc /\<math\.deg\>/
-syn match   neluaFunc /\<math\.exp\>/
-syn match   neluaFunc /\<math\.floor\>/
-syn match   neluaFunc /\<math\.log\>/
-syn match   neluaFunc /\<math\.max\>/
-syn match   neluaFunc /\<math\.min\>/
-syn match   neluaFunc /\<math\.huge\>/
-syn match   neluaFunc /\<math\.fmod\>/
-syn match   neluaFunc /\<math\.modf\>/
-syn match   neluaFunc /\<math\.cosh\>/
-syn match   neluaFunc /\<math\.sinh\>/
-syn match   neluaFunc /\<math\.tanh\>/
-syn match   neluaFunc /\<math\.pow\>/
-syn match   neluaFunc /\<math\.rad\>/
-syn match   neluaFunc /\<math\.sqrt\>/
-syn match   neluaFunc /\<math\.frexp\>/
-syn match   neluaFunc /\<math\.ldexp\>/
-syn match   neluaFunc /\<math\.random\>/
-syn match   neluaFunc /\<math\.randomseed\>/
-syn match   neluaFunc /\<math\.pi\>/
-syn match   neluaFunc /\<io\.close\>/
-syn match   neluaFunc /\<io\.flush\>/
-syn match   neluaFunc /\<io\.input\>/
-syn match   neluaFunc /\<io\.lines\>/
-syn match   neluaFunc /\<io\.open\>/
-syn match   neluaFunc /\<io\.output\>/
-syn match   neluaFunc /\<io\.popen\>/
-syn match   neluaFunc /\<io\.read\>/
-syn match   neluaFunc /\<io\.stderr\>/
-syn match   neluaFunc /\<io\.stdin\>/
-syn match   neluaFunc /\<io\.stdout\>/
-syn match   neluaFunc /\<io\.tmpfile\>/
-syn match   neluaFunc /\<io\.type\>/
-syn match   neluaFunc /\<io\.write\>/
-syn match   neluaFunc /\<os\.clock\>/
-syn match   neluaFunc /\<os\.date\>/
-syn match   neluaFunc /\<os\.difftime\>/
-syn match   neluaFunc /\<os\.execute\>/
-syn match   neluaFunc /\<os\.exit\>/
-syn match   neluaFunc /\<os\.getenv\>/
-syn match   neluaFunc /\<os\.remove\>/
-syn match   neluaFunc /\<os\.rename\>/
-syn match   neluaFunc /\<os\.setlocale\>/
-syn match   neluaFunc /\<os\.time\>/
-syn match   neluaFunc /\<os\.tmpname\>/
-syn match   neluaFunc /\<debug\.debug\>/
-syn match   neluaFunc /\<debug\.gethook\>/
-syn match   neluaFunc /\<debug\.getinfo\>/
-syn match   neluaFunc /\<debug\.getlocal\>/
-syn match   neluaFunc /\<debug\.getupvalue\>/
-syn match   neluaFunc /\<debug\.setlocal\>/
-syn match   neluaFunc /\<debug\.setupvalue\>/
-syn match   neluaFunc /\<debug\.sethook\>/
-syn match   neluaFunc /\<debug\.traceback\>/
-
-" Define the default highlighting.
-" Only when an item doesn't have highlighting yet
-
-hi def link neluaAnnotation     Identifier
-hi def link neluaBoolean        Boolean
-hi def link neluaBraceError     Error
-hi def link neluaBuiltin        neluaType
-hi def link neluaCharacter      Character
-hi def link neluaComment        Comment
-hi def link neluaCond           Conditional
-hi def link neluaConstant       Constant
-hi def link neluaElse           Conditional
-hi def link neluaError          Error
-hi def link neluaFloat          Float
-hi def link neluaFor            Repeat
-hi def link neluaFunc           Identifier
-hi def link neluaFunction       Function
-" basically it's an iterator, at least for 'for in...'
-hi def link neluaIn             Repeat
-" Any variable name
-hi def link neluaIdentifier     Identifier
-hi def link neluaKeyword        Keyword
-hi def link neluaLabel          Label
-hi def link neluaMetaMethod     Function
-hi def link neluaNumber         Number
-hi def link neluaOperator       Operator
-hi def link neluaParenError     Error
-hi def link neluaPreProc        PreProc
-hi def link neluaRepeat         Repeat
-hi def link neluaSelf           Constant
-hi def link neluaSpecial        SpecialChar
-hi def link neluaStatement      Statement
-hi def link neluaString         String
-hi def link neluaString2        String
-hi def link neluaTable          Structure
-hi def link neluaTodo           Todo
-hi def link neluaType           Type
-
+" ---------------------------------------------------------------------------
+" Default links. Group -> Tree-sitter capture for a future queries/nelua/highlights.scm:
+"   neluaComment           @comment
+"   neluaShebang           @keyword.directive
+"   neluaTodo              @comment.todo
+"   neluaString            @string
+"   neluaLongString        @string
+"   neluaStringDelim       @string
+"   neluaStringSuffix      @type
+"   neluaEscape            @string.escape
+"   neluaEscapeError       @error
+"   neluaNumber            @number / @number.float
+"   neluaNumberSuffix      @number
+"   neluaConditional       @keyword.conditional
+"   neluaRepeat            @keyword.repeat
+"   neluaKeyword           @keyword / @keyword.function
+"   neluaStatement         @keyword.return / @keyword
+"   neluaGoto              @keyword
+"   neluaStorageClass      @keyword.modifier
+"   neluaOperator          @operator
+"   neluaOperatorWord      @keyword.operator
+"   neluaVarargs           @variable.builtin
+"   neluaConstant          @constant.builtin
+"   neluaBoolean           @boolean
+"   neluaSelf              @variable.builtin
+"   neluaType              @type.builtin
+"   neluaTypeAny/NoCall    @type
+"   neluaTypeAt/Prefix     @operator
+"   neluaStructure         @keyword.type
+"   neluaFunctionCall      @function.call
+"   neluaFunctionDef       @function
+"   neluaMacroCall         @function.macro
+"   neluaBuiltin           @function.builtin
+"   neluaBuiltinConst      @constant.builtin
+"   neluaModule            @module.builtin
+"   neluaLabel             @label
+"   neluaGotoLabel         @label
+"   neluaAnnotation        @attribute
+"   neluaAnnotationDelim   @punctuation.bracket
+"   neluaPreProc           @keyword.directive
+hi def link neluaComment         Comment
+hi def link neluaShebang         Comment
+hi def link neluaTodo            Todo
+hi def link neluaString          String
+hi def link neluaLongString      String
+hi def link neluaStringDelim     String
+hi def link neluaStringSuffix    Type
+hi def link neluaEscape          SpecialChar
+hi def link neluaEscapeError     Error
+hi def link neluaNumber          Number
+hi def link neluaNumberSuffix    Number
+hi def link neluaConditional     Conditional
+hi def link neluaRepeat          Repeat
+hi def link neluaKeyword         Keyword
+hi def link neluaStatement       Statement
+hi def link neluaGoto            Statement
+hi def link neluaStorageClass    StorageClass
+hi def link neluaOperator        Operator
+hi def link neluaOperatorWord    Operator
+hi def link neluaVarargs         Special
+hi def link neluaConstant        Constant
+hi def link neluaBoolean         Boolean
+hi def link neluaSelf            Special
+hi def link neluaType            Type
+hi def link neluaTypeAny         Type
+hi def link neluaTypeNoCall      Type
+hi def link neluaTypeAt          Operator
+hi def link neluaTypePrefix      Operator
+hi def link neluaStructure       Structure
+hi def link neluaFunctionCall    Function
+hi def link neluaFunctionDef     Function
+hi def link neluaMacroCall       Macro
+hi def link neluaBuiltin         Special
+hi def link neluaBuiltinConst    Special
+hi def link neluaModule          Special
+hi def link neluaLabel           Label
+hi def link neluaGotoLabel       Label
+hi def link neluaAnnotation      Macro
+hi def link neluaAnnotationDelim Delimiter
+hi def link neluaPreProc         PreProc
+hi def link neluaPPDelim         neluaPreProc
+hi def link neluaPPLine          neluaPreProc
+hi def link neluaPPBlock         neluaPreProc
+hi def link neluaPPExpr          neluaPreProc
+hi def link neluaPPName          neluaPreProc
 
 let b:current_syntax = "nelua"
 

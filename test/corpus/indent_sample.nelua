@@ -1,0 +1,89 @@
+-- Indentation corpus: re-indenting this file with gg=G must change nothing.
+-- Style follows nelua-lang's own sources (2 spaces, cases at switch level).
+local Vec2 = @record{
+  x: number,
+  y: number,
+}
+
+function Vec2.__add(a: Vec2, b: Vec2): Vec2
+  return (@Vec2){a.x + b.x, a.y + b.y}
+end
+
+local function classify(n: integer): string
+  if n < 0 then
+    return 'negative'
+  elseif n == 0 then
+    return 'zero'
+  else
+    return 'positive'
+  end
+end
+
+local function day(d: integer)
+  switch d do
+  case 0, 6 then
+    print 'weekend'
+  case 1 then
+    print 'monday'
+    fallthrough
+  else
+    print 'weekday'
+  end
+end
+
+for i = 1, 10 do
+  if i % 2 == 0 then continue end
+  while i > 0 do
+    i = i - 1
+  end
+end
+
+repeat
+  local x = 1
+until x > 0
+
+do
+  defer
+    print 'leaving'
+  end
+  local v = (do
+    local t = 2
+    in t * 2
+  end)
+end
+
+local t = setmetatable({}, {
+  __index = function(_, key)
+    return key
+  end,
+})
+
+print(classify(1), day(0), t.foo, function() return 1 end)
+
+local printf: function(cstring, ...: cvarargs): cint <cimport, nodecl>
+local cb: function(integer): integer
+
+## for i = 1, 3 do
+  print(#[i]#)
+## end
+
+##[[
+local function unroll(count, block)
+  for i = 1, count do
+    block()
+  end
+end
+]]
+
+## unroll(2, function()
+  print 'unrolled'
+## end)
+
+--[[
+Long comment lines keep
+    whatever indentation they have.
+]]
+local s = [[
+long string lines keep
+    their indentation too
+]]

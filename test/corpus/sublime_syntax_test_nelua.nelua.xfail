@@ -1,0 +1,8 @@
+7 past end of line: Sublime colours the newline character, Vim cannot
+30 past end of line: Sublime colours the newline character, Vim cannot
+161 deliberate: \[ and \] are not valid escapes in Nelua (syntaxdefs.lua ESCAPE rule); Sublime's test inherits them from Lua
+178 past end of line: Sublime colours the newline character, Vim cannot
+183 past end of line (empty line): Sublime colours the newline character, Vim cannot
+191 past end of line: Sublime colours the newline character, Vim cannot
+199 past end of line: unclosed-string error sits on the newline character, Vim cannot colour it
+230 past end of line: Sublime colours the newline character, Vim cannot
