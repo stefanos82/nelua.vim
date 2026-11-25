@@ -2,7 +2,7 @@
 
 ## Fork 
 This is a fork from stefanos82/nelua.vim. See: https://github.com/stefanos82/nelua.vim
-It is a rewrite of stefanos82/nelua.vim.
+It is a rewrite of stefanos82/nelua.vim. It contains many fixes. See [[#Issues in the original repo]] and [[#Improvements]]
 
 ## About
 
@@ -10,7 +10,6 @@ Syntax highlighting for [Nelua](https://nelua.io/) programming language.
 
 <img width="684" height="426" alt="image" src="https://github.com/user-attachments/assets/8d87fefe-f4f9-48e2-88d1-0c75c70ea74f" />
 
-This repo is intended for a PR request. It contains many fixes. See [[#Issues in the original repo]] and [[#Improvements]]
 
 ## How to use this for Neovim
 
