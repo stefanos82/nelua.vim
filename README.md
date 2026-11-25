@@ -195,8 +195,6 @@ There are many known limits.
 
 ## Credits
 
-## Credits and licensing status
-
 * Original plugin: Stefanos Sofroniou (`stefanos82/nelua.vim`). That repository has no license
   file. Its ftplugin was derived from Vim's `ftplugin/lua.vim` (Vim license). The ftplugin here keeps
   that lineage and credits.
