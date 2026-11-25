@@ -109,6 +109,25 @@ And much more...
 
 ...and lastly, better maintainability. 
 
+## Design notes
+
+The design follows from analyzing how Sublime Text runs `Nelua.sublime-syntax`
+(it's from here: https://github.com/edubart/nelua-sublime). Sublime's lexer is a context stack with
+`push`/`set`/`pop:N`/`embed`+`escape` and backtracking (`branch`/`fail`). Vim regions can only nest,
+have no backtracking, and re-sync from `:syn sync` points. So:
+
+* Regions only for self-delimiting lexical constructs (comments, strings, long brackets, the
+  preprocessor forms, one-line annotations). No `if/then/end` or `function/end` regions: the
+  preprocessor splits blocks freely, and such regions are what leaked in the original.
+* Statement context comes from `nextgroup` chains (`:`/`@` → prefixes → type name, `goto` → label)
+  and short, byte-bounded look-arounds. The `nextgroup` chains replaced long look-behinds and gave a
+  4.8× speed-up.
+* The preprocessor embeds Nelua itself (`contains=TOP,…`) with `keepend`. That is the Vim form of
+  Sublime's `embed: scope:source.nelua` + `escape`, and it also matches the grammar
+  (`PREPROCESS_LONG` ends at the first `]]`).
+* Escapes, numbers, suffixes and reserved words follow `nelua-lang/lualib/nelua/syntaxdefs.lua`.
+  Annotation names come from `typedefs.lua`, builtins from `lib/builtins.nelua`.
+
 ## Testing
 
 Everything runs headless with `nvim --headless --clean` and only this plugin on the runtimepath.
@@ -176,8 +195,15 @@ There are many known limits.
 
 ## Credits
 
-This project is based on `lua.vim` found in
-`/usr/share/vim/vim<X.Y>/syntax/lua.vim` and
-`/usr/share/vim/vim<X.Y>/ftplugin/lua.vim` under GNU / Linux Debian distro.
+## Credits and licensing status
 
-Special gratitude goes to its original author(s) and current maintainer(s).
+* Original plugin: Stefanos Sofroniou (`stefanos82/nelua.vim`). That repository has no license
+  file. Its ftplugin was derived from Vim's `ftplugin/lua.vim` (Vim license). The ftplugin here keeps
+  that lineage and credits.
+* `syntax/nelua.vim`, `indent/nelua.vim`, `ftdetect/nelua.lua` and the test tools are new code. Their
+  structure follows Nelua's grammar (`nelua-lang`, MIT, Eduardo Bart) and the scope logic of
+  `nelua-sublime` (MIT, Eduardo Bart).
+* `test/corpus/sublime_syntax_test_nelua.nelua` is a copy of nelua-sublime's `syntax_test_nelua.nelua`
+  (MIT). `test/corpus/docs_examples.nelua` holds code blocks from nelua-lang's docs (MIT).
+* Choosing a licence for this fork is the owner's decision. Until the original author states a licence,
+  redistributing the parts derived from `stefanos82/nelua.vim` is unclear.
