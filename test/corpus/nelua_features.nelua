@@ -1,0 +1,328 @@
+#!/usr/bin/env nelua
+--@ "#!/usr/bin/env nelua" =Comment
+-- Nelua-specific highlighting corpus for nelua.vim.
+-- Assertions: --@ "text"[#n] spec   (see test/run_assertions.lua).
+-- Sources: nelua-lang/docs/pages/overview.md and lualib/nelua/syntaxdefs.lua.
+
+-- TODO: a todo marker inside a comment
+--@ "TODO" =Todo
+--@ "a todo marker" =Comment
+
+--[==[ long comment with ]] and ]=] inside
+still comment ]==] local after_comment = 1
+--@ "still comment ]==]" =Comment
+--@ "local" =StorageClass
+--@ "1" =Number
+
+---------------------------------------------------------------- PREPROCESSOR
+## if not CONSTANT then
+--@ "##" =PreProc
+--@ "if" =Conditional
+--@ "CONSTANT" =PreProc
+--@ "then" =Conditional
+local x <comptime> = 10
+--@ "local" =StorageClass
+--@ "x" =NONE
+--@ "<" =Delimiter
+--@ "comptime" =Macro
+--@ ">" =Delimiter
+--@ "=" =Operator
+--@ "10" =Number
+## end
+--@ "##" =PreProc
+--@ "end" =Keyword
+print(x)
+--@ "print" =Special
+--@ "x" =NONE
+
+##[[
+local something = false
+if something then
+]]
+--@ "]]" =PreProc
+  print('hello')
+--@ "print" =Special
+--@ "'hello'" =String
+##[[ end ]]
+--@ "##[[" =PreProc
+--@ "end" =Keyword
+--@ "]]" =PreProc
+local after_pp = 1
+--@ "local" =StorageClass
+--@ "1" =Number
+
+##[=[ local s = "]]" ]=]
+--@ "##[=[" =PreProc
+--@ "\"]]\"" =String
+--@ "]=]" =PreProc
+local deg2rad = #[math.pi/180.0]#
+--@ "#[" =PreProc
+--@ "math" =Special
+--@ "180.0" =Number
+--@ "]#" =PreProc
+local #|'my' .. 'var'|# = 1
+--@ "#|" =PreProc
+--@ "'my'" =String
+--@ "|#" =PreProc
+--@ "1" =Number
+print(Weekends.#|'S'..string.lower('UNDAY')|#)
+--@ "'S'" =String
+--@ "|#" =PreProc
+#[mul]#(res, a, b)
+--@ "#[" =PreProc
+--@ "mul" =PreProc
+--@ "res" =NONE
+## function increment(a, amount)
+  #|a.name|# = #|a.name|# + #[amount]#
+--@ "#|" =PreProc
+--@ "+" =Operator
+--@ "amount" =PreProc
+## end
+local y = 0
+--@ "0" =Number
+f!(1, 2)
+--@ "f!" =Macro
+
+---------------------------------------------------------------- ANNOTATIONS
+local printf: function(cstring, ...: cvarargs): cint <cimport 'printf', cinclude '<stdio.h>', nodecl>
+--@ "function" =Keyword
+--@ "cstring" =Type
+--@ "..." =Special
+--@ "cvarargs" =Type
+--@ "cint" =Type
+--@ "cimport" =Macro
+--@ "'printf'" =String
+--@ "'<stdio.h>'" =String
+--@ "nodecl" =Macro
+--@ ">"#2 =Delimiter
+local function sum(a: integer, b: integer): integer <inline>
+--@ "sum" =Function
+--@ "integer" =Type
+--@ "inline" =Macro
+  return a + b
+--@ "return" =Statement
+end
+--@ "end" =Keyword
+local Foo <nickname 'foo', aligned(16)> = @record{x: integer}
+--@ "nickname" =Macro
+--@ "aligned" =Macro
+--@ "16" =Number
+--@ "record" =Structure
+local text <const = "Hello, World"
+--@ "<" =Operator
+--@ "const" =NONE
+--@ "\"Hello, World\"" =String
+if a < b and c > d then end
+--@ "<" =Operator
+--@ ">" =Operator
+--@ "and" =Operator
+
+---------------------------------------------------------------- TYPES
+local p: *integer = nilptr
+--@ "*" =Operator
+--@ "integer" =Type
+--@ "nilptr" =Constant
+local arr: [10]integer
+--@ "10" =Number
+--@ "integer" =Type
+local sp: span(integer)
+--@ "span" =Type
+--@ "integer" =Type
+local v: MyType = MyType.new()
+--@ "MyType" =Type
+--@ "MyType"#2 =NONE
+--@ "new" =Function
+local Vec2 = @record{x: number, y: number}
+--@ "@" =Operator
+--@ "record" =Structure
+--@ "x" =NONE
+--@ "number" =Type
+local Weekends = @enum(uint8){ Friday=0, Saturday, Sunday }
+--@ "enum" =Structure
+--@ "uint8" =Type
+--@ "0" =Number
+local U = @union{ i: int32, f: float32 }
+--@ "union" =Structure
+--@ "int32" =Type
+local Fn = @function(integer): integer
+--@ "function" =Keyword
+local Arr4 = @[4]integer
+--@ "4"#2 =Number
+--@ "integer" =Type
+local PInt = @*int8
+--@ "int8" =Type
+local T = @MyType
+--@ "MyType" =Type
+local o: ?integer
+--@ "?" =Operator
+--@ "integer" =Type
+local up: *MyType = nilptr
+--@ "*" =Operator
+--@ "MyType" =Type
+local ua: [N]*MyType
+--@ "N" =NONE
+--@ "*" =Operator
+--@ "MyType" =Type
+local PT = @*MyType
+--@ "@" =Operator
+--@ "*" =Operator
+--@ "MyType" =Type
+local m: mymod.MyType
+--@ "mymod.MyType" =Type
+local f2: function(x: MyType): (integer, MyType)
+--@ "MyType" =Type
+--@ "MyType"#2 =NONE
+function Vec2.__add(a: Vec2, b: Vec2): Vec2
+--@ "Vec2" =NONE
+--@ "__add" =Function
+--@ "Vec2"#2 =Type
+--@ "Vec2"#4 =Type
+  return (@Vec2){a.x + b.x, a.y + b.y}
+--@ "Vec2" =Type
+end
+function Vec2:len(): number
+--@ "len" =Function
+--@ "number" =Type
+  return math.sqrt(self.x * self.x)
+--@ "math" =Special
+--@ "sqrt" =Function
+--@ "self" =Special
+end
+local l = v:len()
+--@ "len" =Function
+::continue_label::
+--@ "::continue_label::" =Label
+goto continue_label
+--@ "goto" =Statement
+--@ "continue_label" =Label
+
+---------------------------------------------------------------- CONTROL FLOW
+switch x do
+--@ "switch" =Conditional
+case 1, 2 then
+--@ "case" =Conditional
+--@ "then" =Conditional
+  fallthrough
+--@ "fallthrough" =Statement
+case 3 then
+  print 'three'
+--@ "'three'" =String
+else
+--@ "else" =Conditional
+end
+do
+  defer print('deferred') end
+--@ "defer" =Statement
+--@ "print" =Special
+end
+for i = 0, < 10 do continue end
+--@ "for" =Repeat
+--@ "<" =Operator
+--@ "continue" =Statement
+for k, v in pairs(t) do end
+--@ "in" =Repeat
+--@ "pairs" =Special
+while true do break end
+--@ "while" =Repeat
+--@ "true" =Boolean
+--@ "break" =Statement
+repeat until false
+--@ "repeat" =Repeat
+--@ "until" =Repeat
+local z = (do
+  local res = x * 2
+  in res
+--@ "in" =Statement
+end)
+
+---------------------------------------------------------------- OPERATORS
+local ops = 7 /// 2 + 7 %%% 2 + (a >>> 1) + (a // 2) + (a ~ b) + #t
+--@ "///" =Operator
+--@ "%%%" =Operator
+--@ ">>>" =Operator
+--@ "//" =Operator
+--@ "~" =Operator
+--@ "#" =Operator
+local r = &x
+--@ "&" =Operator
+local d = $r
+--@ "$" =Operator
+local s = 'a' .. 'b'
+--@ ".." =Operator
+
+---------------------------------------------------------------- NUMBERS
+local nums = {1234, 0b1010, 0xff, 1.2e-100, 1.41, .5, 0x1.921FB54442D18p+1}
+--@ "1234" =Number
+--@ "0b1010" =Number
+--@ "0xff" =Number
+--@ "1.2e-100" =Number
+--@ ".5" =Number
+--@ "0x1.921FB54442D18p+1" =Number
+local a = 1234_u32 + 1_f32 + -1_isize
+--@ "1234_u32" =Number
+--@ "1_f32" =Number
+--@ "1_isize" =Number
+local char = 'A'_u8
+--@ "'A'" =String
+--@ "_u8" =Type
+
+---------------------------------------------------------------- STRINGS
+local ctr = "\n\t\r\a\b\v\f"
+--@ "\n\t\r\a\b\v\f" =SpecialChar
+local utf = "\u{03C0}" .. "\x41" .. "\65"
+--@ "\u{03C0}" =SpecialChar
+--@ "\x41" =SpecialChar
+--@ "\65" =SpecialChar
+local bad = "a\qb"
+--@ "\q" =Error
+local multiline1 = "my\z
+                    text1"
+--@ "text1\"" =String
+local multiline2 = "my\
+text2"
+--@ "text2\"" =String
+local after_strings = 1
+--@ "1" =Number
+local escaped_backslash = "abc\\
+local after_bs = 4
+--@ "local" =StorageClass
+--@ "4" =Number
+local triple = "abc\\\
+continued"
+--@ "continued\"" =String
+local escaped_then_z = "abc\\z
+local after_bsz = 5
+--@ "local" =StorageClass
+--@ "5" =Number
+local z_blanks = "abc\z   
+   continued"
+--@ "continued\"" =String
+local dec = "\123\0\300"
+--@ "\123" =SpecialChar
+--@ "\0" =SpecialChar
+--@ "\3" =Error
+local h <nocopy> = 3
+--@ "nocopy" =Macro
+local long = [==[
+a ]] b ]=] c
+]==]
+--@ "]==]" =String
+local unclosed = "oops
+local after_unclosed = 2
+--@ "local" =StorageClass
+--@ "2" =Number
+
+---------------------------------------------------------------- MISC
+local anon = function(x: integer): integer return x end
+--@ "anon" =Function
+--@ "function" =Keyword
+local t = {__index = function(i) end, key = 1}
+--@ "__index" =Function
+--@ "key" =NONE
+print(nil, true, false, ..., _VERSION)
+--@ "nil" =Constant
+--@ "false" =Boolean
+--@ "..." =Special
+--@ "_VERSION" =Special
+local last_line = 1
+--@ "local" =StorageClass

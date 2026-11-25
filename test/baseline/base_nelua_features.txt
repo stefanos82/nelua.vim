@@ -1,0 +1,313 @@
+FAIL L14 (code L12) [=StorageClass]
+     code: still comment ]==] local after_comment = 1
+     want: StorageClass
+     got:  col 20=Statement(neluaStatement), col 21=Statement(neluaStatement), col 22=Statement(neluaStatement), col 23=Statement(neluaStatement), col 24=Statement(neluaStatement)
+FAIL L21 (code L18) [=PreProc]
+     code: ## if not CONSTANT then
+     want: PreProc
+     got:  col 11=NONE(), col 12=NONE(), col 13=NONE(), col 14=NONE(), col 15=NONE(), col 16=NONE(), col 17=NONE(), col 18=NONE()
+FAIL L24 (code L23) [=StorageClass]
+     code: local x <comptime> = 10
+     want: StorageClass
+     got:  col 1=Statement(neluaStatement), col 2=Statement(neluaStatement), col 3=Statement(neluaStatement), col 4=Statement(neluaStatement), col 5=Statement(neluaStatement)
+FAIL L26 (code L23) [=Delimiter]
+     code: local x <comptime> = 10
+     want: Delimiter
+     got:  col 9=Keyword(neluaKeyword)
+FAIL L27 (code L23) [=Macro]
+     code: local x <comptime> = 10
+     want: Macro
+     got:  col 10=Identifier(neluaAnnotation), col 11=Identifier(neluaAnnotation), col 12=Identifier(neluaAnnotation), col 13=Identifier(neluaAnnotation), col 14=Identifier(neluaAnnotation), col 15=Identifier(neluaAnnotation), col 16=Identifier(neluaAnnotation), col 17=Identifier(neluaAnnotation)
+FAIL L28 (code L23) [=Delimiter]
+     code: local x <comptime> = 10
+     want: Delimiter
+     got:  col 18=Keyword(neluaKeyword)
+FAIL L29 (code L23) [=Operator]
+     code: local x <comptime> = 10
+     want: Operator
+     got:  col 20=Keyword(neluaKeyword)
+FAIL L33 (code L31) [=Keyword]
+     code: ## end
+     want: Keyword
+     got:  col 4=Conditional(neluaCond), col 5=Conditional(neluaCond), col 6=Conditional(neluaCond)
+FAIL L35 (code L34) [=Special]
+     code: print(x)
+     want: Special
+     got:  col 1=Type(neluaBuiltin), col 2=Type(neluaBuiltin), col 3=Type(neluaBuiltin), col 4=Type(neluaBuiltin), col 5=Type(neluaBuiltin)
+FAIL L42 (code L41) [=PreProc]
+     code: ]]
+     want: PreProc
+     got:  col 1=NONE(neluaPreProcCodeBlock), col 2=NONE(neluaPreProcCodeBlock)
+FAIL L44 (code L43) [=Special]
+     code:   print('hello')
+     want: Special
+     got:  col 3=Type(neluaBuiltin), col 4=Type(neluaBuiltin), col 5=Type(neluaBuiltin), col 6=Type(neluaBuiltin), col 7=Type(neluaBuiltin)
+FAIL L47 (code L46) [=PreProc]
+     code: ##[[ end ]]
+     want: PreProc
+     got:  col 1=Include(Include), col 2=Include(Include), col 3=Include(Include), col 4=Include(Include)
+FAIL L49 (code L46) [=PreProc]
+     code: ##[[ end ]]
+     want: PreProc
+     got:  col 10=Include(Include), col 11=Include(Include)
+FAIL L51 (code L50) [=StorageClass]
+     code: local after_pp = 1
+     want: StorageClass
+     got:  col 1=Statement(neluaStatement), col 2=Statement(neluaStatement), col 3=Statement(neluaStatement), col 4=Statement(neluaStatement), col 5=Statement(neluaStatement)
+FAIL L55 (code L54) [=PreProc]
+     code: ##[=[ local s = "]]" ]=]
+     want: PreProc
+     got:  col 1=Include(Include), col 2=Include(Include), col 3=Include(Include), col 4=Include(Include), col 5=Include(Include)
+FAIL L57 (code L54) [=PreProc]
+     code: ##[=[ local s = "]]" ]=]
+     want: PreProc
+     got:  col 22=Include(Include), col 23=Include(Include), col 24=Include(Include)
+FAIL L60 (code L58) [=Special]
+     code: local deg2rad = #[math.pi/180.0]#
+     want: Special
+     got:  col 19=Identifier(neluaFunc), col 20=Identifier(neluaFunc), col 21=Identifier(neluaFunc), col 22=Identifier(neluaFunc)
+FAIL L73 (code L71) [=PreProc]
+     code: #[mul]#(res, a, b)
+     want: PreProc
+     got:  col 3=NONE(neluaPreProcExpression), col 4=NONE(neluaPreProcExpression), col 5=NONE(neluaPreProcExpression)
+FAIL L78 (code L76) [=Operator]
+     code:   #|a.name|# = #|a.name|# + #[amount]#
+     want: Operator
+     got:  col 27=Keyword(neluaKeyword)
+FAIL L79 (code L76) [=PreProc]
+     code:   #|a.name|# = #|a.name|# + #[amount]#
+     want: PreProc
+     got:  col 31=NONE(neluaPreProcExpression), col 32=NONE(neluaPreProcExpression), col 33=NONE(neluaPreProcExpression), col 34=NONE(neluaPreProcExpression), col 35=NONE(neluaPreProcExpression), col 36=NONE(neluaPreProcExpression)
+FAIL L84 (code L83) [=Macro]
+     code: f!(1, 2)
+     want: Macro
+     got:  col 1=NONE(neluaPreProcCodeBlock), col 2=NONE(neluaPreProcCodeBlock)
+FAIL L90 (code L87) [=Special]
+     code: local printf: function(cstring, ...: cvarargs): cint <cimport 'printf', cinclude '<stdio.h>', nodecl>
+     want: Special
+     got:  col 33=Keyword(neluaKeyword), col 34=Keyword(neluaKeyword), col 35=Keyword(neluaKeyword)
+FAIL L91 (code L87) [=Type]
+     code: local printf: function(cstring, ...: cvarargs): cint <cimport 'printf', cinclude '<stdio.h>', nodecl>
+     want: Type
+     got:  col 38=NONE(neluaPreProcCodeBlock), col 39=NONE(neluaPreProcCodeBlock), col 40=NONE(neluaPreProcCodeBlock), col 41=NONE(neluaPreProcCodeBlock), col 42=NONE(neluaPreProcCodeBlock), col 43=NONE(neluaPreProcCodeBlock), col 44=NONE(neluaPreProcCodeBlock), col 45=NONE(neluaPreProcCodeBlock)
+FAIL L93 (code L87) [=Macro]
+     code: local printf: function(cstring, ...: cvarargs): cint <cimport 'printf', cinclude '<stdio.h>', nodecl>
+     want: Macro
+     got:  col 55=Identifier(neluaAnnotation), col 56=Identifier(neluaAnnotation), col 57=Identifier(neluaAnnotation), col 58=Identifier(neluaAnnotation), col 59=Identifier(neluaAnnotation), col 60=Identifier(neluaAnnotation), col 61=Identifier(neluaAnnotation)
+FAIL L96 (code L87) [=Macro]
+     code: local printf: function(cstring, ...: cvarargs): cint <cimport 'printf', cinclude '<stdio.h>', nodecl>
+     want: Macro
+     got:  col 95=Identifier(neluaAnnotation), col 96=Identifier(neluaAnnotation), col 97=Identifier(neluaAnnotation), col 98=Identifier(neluaAnnotation), col 99=Identifier(neluaAnnotation), col 100=Identifier(neluaAnnotation)
+FAIL L97 (code L87) [=Delimiter]
+     code: local printf: function(cstring, ...: cvarargs): cint <cimport 'printf', cinclude '<stdio.h>', nodecl>
+     want: Delimiter
+     got:  col 101=Keyword(neluaKeyword)
+FAIL L99 (code L98) [=Function]
+     code: local function sum(a: integer, b: integer): integer <inline>
+     want: Function
+     got:  col 16=NONE(neluaPreProcCodeBlock), col 17=NONE(neluaPreProcCodeBlock), col 18=NONE(neluaPreProcCodeBlock)
+FAIL L101 (code L98) [=Macro]
+     code: local function sum(a: integer, b: integer): integer <inline>
+     want: Macro
+     got:  col 54=Identifier(neluaAnnotation), col 55=Identifier(neluaAnnotation), col 56=Identifier(neluaAnnotation), col 57=Identifier(neluaAnnotation), col 58=Identifier(neluaAnnotation), col 59=Identifier(neluaAnnotation)
+FAIL L107 (code L106) [=Macro]
+     code: local Foo <nickname 'foo', aligned(16)> = @record{x: integer}
+     want: Macro
+     got:  col 12=Identifier(neluaAnnotation), col 13=Identifier(neluaAnnotation), col 14=Identifier(neluaAnnotation), col 15=Identifier(neluaAnnotation), col 16=Identifier(neluaAnnotation), col 17=Identifier(neluaAnnotation), col 18=Identifier(neluaAnnotation), col 19=Identifier(neluaAnnotation)
+FAIL L108 (code L106) [=Macro]
+     code: local Foo <nickname 'foo', aligned(16)> = @record{x: integer}
+     want: Macro
+     got:  col 28=Type(neluaBuiltin), col 29=Type(neluaBuiltin), col 30=Type(neluaBuiltin), col 31=Type(neluaBuiltin), col 32=Type(neluaBuiltin), col 33=Type(neluaBuiltin), col 34=Type(neluaBuiltin)
+FAIL L112 (code L111) [=Operator]
+     code: local text <const = "Hello, World"
+     want: Operator
+     got:  col 12=Keyword(neluaKeyword)
+FAIL L113 (code L111) [=NONE]
+     code: local text <const = "Hello, World"
+     want: NONE
+     got:  col 13=Identifier(neluaAnnotation), col 14=Identifier(neluaAnnotation), col 15=Identifier(neluaAnnotation), col 16=Identifier(neluaAnnotation), col 17=Identifier(neluaAnnotation)
+FAIL L116 (code L115) [=Operator]
+     code: if a < b and c > d then end
+     want: Operator
+     got:  col 6=Keyword(neluaKeyword)
+FAIL L117 (code L115) [=Operator]
+     code: if a < b and c > d then end
+     want: Operator
+     got:  col 16=Keyword(neluaKeyword)
+FAIL L122 (code L121) [=Operator]
+     code: local p: *integer = nilptr
+     want: Operator
+     got:  col 10=Keyword(neluaKeyword)
+FAIL L129 (code L128) [=Type]
+     code: local sp: span(integer)
+     want: Type
+     got:  col 11=NONE(neluaPreProcCodeBlock), col 12=NONE(neluaPreProcCodeBlock), col 13=NONE(neluaPreProcCodeBlock), col 14=NONE(neluaPreProcCodeBlock)
+FAIL L132 (code L131) [=Type]
+     code: local v: MyType = MyType.new()
+     want: Type
+     got:  col 10=NONE(neluaPreProcCodeBlock), col 11=NONE(neluaPreProcCodeBlock), col 12=NONE(neluaPreProcCodeBlock), col 13=NONE(neluaPreProcCodeBlock), col 14=NONE(neluaPreProcCodeBlock), col 15=NONE(neluaPreProcCodeBlock)
+FAIL L134 (code L131) [=Function]
+     code: local v: MyType = MyType.new()
+     want: Function
+     got:  col 26=NONE(neluaPreProcCodeBlock), col 27=NONE(neluaPreProcCodeBlock), col 28=NONE(neluaPreProcCodeBlock)
+FAIL L136 (code L135) [=Operator]
+     code: local Vec2 = @record{x: number, y: number}
+     want: Operator
+     got:  col 14=Keyword(neluaKeyword)
+FAIL L150 (code L149) [=Number]
+     code: local Arr4 = @[4]integer
+     want: Number
+     got:  col 10=NONE(neluaPreProcCodeBlock)
+FAIL L155 (code L154) [=Type]
+     code: local T = @MyType
+     want: Type
+     got:  col 12=NONE(neluaPreProcCodeBlock), col 13=NONE(neluaPreProcCodeBlock), col 14=NONE(neluaPreProcCodeBlock), col 15=NONE(neluaPreProcCodeBlock), col 16=NONE(neluaPreProcCodeBlock), col 17=NONE(neluaPreProcCodeBlock)
+FAIL L157 (code L156) [=Operator]
+     code: local o: ?integer
+     want: Operator
+     got:  col 10=NONE(neluaPreProcCodeBlock)
+FAIL L162 (code L159) [=Type]
+     code: function Vec2.__add(a: Vec2, b: Vec2): Vec2
+     want: Type
+     got:  col 24=NONE(neluaPreProcCodeBlock), col 25=NONE(neluaPreProcCodeBlock), col 26=NONE(neluaPreProcCodeBlock), col 27=NONE(neluaPreProcCodeBlock)
+FAIL L163 (code L159) [=Type]
+     code: function Vec2.__add(a: Vec2, b: Vec2): Vec2
+     want: Type
+     got:  col 40=NONE(neluaPreProcCodeBlock), col 41=NONE(neluaPreProcCodeBlock), col 42=NONE(neluaPreProcCodeBlock), col 43=NONE(neluaPreProcCodeBlock)
+FAIL L165 (code L164) [=Type]
+     code:   return (@Vec2){a.x + b.x, a.y + b.y}
+     want: Type
+     got:  col 12=NONE(neluaPreProcCodeBlock), col 13=NONE(neluaPreProcCodeBlock), col 14=NONE(neluaPreProcCodeBlock), col 15=NONE(neluaPreProcCodeBlock)
+FAIL L168 (code L167) [=Function]
+     code: function Vec2:len(): number
+     want: Function
+     got:  col 15=NONE(neluaPreProcCodeBlock), col 16=NONE(neluaPreProcCodeBlock), col 17=NONE(neluaPreProcCodeBlock)
+FAIL L171 (code L170) [=Special]
+     code:   return math.sqrt(self.x * self.x)
+     want: Special
+     got:  col 10=Identifier(neluaFunc), col 11=Identifier(neluaFunc), col 12=Identifier(neluaFunc), col 13=Identifier(neluaFunc)
+FAIL L172 (code L170) [=Function]
+     code:   return math.sqrt(self.x * self.x)
+     want: Function
+     got:  col 15=Identifier(neluaFunc), col 16=Identifier(neluaFunc), col 17=Identifier(neluaFunc), col 18=Identifier(neluaFunc)
+FAIL L173 (code L170) [=Special]
+     code:   return math.sqrt(self.x * self.x)
+     want: Special
+     got:  col 20=Constant(neluaSelf), col 21=Constant(neluaSelf), col 22=Constant(neluaSelf), col 23=Constant(neluaSelf)
+FAIL L176 (code L175) [=Function]
+     code: local l = v:len()
+     want: Function
+     got:  col 13=NONE(neluaPreProcCodeBlock), col 14=NONE(neluaPreProcCodeBlock), col 15=NONE(neluaPreProcCodeBlock)
+FAIL L181 (code L179) [=Label]
+     code: goto continue_label
+     want: Label
+     got:  col 6=NONE(neluaPreProcCodeBlock), col 7=NONE(neluaPreProcCodeBlock), col 8=NONE(neluaPreProcCodeBlock), col 9=NONE(neluaPreProcCodeBlock), col 10=NONE(neluaPreProcCodeBlock), col 11=NONE(neluaPreProcCodeBlock), col 12=NONE(neluaPreProcCodeBlock), col 13=NONE(neluaPreProcCodeBlock), col 14=NONE(neluaPreProcCodeBlock), col 15=NONE(neluaPreProcCodeBlock), col 16=NONE(neluaPreProcCodeBlock), col 17=NONE(neluaPreProcCodeBlock), col 18=NONE(neluaPreProcCodeBlock), col 19=NONE(neluaPreProcCodeBlock)
+FAIL L200 (code L198) [=Special]
+     code:   defer print('deferred') end
+     want: Special
+     got:  col 9=Type(neluaBuiltin), col 10=Type(neluaBuiltin), col 11=Type(neluaBuiltin), col 12=Type(neluaBuiltin), col 13=Type(neluaBuiltin)
+FAIL L204 (code L202) [=Operator]
+     code: for i = 0, < 10 do continue end
+     want: Operator
+     got:  col 12=Keyword(neluaKeyword)
+FAIL L208 (code L206) [=Special]
+     code: for k, v in pairs(t) do end
+     want: Special
+     got:  col 13=Identifier(neluaFunc), col 14=Identifier(neluaFunc), col 15=Identifier(neluaFunc), col 16=Identifier(neluaFunc), col 17=Identifier(neluaFunc)
+FAIL L219 (code L218) [=Statement]
+     code:   in res
+     want: Statement
+     got:  col 3=Keyword(neluaInKeyword), col 4=Keyword(neluaInKeyword)
+FAIL L224 (code L223) [=Operator]
+     code: local ops = 7 /// 2 + 7 %%% 2 + (a >>> 1) + (a // 2) + (a ~ b) + #t
+     want: Operator
+     got:  col 15=Keyword(neluaKeyword), col 16=Keyword(neluaKeyword), col 17=Keyword(neluaKeyword)
+FAIL L225 (code L223) [=Operator]
+     code: local ops = 7 /// 2 + 7 %%% 2 + (a >>> 1) + (a // 2) + (a ~ b) + #t
+     want: Operator
+     got:  col 25=NONE(neluaPreProcCodeBlock), col 26=NONE(neluaPreProcCodeBlock), col 27=NONE(neluaPreProcCodeBlock)
+FAIL L226 (code L223) [=Operator]
+     code: local ops = 7 /// 2 + 7 %%% 2 + (a >>> 1) + (a // 2) + (a ~ b) + #t
+     want: Operator
+     got:  col 36=Keyword(neluaKeyword), col 37=Keyword(neluaKeyword), col 38=Keyword(neluaKeyword)
+FAIL L227 (code L223) [=Operator]
+     code: local ops = 7 /// 2 + 7 %%% 2 + (a >>> 1) + (a // 2) + (a ~ b) + #t
+     want: Operator
+     got:  col 15=Keyword(neluaKeyword), col 16=Keyword(neluaKeyword)
+FAIL L228 (code L223) [=Operator]
+     code: local ops = 7 /// 2 + 7 %%% 2 + (a >>> 1) + (a // 2) + (a ~ b) + #t
+     want: Operator
+     got:  col 59=Keyword(neluaKeyword)
+FAIL L229 (code L223) [=Operator]
+     code: local ops = 7 /// 2 + 7 %%% 2 + (a >>> 1) + (a // 2) + (a ~ b) + #t
+     want: Operator
+     got:  col 66=PreProc(neluaPreProc)
+FAIL L231 (code L230) [=Operator]
+     code: local r = &x
+     want: Operator
+     got:  col 11=Keyword(neluaKeyword)
+FAIL L233 (code L232) [=Operator]
+     code: local d = $r
+     want: Operator
+     got:  col 11=Keyword(neluaKeyword)
+FAIL L235 (code L234) [=Operator]
+     code: local s = 'a' .. 'b'
+     want: Operator
+     got:  col 15=Keyword(neluaKeyword), col 16=Keyword(neluaKeyword)
+FAIL L243 (code L238) [=Number]
+     code: local nums = {1234, 0b1010, 0xff, 1.2e-100, 1.41, .5, 0x1.921FB54442D18p+1}
+     want: Number
+     got:  col 51=Keyword(neluaKeyword)
+FAIL L251 (code L249) [=Type]
+     code: local char = 'A'_u8
+     want: Type
+     got:  col 17=NONE(neluaPreProcCodeBlock), col 18=NONE(neluaPreProcCodeBlock), col 19=NONE(neluaPreProcCodeBlock)
+FAIL L257 (code L256) [=SpecialChar]
+     code: local utf = "\u{03C0}" .. "\x41" .. "\65"
+     want: SpecialChar
+     got:  col 15=String(neluastring), col 16=String(neluastring), col 17=String(neluastring), col 18=String(neluastring), col 19=String(neluastring), col 20=String(neluastring), col 21=String(neluastring)
+FAIL L261 (code L260) [=Error]
+     code: local bad = "a\qb"
+     want: Error
+     got:  col 15=SpecialChar(neluaSpecial), col 16=String(neluastring)
+FAIL L276 (code L275) [=StorageClass]
+     code: local after_unclosed = 2
+     want: StorageClass
+     got:  col 1=String(neluastring), col 2=String(neluastring), col 3=String(neluastring), col 4=String(neluastring), col 5=String(neluastring)
+FAIL L277 (code L275) [=Number]
+     code: local after_unclosed = 2
+     want: Number
+     got:  col 24=String(neluastring)
+FAIL L281 (code L280) [=Function]
+     code: local anon = function(x: integer): integer return x end
+     want: Function
+     got:  col 7=String(neluastring), col 8=String(neluastring), col 9=String(neluastring), col 10=String(neluastring)
+FAIL L284 (code L283) [=Function]
+     code: local t = {__index = function(i) end, key = 1}
+     want: Function
+     got:  col 12=String(neluastring), col 13=String(neluastring), col 14=String(neluastring), col 15=String(neluastring), col 16=String(neluastring), col 17=String(neluastring), col 18=String(neluastring)
+FAIL L285 (code L283) [=NONE]
+     code: local t = {__index = function(i) end, key = 1}
+     want: NONE
+     got:  col 39=String(neluastring), col 40=String(neluastring), col 41=String(neluastring)
+FAIL L287 (code L286) [=Constant]
+     code: print(nil, true, false, ..., _VERSION)
+     want: Constant
+     got:  col 7=String(neluastring), col 8=String(neluastring), col 9=String(neluastring)
+FAIL L288 (code L286) [=Boolean]
+     code: print(nil, true, false, ..., _VERSION)
+     want: Boolean
+     got:  col 18=String(neluastring), col 19=String(neluastring), col 20=String(neluastring), col 21=String(neluastring), col 22=String(neluastring)
+FAIL L289 (code L286) [=Special]
+     code: print(nil, true, false, ..., _VERSION)
+     want: Special
+     got:  col 25=String(neluastring), col 26=String(neluastring), col 27=String(neluastring)
+FAIL L290 (code L286) [=Special]
+     code: print(nil, true, false, ..., _VERSION)
+     want: Special
+     got:  col 30=String(neluastring), col 31=String(neluastring), col 32=String(neluastring), col 33=String(neluastring), col 34=String(neluastring), col 35=String(neluastring), col 36=String(neluastring), col 37=String(neluastring)
+FAIL L292 (code L291) [=StorageClass]
+     code: local last_line = 1
+     want: StorageClass
+     got:  col 1=String(neluastring), col 2=String(neluastring), col 3=String(neluastring), col 4=String(neluastring), col 5=String(neluastring)
+SUMMARY file=nelua_features.nelua pass=96 fail=78 skipped(no colour meaning)=0

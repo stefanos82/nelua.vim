@@ -1,0 +1,573 @@
+filetype=nelua syntax=nelua current_syntax=nelua ts_highlight=nil
+   1| #!/usr/bin/env nelua
+    '#!/usr/bin/env nelua' neluaComment -> Comment
+   2| --@ "#!/usr/bin/env nelua" =Comment
+    '--@ "#!/usr/bin/env nelua" =Comment' neluaComment -> Comment
+   3| -- Nelua-specific highlighting corpus for nelua.vim.
+    '-- Nelua-specific highlighting corpus for nelua.vim.' neluaComment -> Comment
+   4| -- Assertions: --@ "text"[#n] spec   (see test/run_assertions.lua).
+    '-- Assertions: --@ "text"[#n] spec   (see test/run_assertions.lua).' neluaComment -> Comment
+   5| -- Sources: nelua-lang/docs/pages/overview.md and lualib/nelua/syntaxdefs.lua.
+    '-- Sources: nelua-lang/docs/pages/overview.md and lualib/nelua/syntaxdefs.lua.' neluaComment -> Comment
+   6| 
+   7| -- TODO: a todo marker inside a comment
+    '-- ' neluaComment -> Comment | 'TODO' neluaTodo -> Todo | ': a todo marker inside a comment' neluaComment -> Comment
+   8| --@ "TODO" =Todo
+    '--@ "' neluaComment -> Comment | 'TODO' neluaTodo -> Todo | '" =Todo' neluaComment -> Comment
+   9| --@ "a todo marker" =Comment
+    '--@ "a todo marker" =Comment' neluaComment -> Comment
+  10| 
+  11| --[==[ long comment with ]] and ]=] inside
+    '--[==[ long comment with ]] and ]=] inside' neluaComment -> Comment
+  12| still comment ]==] local after_comment = 1
+    'still comment ]==]' neluaComment -> Comment | 'local' neluaStatement -> Statement | '=' neluaKeyword -> Statement | '1' neluaNumber -> Constant
+  13| --@ "still comment ]==]" =Comment
+    '--@ "still comment ]==]" =Comment' neluaComment -> Comment
+  14| --@ "local" =StorageClass
+    '--@ "local" =StorageClass' neluaComment -> Comment
+  15| --@ "1" =Number
+    '--@ "1" =Number' neluaComment -> Comment
+  16| 
+  17| ---------------------------------------------------------------- PREPROCESSOR
+    '---------------------------------------------------------------- PREPROCESSOR' neluaComment -> Comment
+  18| ## if not CONSTANT then
+    '##' neluaPreProc -> PreProc | 'if' neluaCond -> Statement | 'not' neluaOperator -> Operator | 'then' neluaCond -> Statement
+  19| --@ "##" =PreProc
+    '--@ "##" =PreProc' neluaComment -> Comment
+  20| --@ "if" =Conditional
+    '--@ "if" =Conditional' neluaComment -> Comment
+  21| --@ "CONSTANT" =PreProc
+    '--@ "CONSTANT" =PreProc' neluaComment -> Comment
+  22| --@ "then" =Conditional
+    '--@ "then" =Conditional' neluaComment -> Comment
+  23| local x <comptime> = 10
+    'local' neluaStatement -> Statement | '<' neluaKeyword -> Statement | 'comptime' neluaAnnotation -> Identifier | '>' neluaKeyword -> Statement | '=' neluaKeyword -> Statement | '10' neluaNumber -> Constant
+  24| --@ "local" =StorageClass
+    '--@ "local" =StorageClass' neluaComment -> Comment
+  25| --@ "x" =NONE
+    '--@ "x" =NONE' neluaComment -> Comment
+  26| --@ "<" =Delimiter
+    '--@ "<" =Delimiter' neluaComment -> Comment
+  27| --@ "comptime" =Macro
+    '--@ "comptime" =Macro' neluaComment -> Comment
+  28| --@ ">" =Delimiter
+    '--@ ">" =Delimiter' neluaComment -> Comment
+  29| --@ "=" =Operator
+    '--@ "=" =Operator' neluaComment -> Comment
+  30| --@ "10" =Number
+    '--@ "10" =Number' neluaComment -> Comment
+  31| ## end
+    '##' neluaPreProc -> PreProc | 'end' neluaCond -> Statement
+  32| --@ "##" =PreProc
+    '--@ "##" =PreProc' neluaComment -> Comment
+  33| --@ "end" =Keyword
+    '--@ "end" =Keyword' neluaComment -> Comment
+  34| print(x)
+    'print' neluaBuiltin -> Type
+  35| --@ "print" =Special
+    '--@ "print" =Special' neluaComment -> Comment
+  36| --@ "x" =NONE
+    '--@ "x" =NONE' neluaComment -> Comment
+  37| 
+  38| ##[[
+    '##[[' Include -> PreProc
+  39| local something = false
+    'local' neluaStatement -> Statement | ' something ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '=' neluaKeyword -> Statement | 'false' neluaBoolean -> Constant
+  40| if something then
+    'if' neluaCond -> Statement | ' something ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | 'then' neluaCond -> Statement
+  41| ]]
+    ']]' neluaPreProcCodeBlock -> neluaPreProcCodeBlock
+  42| --@ "]]" =PreProc
+    '--@ "]]" =PreProc' neluaComment -> Comment
+  43|   print('hello')
+    'print' neluaBuiltin -> Type | '(' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | ''hello'' neluastring -> String | ')' neluaPreProcCodeBlock -> neluaPreProcCodeBlock
+  44| --@ "print" =Special
+    '--@ "print" =Special' neluaComment -> Comment
+  45| --@ "'hello'" =String
+    '--@ "'hello'" =String' neluaComment -> Comment
+  46| ##[[ end ]]
+    '##[[' Include -> PreProc | 'end' neluaEnd -> Statement | ']]' Include -> PreProc
+  47| --@ "##[[" =PreProc
+    '--@ "##[[" =PreProc' neluaComment -> Comment
+  48| --@ "end" =Keyword
+    '--@ "end" =Keyword' neluaComment -> Comment
+  49| --@ "]]" =PreProc
+    '--@ "]]" =PreProc' neluaComment -> Comment
+  50| local after_pp = 1
+    'local' neluaStatement -> Statement | ' after_pp ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '=' neluaKeyword -> Statement | '1' neluaNumber -> Constant
+  51| --@ "local" =StorageClass
+    '--@ "local" =StorageClass' neluaComment -> Comment
+  52| --@ "1" =Number
+    '--@ "1" =Number' neluaComment -> Comment
+  53| 
+  54| ##[=[ local s = "]]" ]=]
+    '##[=[' Include -> PreProc | 'local' neluaStatement -> Statement | ' s ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '=' neluaKeyword -> Statement | '"]]"' neluastring -> String | ']=]' Include -> PreProc
+  55| --@ "##[=[" =PreProc
+    '--@ "##[=[" =PreProc' neluaComment -> Comment
+  56| --@ "\"]]\"" =String
+    '--@ "\"]]\"" =String' neluaComment -> Comment
+  57| --@ "]=]" =PreProc
+    '--@ "]=]" =PreProc' neluaComment -> Comment
+  58| local deg2rad = #[math.pi/180.0]#
+    'local' neluaStatement -> Statement | ' deg2rad ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '=' neluaKeyword -> Statement | '#[' neluaPreProc -> PreProc | 'math.pi' neluaFunc -> Identifier | '/' neluaKeyword -> Statement | '180.0' neluaNumber -> Constant | ']#' neluaPreProc -> PreProc
+  59| --@ "#[" =PreProc
+    '--@ "#[" =PreProc' neluaComment -> Comment
+  60| --@ "math" =Special
+    '--@ "math" =Special' neluaComment -> Comment
+  61| --@ "180.0" =Number
+    '--@ "180.0" =Number' neluaComment -> Comment
+  62| --@ "]#" =PreProc
+    '--@ "]#" =PreProc' neluaComment -> Comment
+  63| local #|'my' .. 'var'|# = 1
+    'local' neluaStatement -> Statement | '#|' neluaPreProc -> PreProc | ''my'' neluastring -> String | '..' neluaKeyword -> Statement | ''var'' neluastring -> String | '|#' neluaPreProc -> PreProc | '=' neluaKeyword -> Statement | '1' neluaNumber -> Constant
+  64| --@ "#|" =PreProc
+    '--@ "#|" =PreProc' neluaComment -> Comment
+  65| --@ "'my'" =String
+    '--@ "'my'" =String' neluaComment -> Comment
+  66| --@ "|#" =PreProc
+    '--@ "|#" =PreProc' neluaComment -> Comment
+  67| --@ "1" =Number
+    '--@ "1" =Number' neluaComment -> Comment
+  68| print(Weekends.#|'S'..string.lower('UNDAY')|#)
+    'print' neluaBuiltin -> Type | '(Weekends' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '.' neluaKeyword -> Statement | '#|' neluaPreProc -> PreProc | ''S'' neluastring -> String | '..' neluaKeyword -> Statement | 'string' neluaBuiltin -> Type | '.' neluaKeyword -> Statement | 'lower(' neluaPreProcNameReplacement -> neluaPreProcNameReplacement | ''UNDAY'' neluastring -> String | ')' neluaPreProcNameReplacement -> neluaPreProcNameReplacement | '|#' neluaPreProc -> PreProc | ')' neluaPreProcCodeBlock -> neluaPreProcCodeBlock
+  69| --@ "'S'" =String
+    '--@ "'S'" =String' neluaComment -> Comment
+  70| --@ "|#" =PreProc
+    '--@ "|#" =PreProc' neluaComment -> Comment
+  71| #[mul]#(res, a, b)
+    '#[' neluaPreProc -> PreProc | 'mul' neluaPreProcExpression -> neluaPreProcExpression | ']#' neluaPreProc -> PreProc | '(res, a, b)' neluaPreProcCodeBlock -> neluaPreProcCodeBlock
+  72| --@ "#[" =PreProc
+    '--@ "#[" =PreProc' neluaComment -> Comment
+  73| --@ "mul" =PreProc
+    '--@ "mul" =PreProc' neluaComment -> Comment
+  74| --@ "res" =NONE
+    '--@ "res" =NONE' neluaComment -> Comment
+  75| ## function increment(a, amount)
+    '##' neluaPreProc -> PreProc | 'function' neluaFunctionKeyword -> Statement | ' increment(a, amount)' neluaPreProcCodeBlock -> neluaPreProcCodeBlock
+  76|   #|a.name|# = #|a.name|# + #[amount]#
+    '#|' neluaPreProc -> PreProc | 'a' neluaPreProcNameReplacement -> neluaPreProcNameReplacement | '.' neluaKeyword -> Statement | 'name' neluaPreProcNameReplacement -> neluaPreProcNameReplacement | '|#' neluaPreProc -> PreProc | '=' neluaKeyword -> Statement | '#|' neluaPreProc -> PreProc | 'a' neluaPreProcNameReplacement -> neluaPreProcNameReplacement | '.' neluaKeyword -> Statement | 'name' neluaPreProcNameReplacement -> neluaPreProcNameReplacement | '|#' neluaPreProc -> PreProc | '+' neluaKeyword -> Statement | '#[' neluaPreProc -> PreProc | 'amount' neluaPreProcExpression -> neluaPreProcExpression | ']#' neluaPreProc -> PreProc
+  77| --@ "#|" =PreProc
+    '--@ "#|" =PreProc' neluaComment -> Comment
+  78| --@ "+" =Operator
+    '--@ "+" =Operator' neluaComment -> Comment
+  79| --@ "amount" =PreProc
+    '--@ "amount" =PreProc' neluaComment -> Comment
+  80| ## end
+    '##' neluaPreProc -> PreProc | 'end' neluaCond -> Statement
+  81| local y = 0
+    'local' neluaStatement -> Statement | ' y ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '=' neluaKeyword -> Statement | '0' neluaNumber -> Constant
+  82| --@ "0" =Number
+    '--@ "0" =Number' neluaComment -> Comment
+  83| f!(1, 2)
+    'f!(' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '1' neluaNumber -> Constant | ', ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '2' neluaNumber -> Constant | ')' neluaPreProcCodeBlock -> neluaPreProcCodeBlock
+  84| --@ "f!" =Macro
+    '--@ "f!" =Macro' neluaComment -> Comment
+  85| 
+  86| ---------------------------------------------------------------- ANNOTATIONS
+    '---------------------------------------------------------------- ANNOTATIONS' neluaComment -> Comment
+  87| local printf: function(cstring, ...: cvarargs): cint <cimport 'printf', cinclude '<stdio.h>', nodecl>
+    'local' neluaStatement -> Statement | ' printf' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | ':' neluaKeyword -> Statement | 'function' neluaFunctionKeyword -> Statement | '(' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | 'cstring' neluaBuiltin -> Type | ', ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '...:' neluaKeyword -> Statement | ' cvarargs)' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | ':' neluaKeyword -> Statement | 'cint' neluaBuiltin -> Type | '<' neluaKeyword -> Statement | 'cimport' neluaAnnotation -> Identifier | ''printf'' neluastring -> String | ', ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | 'cinclude' neluaAnnotation -> Identifier | ''<stdio.h>'' neluastring -> String | ', ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | 'nodecl' neluaAnnotation -> Identifier | '>' neluaKeyword -> Statement
+  88| --@ "function" =Keyword
+    '--@ "function" =Keyword' neluaComment -> Comment
+  89| --@ "cstring" =Type
+    '--@ "cstring" =Type' neluaComment -> Comment
+  90| --@ "..." =Special
+    '--@ "..." =Special' neluaComment -> Comment
+  91| --@ "cvarargs" =Type
+    '--@ "cvarargs" =Type' neluaComment -> Comment
+  92| --@ "cint" =Type
+    '--@ "cint" =Type' neluaComment -> Comment
+  93| --@ "cimport" =Macro
+    '--@ "cimport" =Macro' neluaComment -> Comment
+  94| --@ "'printf'" =String
+    '--@ "'printf'" =String' neluaComment -> Comment
+  95| --@ "'<stdio.h>'" =String
+    '--@ "'<stdio.h>'" =String' neluaComment -> Comment
+  96| --@ "nodecl" =Macro
+    '--@ "nodecl" =Macro' neluaComment -> Comment
+  97| --@ ">"#2 =Delimiter
+    '--@ ">"#2 =Delimiter' neluaComment -> Comment
+  98| local function sum(a: integer, b: integer): integer <inline>
+    'local' neluaStatement -> Statement | 'function' neluaFunctionKeyword -> Statement | ' sum(a' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | ':' neluaKeyword -> Statement | 'integer' neluaBuiltin -> Type | ', b' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | ':' neluaKeyword -> Statement | 'integer' neluaBuiltin -> Type | ')' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | ':' neluaKeyword -> Statement | 'integer' neluaBuiltin -> Type | '<' neluaKeyword -> Statement | 'inline' neluaAnnotation -> Identifier | '>' neluaKeyword -> Statement
+  99| --@ "sum" =Function
+    '--@ "sum" =Function' neluaComment -> Comment
+ 100| --@ "integer" =Type
+    '--@ "integer" =Type' neluaComment -> Comment
+ 101| --@ "inline" =Macro
+    '--@ "inline" =Macro' neluaComment -> Comment
+ 102|   return a + b
+    'return' neluaStatement -> Statement | ' a ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '+' neluaKeyword -> Statement | ' b' neluaPreProcCodeBlock -> neluaPreProcCodeBlock
+ 103| --@ "return" =Statement
+    '--@ "return" =Statement' neluaComment -> Comment
+ 104| end
+    'end' neluaEnd -> Statement
+ 105| --@ "end" =Keyword
+    '--@ "end" =Keyword' neluaComment -> Comment
+ 106| local Foo <nickname 'foo', aligned(16)> = @record{x: integer}
+    'local' neluaStatement -> Statement | ' Foo ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '<' neluaKeyword -> Statement | 'nickname' neluaAnnotation -> Identifier | ''foo'' neluastring -> String | ', ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | 'aligned' neluaBuiltin -> Type | '(' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '16' neluaNumber -> Constant | ')' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '>' neluaKeyword -> Statement | '=' neluaKeyword -> Statement | '@' neluaKeyword -> Statement | 'record{' neluaTable -> Type | 'x' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | ':' neluaKeyword -> Statement | 'integer' neluaBuiltin -> Type | '}' neluaTable -> Type
+ 107| --@ "nickname" =Macro
+    '--@ "nickname" =Macro' neluaComment -> Comment
+ 108| --@ "aligned" =Macro
+    '--@ "aligned" =Macro' neluaComment -> Comment
+ 109| --@ "16" =Number
+    '--@ "16" =Number' neluaComment -> Comment
+ 110| --@ "record" =Structure
+    '--@ "record" =Structure' neluaComment -> Comment
+ 111| local text <const = "Hello, World"
+    'local' neluaStatement -> Statement | ' text ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '<' neluaKeyword -> Statement | 'const' neluaAnnotation -> Identifier | '=' neluaKeyword -> Statement | '"Hello, World"' neluastring -> String
+ 112| --@ "<" =Operator
+    '--@ "<" =Operator' neluaComment -> Comment
+ 113| --@ "const" =NONE
+    '--@ "const" =NONE' neluaComment -> Comment
+ 114| --@ "\"Hello, World\"" =String
+    '--@ "\"Hello, World\"" =String' neluaComment -> Comment
+ 115| if a < b and c > d then end
+    'if' neluaCond -> Statement | ' a ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '<' neluaKeyword -> Statement | ' b ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | 'and' neluaOperator -> Operator | ' c ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '>' neluaKeyword -> Statement | ' d ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | 'then' neluaCond -> Statement | 'end' neluaCond -> Statement
+ 116| --@ "<" =Operator
+    '--@ "<" =Operator' neluaComment -> Comment
+ 117| --@ ">" =Operator
+    '--@ ">" =Operator' neluaComment -> Comment
+ 118| --@ "and" =Operator
+    '--@ "and" =Operator' neluaComment -> Comment
+ 119| 
+ 120| ---------------------------------------------------------------- TYPES
+    '---------------------------------------------------------------- TYPES' neluaComment -> Comment
+ 121| local p: *integer = nilptr
+    'local' neluaStatement -> Statement | ' p' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | ':' neluaKeyword -> Statement | '*' neluaKeyword -> Statement | 'integer' neluaBuiltin -> Type | '=' neluaKeyword -> Statement | 'nilptr' neluaConstant -> Constant
+ 122| --@ "*" =Operator
+    '--@ "*" =Operator' neluaComment -> Comment
+ 123| --@ "integer" =Type
+    '--@ "integer" =Type' neluaComment -> Comment
+ 124| --@ "nilptr" =Constant
+    '--@ "nilptr" =Constant' neluaComment -> Comment
+ 125| local arr: [10]integer
+    'local' neluaStatement -> Statement | ' arr' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | ':' neluaKeyword -> Statement | ' [' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '10' neluaNumber -> Constant | ']' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | 'integer' neluaBuiltin -> Type
+ 126| --@ "10" =Number
+    '--@ "10" =Number' neluaComment -> Comment
+ 127| --@ "integer" =Type
+    '--@ "integer" =Type' neluaComment -> Comment
+ 128| local sp: span(integer)
+    'local' neluaStatement -> Statement | ' sp' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | ':' neluaKeyword -> Statement | ' span(' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | 'integer' neluaBuiltin -> Type | ')' neluaPreProcCodeBlock -> neluaPreProcCodeBlock
+ 129| --@ "span" =Type
+    '--@ "span" =Type' neluaComment -> Comment
+ 130| --@ "integer" =Type
+    '--@ "integer" =Type' neluaComment -> Comment
+ 131| local v: MyType = MyType.new()
+    'local' neluaStatement -> Statement | ' v' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | ':' neluaKeyword -> Statement | ' MyType ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '=' neluaKeyword -> Statement | ' MyType' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '.' neluaKeyword -> Statement | 'new()' neluaPreProcCodeBlock -> neluaPreProcCodeBlock
+ 132| --@ "MyType" =Type
+    '--@ "MyType" =Type' neluaComment -> Comment
+ 133| --@ "MyType"#2 =NONE
+    '--@ "MyType"#2 =NONE' neluaComment -> Comment
+ 134| --@ "new" =Function
+    '--@ "new" =Function' neluaComment -> Comment
+ 135| local Vec2 = @record{x: number, y: number}
+    'local' neluaStatement -> Statement | ' Vec2 ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '=' neluaKeyword -> Statement | '@' neluaKeyword -> Statement | 'record{' neluaTable -> Type | 'x' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | ':' neluaKeyword -> Statement | 'number' neluaBuiltin -> Type | ', y' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | ':' neluaKeyword -> Statement | 'number' neluaBuiltin -> Type | '}' neluaTable -> Type
+ 136| --@ "@" =Operator
+    '--@ "@" =Operator' neluaComment -> Comment
+ 137| --@ "record" =Structure
+    '--@ "record" =Structure' neluaComment -> Comment
+ 138| --@ "x" =NONE
+    '--@ "x" =NONE' neluaComment -> Comment
+ 139| --@ "number" =Type
+    '--@ "number" =Type' neluaComment -> Comment
+ 140| local Weekends = @enum(uint8){ Friday=0, Saturday, Sunday }
+    'local' neluaStatement -> Statement | ' Weekends ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '=' neluaKeyword -> Statement | '@' neluaKeyword -> Statement | 'enum' neluaTable -> Type | '(' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | 'uint8' neluaBuiltin -> Type | ')' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '{' neluaTable -> Type | ' Friday' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '=' neluaKeyword -> Statement | '0' neluaNumber -> Constant | ', Saturday, Sunday ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '}' neluaTable -> Type
+ 141| --@ "enum" =Structure
+    '--@ "enum" =Structure' neluaComment -> Comment
+ 142| --@ "uint8" =Type
+    '--@ "uint8" =Type' neluaComment -> Comment
+ 143| --@ "0" =Number
+    '--@ "0" =Number' neluaComment -> Comment
+ 144| local U = @union{ i: int32, f: float32 }
+    'local' neluaStatement -> Statement | ' U ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '=' neluaKeyword -> Statement | '@' neluaKeyword -> Statement | 'union{' neluaTable -> Type | ' i' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | ':' neluaKeyword -> Statement | 'int32' neluaBuiltin -> Type | ', f' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | ':' neluaKeyword -> Statement | 'float32' neluaBuiltin -> Type | '}' neluaTable -> Type
+ 145| --@ "union" =Structure
+    '--@ "union" =Structure' neluaComment -> Comment
+ 146| --@ "int32" =Type
+    '--@ "int32" =Type' neluaComment -> Comment
+ 147| local Fn = @function(integer): integer
+    'local' neluaStatement -> Statement | ' Fn ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '=' neluaKeyword -> Statement | '@' neluaKeyword -> Statement | 'function' neluaFunctionKeyword -> Statement | '(' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | 'integer' neluaBuiltin -> Type | ')' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | ':' neluaKeyword -> Statement | 'integer' neluaBuiltin -> Type
+ 148| --@ "function" =Keyword
+    '--@ "function" =Keyword' neluaComment -> Comment
+ 149| local Arr4 = @[4]integer
+    'local' neluaStatement -> Statement | ' Arr4 ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '=' neluaKeyword -> Statement | '@' neluaKeyword -> Statement | '[' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '4' neluaNumber -> Constant | ']' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | 'integer' neluaBuiltin -> Type
+ 150| --@ "4" =Number
+    '--@ "4" =Number' neluaComment -> Comment
+ 151| --@ "integer" =Type
+    '--@ "integer" =Type' neluaComment -> Comment
+ 152| local PInt = @*int8
+    'local' neluaStatement -> Statement | ' PInt ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '=' neluaKeyword -> Statement | '@*' neluaKeyword -> Statement | 'int8' neluaBuiltin -> Type
+ 153| --@ "int8" =Type
+    '--@ "int8" =Type' neluaComment -> Comment
+ 154| local T = @MyType
+    'local' neluaStatement -> Statement | ' T ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '=' neluaKeyword -> Statement | '@' neluaKeyword -> Statement | 'MyType' neluaPreProcCodeBlock -> neluaPreProcCodeBlock
+ 155| --@ "MyType" =Type
+    '--@ "MyType" =Type' neluaComment -> Comment
+ 156| local o: ?integer
+    'local' neluaStatement -> Statement | ' o' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | ':' neluaKeyword -> Statement | ' ?' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | 'integer' neluaBuiltin -> Type
+ 157| --@ "?" =Operator
+    '--@ "?" =Operator' neluaComment -> Comment
+ 158| --@ "integer" =Type
+    '--@ "integer" =Type' neluaComment -> Comment
+ 159| function Vec2.__add(a: Vec2, b: Vec2): Vec2
+    'function' neluaFunctionKeyword -> Statement | ' Vec2' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '.' neluaKeyword -> Statement | '__add' neluaMetaMethod -> Function | '(a' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | ':' neluaKeyword -> Statement | ' Vec2, b' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | ':' neluaKeyword -> Statement | ' Vec2)' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | ':' neluaKeyword -> Statement | ' Vec2' neluaPreProcCodeBlock -> neluaPreProcCodeBlock
+ 160| --@ "Vec2" =NONE
+    '--@ "Vec2" =NONE' neluaComment -> Comment
+ 161| --@ "__add" =Function
+    '--@ "__add" =Function' neluaComment -> Comment
+ 162| --@ "Vec2"#2 =Type
+    '--@ "Vec2"#2 =Type' neluaComment -> Comment
+ 163| --@ "Vec2"#4 =Type
+    '--@ "Vec2"#4 =Type' neluaComment -> Comment
+ 164|   return (@Vec2){a.x + b.x, a.y + b.y}
+    'return' neluaStatement -> Statement | ' (' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '@' neluaKeyword -> Statement | 'Vec2)' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '{' neluaTable -> Type | 'a' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '.' neluaKeyword -> Statement | 'x ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '+' neluaKeyword -> Statement | ' b' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '.' neluaKeyword -> Statement | 'x, a' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '.' neluaKeyword -> Statement | 'y ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '+' neluaKeyword -> Statement | ' b' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '.' neluaKeyword -> Statement | 'y' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '}' neluaTable -> Type
+ 165| --@ "Vec2" =Type
+    '--@ "Vec2" =Type' neluaComment -> Comment
+ 166| end
+    'end' neluaEnd -> Statement
+ 167| function Vec2:len(): number
+    'function' neluaFunctionKeyword -> Statement | ' Vec2' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | ':' neluaKeyword -> Statement | 'len()' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | ':' neluaKeyword -> Statement | 'number' neluaBuiltin -> Type
+ 168| --@ "len" =Function
+    '--@ "len" =Function' neluaComment -> Comment
+ 169| --@ "number" =Type
+    '--@ "number" =Type' neluaComment -> Comment
+ 170|   return math.sqrt(self.x * self.x)
+    'return' neluaStatement -> Statement | 'math.sqrt' neluaFunc -> Identifier | '(' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | 'self' neluaSelf -> Constant | '.' neluaKeyword -> Statement | 'x ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '*' neluaKeyword -> Statement | 'self' neluaSelf -> Constant | '.' neluaKeyword -> Statement | 'x)' neluaPreProcCodeBlock -> neluaPreProcCodeBlock
+ 171| --@ "math" =Special
+    '--@ "math" =Special' neluaComment -> Comment
+ 172| --@ "sqrt" =Function
+    '--@ "sqrt" =Function' neluaComment -> Comment
+ 173| --@ "self" =Special
+    '--@ "self" =Special' neluaComment -> Comment
+ 174| end
+    'end' neluaEnd -> Statement
+ 175| local l = v:len()
+    'local' neluaStatement -> Statement | ' l ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '=' neluaKeyword -> Statement | ' v' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | ':' neluaKeyword -> Statement | 'len()' neluaPreProcCodeBlock -> neluaPreProcCodeBlock
+ 176| --@ "len" =Function
+    '--@ "len" =Function' neluaComment -> Comment
+ 177| ::continue_label::
+    '::continue_label::' neluaLabel -> Statement
+ 178| --@ "::continue_label::" =Label
+    '--@ "::continue_label::" =Label' neluaComment -> Comment
+ 179| goto continue_label
+    'goto' neluaStatement -> Statement | ' continue_label' neluaPreProcCodeBlock -> neluaPreProcCodeBlock
+ 180| --@ "goto" =Statement
+    '--@ "goto" =Statement' neluaComment -> Comment
+ 181| --@ "continue_label" =Label
+    '--@ "continue_label" =Label' neluaComment -> Comment
+ 182| 
+ 183| ---------------------------------------------------------------- CONTROL FLOW
+    '---------------------------------------------------------------- CONTROL FLOW' neluaComment -> Comment
+ 184| switch x do
+    'switch' neluaCond -> Statement | ' x ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | 'do' neluaStatement -> Statement
+ 185| --@ "switch" =Conditional
+    '--@ "switch" =Conditional' neluaComment -> Comment
+ 186| case 1, 2 then
+    'case' neluaCond -> Statement | '1' neluaNumber -> Constant | ', ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '2' neluaNumber -> Constant | 'then' neluaCond -> Statement
+ 187| --@ "case" =Conditional
+    '--@ "case" =Conditional' neluaComment -> Comment
+ 188| --@ "then" =Conditional
+    '--@ "then" =Conditional' neluaComment -> Comment
+ 189|   fallthrough
+    'fallthrough' neluaStatement -> Statement
+ 190| --@ "fallthrough" =Statement
+    '--@ "fallthrough" =Statement' neluaComment -> Comment
+ 191| case 3 then
+    'case' neluaCond -> Statement | '3' neluaNumber -> Constant | 'then' neluaCond -> Statement
+ 192|   print 'three'
+    'print' neluaBuiltin -> Type | ''three'' neluastring -> String
+ 193| --@ "'three'" =String
+    '--@ "'three'" =String' neluaComment -> Comment
+ 194| else
+    'else' neluaElse -> Statement
+ 195| --@ "else" =Conditional
+    '--@ "else" =Conditional' neluaComment -> Comment
+ 196| end
+    'end' neluaCond -> Statement
+ 197| do
+    'do' neluaStatement -> Statement
+ 198|   defer print('deferred') end
+    'defer' neluaStatement -> Statement | 'print' neluaBuiltin -> Type | '(' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | ''deferred'' neluastring -> String | ') ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | 'end' neluaStatement -> Statement
+ 199| --@ "defer" =Statement
+    '--@ "defer" =Statement' neluaComment -> Comment
+ 200| --@ "print" =Special
+    '--@ "print" =Special' neluaComment -> Comment
+ 201| end
+    'end' neluaStatement -> Statement
+ 202| for i = 0, < 10 do continue end
+    'for' neluaRepeat -> Statement | ' i ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '=' neluaKeyword -> Statement | '0' neluaNumber -> Constant | ', ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '<' neluaKeyword -> Statement | '10' neluaNumber -> Constant | 'do' neluaStatement -> Statement | 'continue' neluaStatement -> Statement | 'end' neluaStatement -> Statement
+ 203| --@ "for" =Repeat
+    '--@ "for" =Repeat' neluaComment -> Comment
+ 204| --@ "<" =Operator
+    '--@ "<" =Operator' neluaComment -> Comment
+ 205| --@ "continue" =Statement
+    '--@ "continue" =Statement' neluaComment -> Comment
+ 206| for k, v in pairs(t) do end
+    'for' neluaRepeat -> Statement | ' k, v ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | 'in' neluaFor -> Statement | 'pairs' neluaFunc -> Identifier | '(t) ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | 'do' neluaStatement -> Statement | 'end' neluaStatement -> Statement
+ 207| --@ "in" =Repeat
+    '--@ "in" =Repeat' neluaComment -> Comment
+ 208| --@ "pairs" =Special
+    '--@ "pairs" =Special' neluaComment -> Comment
+ 209| while true do break end
+    'while' neluaRepeat -> Statement | 'true' neluaBoolean -> Constant | 'do' neluaStatement -> Statement | 'break' neluaStatement -> Statement | 'end' neluaStatement -> Statement
+ 210| --@ "while" =Repeat
+    '--@ "while" =Repeat' neluaComment -> Comment
+ 211| --@ "true" =Boolean
+    '--@ "true" =Boolean' neluaComment -> Comment
+ 212| --@ "break" =Statement
+    '--@ "break" =Statement' neluaComment -> Comment
+ 213| repeat until false
+    'repeat' neluaRepeat -> Statement | 'until' neluaRepeat -> Statement | 'false' neluaBoolean -> Constant
+ 214| --@ "repeat" =Repeat
+    '--@ "repeat" =Repeat' neluaComment -> Comment
+ 215| --@ "until" =Repeat
+    '--@ "until" =Repeat' neluaComment -> Comment
+ 216| local z = (do
+    'local' neluaStatement -> Statement | ' z ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '=' neluaKeyword -> Statement | ' (' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | 'do' neluaStatement -> Statement
+ 217|   local res = x * 2
+    'local' neluaStatement -> Statement | ' res ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '=' neluaKeyword -> Statement | ' x ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '*' neluaKeyword -> Statement | '2' neluaNumber -> Constant
+ 218|   in res
+    'in' neluaInKeyword -> Statement | ' res' neluaPreProcCodeBlock -> neluaPreProcCodeBlock
+ 219| --@ "in" =Statement
+    '--@ "in" =Statement' neluaComment -> Comment
+ 220| end)
+    'end' neluaStatement -> Statement | ')' neluaPreProcCodeBlock -> neluaPreProcCodeBlock
+ 221| 
+ 222| ---------------------------------------------------------------- OPERATORS
+    '---------------------------------------------------------------- OPERATORS' neluaComment -> Comment
+ 223| local ops = 7 /// 2 + 7 %%% 2 + (a >>> 1) + (a // 2) + (a ~ b) + #t
+    'local' neluaStatement -> Statement | ' ops ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '=' neluaKeyword -> Statement | '7' neluaNumber -> Constant | '///' neluaKeyword -> Statement | '2' neluaNumber -> Constant | '+' neluaKeyword -> Statement | '7' neluaNumber -> Constant | ' %%% ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '2' neluaNumber -> Constant | '+' neluaKeyword -> Statement | ' (a ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '>>>' neluaKeyword -> Statement | '1' neluaNumber -> Constant | ') ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '+' neluaKeyword -> Statement | ' (a ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '//' neluaKeyword -> Statement | '2' neluaNumber -> Constant | ') ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '+' neluaKeyword -> Statement | ' (a ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '~' neluaKeyword -> Statement | ' b) ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '+' neluaKeyword -> Statement | '#' neluaPreProc -> PreProc | 't' neluaPreProcCodeBlock -> neluaPreProcCodeBlock
+ 224| --@ "///" =Operator
+    '--@ "///" =Operator' neluaComment -> Comment
+ 225| --@ "%%%" =Operator
+    '--@ "%%%" =Operator' neluaComment -> Comment
+ 226| --@ ">>>" =Operator
+    '--@ ">>>" =Operator' neluaComment -> Comment
+ 227| --@ "//" =Operator
+    '--@ "//" =Operator' neluaComment -> Comment
+ 228| --@ "~" =Operator
+    '--@ "~" =Operator' neluaComment -> Comment
+ 229| --@ "#" =Operator
+    '--@ "#" =Operator' neluaComment -> Comment
+ 230| local r = &x
+    'local' neluaStatement -> Statement | ' r ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '=' neluaKeyword -> Statement | '&' neluaKeyword -> Statement | 'x' neluaPreProcCodeBlock -> neluaPreProcCodeBlock
+ 231| --@ "&" =Operator
+    '--@ "&" =Operator' neluaComment -> Comment
+ 232| local d = $r
+    'local' neluaStatement -> Statement | ' d ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '=' neluaKeyword -> Statement | '$' neluaKeyword -> Statement | 'r' neluaPreProcCodeBlock -> neluaPreProcCodeBlock
+ 233| --@ "$" =Operator
+    '--@ "$" =Operator' neluaComment -> Comment
+ 234| local s = 'a' .. 'b'
+    'local' neluaStatement -> Statement | ' s ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '=' neluaKeyword -> Statement | ''a'' neluastring -> String | '..' neluaKeyword -> Statement | ''b'' neluastring -> String
+ 235| --@ ".." =Operator
+    '--@ ".." =Operator' neluaComment -> Comment
+ 236| 
+ 237| ---------------------------------------------------------------- NUMBERS
+    '---------------------------------------------------------------- NUMBERS' neluaComment -> Comment
+ 238| local nums = {1234, 0b1010, 0xff, 1.2e-100, 1.41, .5, 0x1.921FB54442D18p+1}
+    'local' neluaStatement -> Statement | ' nums ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '=' neluaKeyword -> Statement | '{' neluaTable -> Type | '1234' neluaNumber -> Constant | ', ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '0b1010' neluaNumber -> Constant | ', ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '0xff' neluaNumber -> Constant | ', ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '1.2e-100' neluaNumber -> Constant | ', ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '1.41' neluaNumber -> Constant | ', ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '.' neluaKeyword -> Statement | '5' neluaNumber -> Constant | ', ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '0x1.921FB54442D18p+1' neluaNumber -> Constant | '}' neluaTable -> Type
+ 239| --@ "1234" =Number
+    '--@ "1234" =Number' neluaComment -> Comment
+ 240| --@ "0b1010" =Number
+    '--@ "0b1010" =Number' neluaComment -> Comment
+ 241| --@ "0xff" =Number
+    '--@ "0xff" =Number' neluaComment -> Comment
+ 242| --@ "1.2e-100" =Number
+    '--@ "1.2e-100" =Number' neluaComment -> Comment
+ 243| --@ ".5" =Number
+    '--@ ".5" =Number' neluaComment -> Comment
+ 244| --@ "0x1.921FB54442D18p+1" =Number
+    '--@ "0x1.921FB54442D18p+1" =Number' neluaComment -> Comment
+ 245| local a = 1234_u32 + 1_f32 + -1_isize
+    'local' neluaStatement -> Statement | ' a ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '=' neluaKeyword -> Statement | '1234_u32' neluaNumber -> Constant | '+' neluaKeyword -> Statement | '1_f32' neluaNumber -> Constant | '+' neluaKeyword -> Statement | ' -' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '1_isize' neluaNumber -> Constant
+ 246| --@ "1234_u32" =Number
+    '--@ "1234_u32" =Number' neluaComment -> Comment
+ 247| --@ "1_f32" =Number
+    '--@ "1_f32" =Number' neluaComment -> Comment
+ 248| --@ "1_isize" =Number
+    '--@ "1_isize" =Number' neluaComment -> Comment
+ 249| local char = 'A'_u8
+    'local' neluaStatement -> Statement | ' char ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '=' neluaKeyword -> Statement | ''A'' neluastring -> String | '_u8' neluaPreProcCodeBlock -> neluaPreProcCodeBlock
+ 250| --@ "'A'" =String
+    '--@ "'A'" =String' neluaComment -> Comment
+ 251| --@ "_u8" =Type
+    '--@ "_u8" =Type' neluaComment -> Comment
+ 252| 
+ 253| ---------------------------------------------------------------- STRINGS
+    '---------------------------------------------------------------- STRINGS' neluaComment -> Comment
+ 254| local ctr = "\n\t\r\a\b\v\f"
+    'local' neluaStatement -> Statement | ' ctr ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '=' neluaKeyword -> Statement | '"' neluastring -> String | '\n\t\r\a\b\v\f' neluaSpecial -> Special | '"' neluastring -> String
+ 255| --@ "\n\t\r\a\b\v\f" =SpecialChar
+    '--@ "\n\t\r\a\b\v\f" =SpecialChar' neluaComment -> Comment
+ 256| local utf = "\u{03C0}" .. "\x41" .. "\65"
+    'local' neluaStatement -> Statement | ' utf ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '=' neluaKeyword -> Statement | '"' neluastring -> String | '\' neluaSpecial -> Special | 'u{03C0}"' neluastring -> String | '..' neluaKeyword -> Statement | '"' neluastring -> String | '\x41' neluaSpecial -> Special | '"' neluastring -> String | '..' neluaKeyword -> Statement | '"' neluastring -> String | '\65' neluaSpecial -> Special | '"' neluastring -> String
+ 257| --@ "\u{03C0}" =SpecialChar
+    '--@ "\u{03C0}" =SpecialChar' neluaComment -> Comment
+ 258| --@ "\x41" =SpecialChar
+    '--@ "\x41" =SpecialChar' neluaComment -> Comment
+ 259| --@ "\65" =SpecialChar
+    '--@ "\65" =SpecialChar' neluaComment -> Comment
+ 260| local bad = "a\qb"
+    'local' neluaStatement -> Statement | ' bad ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '=' neluaKeyword -> Statement | '"a' neluastring -> String | '\' neluaSpecial -> Special | 'qb"' neluastring -> String
+ 261| --@ "\q" =Error
+    '--@ "\q" =Error' neluaComment -> Comment
+ 262| local multiline1 = "my\z
+    'local' neluaStatement -> Statement | ' multiline1 ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '=' neluaKeyword -> Statement | '"my' neluastring -> String | '\z' neluaSpecial -> Special
+ 263|                     text1"
+    '                    text1"' neluastring -> String
+ 264| --@ "text1\"" =String
+    '--@ "text1\"" =String' neluaComment -> Comment
+ 265| local multiline2 = "my\
+    'local' neluaStatement -> Statement | ' multiline2 ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '=' neluaKeyword -> Statement | '"my' neluastring -> String | '\' neluaSpecial -> Special
+ 266| text2"
+    'text2"' neluastring -> String
+ 267| --@ "text2\"" =String
+    '--@ "text2\"" =String' neluaComment -> Comment
+ 268| local after_strings = 1
+    'local' neluaStatement -> Statement | ' after_strings ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '=' neluaKeyword -> Statement | '1' neluaNumber -> Constant
+ 269| --@ "1" =Number
+    '--@ "1" =Number' neluaComment -> Comment
+ 270| local long = [==[
+    'local' neluaStatement -> Statement | ' long ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '=' neluaKeyword -> Statement | '[==[' neluastring -> String
+ 271| a ]] b ]=] c
+    'a ]] b ]=] c' neluastring2 -> String
+ 272| ]==]
+    ']==]' neluastring -> String
+ 273| --@ "]==]" =String
+    '--@ "]==]" =String' neluaComment -> Comment
+ 274| local unclosed = "oops
+    'local' neluaStatement -> Statement | ' unclosed ' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '=' neluaKeyword -> Statement | '"oops' neluastring -> String
+ 275| local after_unclosed = 2
+    'local after_unclosed = 2' neluastring -> String
+ 276| --@ "local" =StorageClass
+    '--@ "' neluastring -> String | 'local' neluaStatement -> Statement | '" =StorageClass' neluastring -> String
+ 277| --@ "2" =Number
+    '--@ "' neluastring -> String | '2' neluaNumber -> Constant | '" =Number' neluastring -> String
+ 278| 
+ 279| ---------------------------------------------------------------- MISC
+    '---------------------------------------------------------------- MISC' neluastring -> String
+ 280| local anon = function(x: integer): integer return x end
+    'local anon = ' neluastring -> String | 'function(x: integer): integer' neluaAnonFunction -> Statement | ' return x end' neluastring -> String
+ 281| --@ "anon" =Function
+    '--@ "' neluastring -> String | 'anon' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '" =Function' neluastring -> String
+ 282| --@ "function" =Keyword
+    '--@ "' neluastring -> String | 'function' neluaFunctionKeyword -> Statement | '" =Keyword' neluastring -> String
+ 283| local t = {__index = function(i) end, key = 1}
+    'local t = {__index = ' neluastring -> String | 'function(i) ' neluaAnonFunction -> Statement | 'end, key = 1}' neluastring -> String
+ 284| --@ "__index" =Function
+    '--@ "' neluastring -> String | '__index' neluaMetaMethod -> Function | '" =Function' neluastring -> String
+ 285| --@ "key" =NONE
+    '--@ "' neluastring -> String | 'key' neluaPreProcCodeBlock -> neluaPreProcCodeBlock | '" =NONE' neluastring -> String
+ 286| print(nil, true, false, ..., _VERSION)
+    'print(nil, true, false, ..., _VERSION)' neluastring -> String
+ 287| --@ "nil" =Constant
+    '--@ "' neluastring -> String | 'nil' neluaConstant -> Constant | '" =Constant' neluastring -> String
+ 288| --@ "false" =Boolean
+    '--@ "' neluastring -> String | 'false' neluaBoolean -> Constant | '" =Boolean' neluastring -> String
+ 289| --@ "..." =Special
+    '--@ "' neluastring -> String | '...' neluaKeyword -> Statement | '" =Special' neluastring -> String
+ 290| --@ "_VERSION" =Special
+    '--@ "' neluastring -> String | '_VERSION' neluaBuiltin -> Type | '" =Special' neluastring -> String
+ 291| local last_line = 1
+    'local last_line = 1' neluastring -> String
+ 292| --@ "local" =StorageClass
+    '--@ "' neluastring -> String | 'local' neluaStatement -> Statement | '" =StorageClass' neluastring -> String

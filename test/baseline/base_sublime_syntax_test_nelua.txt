@@ -1,0 +1,633 @@
+FAIL L7 (code L5) [comment.line]
+     code:     -- Foo!
+     want: Comment
+     got:  col 12=NONE()
+FAIL L30 (code L29) [comment.block - punctuation]
+     code:         ]]
+     want: Comment
+     got:  col 11=NONE()
+FAIL L64 (code L63) [constant.language]
+     code:     ...;
+     want: Constant|Special
+     got:  col 5=Keyword(neluaKeyword), col 6=Keyword(neluaKeyword), col 7=Keyword(neluaKeyword)
+FAIL L67 (code L66) [variable.language.this]
+     code:     self;
+     want: Special
+     got:  col 5=Constant(neluaSelf), col 6=Constant(neluaSelf), col 7=Constant(neluaSelf), col 8=Constant(neluaSelf)
+FAIL L82 (code L81) [meta.number.float.decimal constant.numeric.value]
+     code:     1.;
+     want: Number
+     got:  col 6=Keyword(neluaKeyword)
+FAIL L83 (code L81) [punctuation.separator.decimal]
+     code:     1.;
+     want: Number
+     got:  col 6=Keyword(neluaKeyword)
+FAIL L86 (code L85) [meta.number.float.decimal constant.numeric.value]
+     code:     .2;
+     want: Number
+     got:  col 5=Keyword(neluaKeyword)
+FAIL L87 (code L85) [punctuation.separator.decimal]
+     code:     .2;
+     want: Number
+     got:  col 5=Keyword(neluaKeyword)
+FAIL L114 (code L109) [meta.number.float.hexadecimal constant.numeric]
+     code:     0xa.bc + 0xa. + 0x.b;
+     want: Number
+     got:  col 17=Keyword(neluaKeyword)
+FAIL L116 (code L109) [constant.numeric.value]
+     code:     0xa.bc + 0xa. + 0x.b;
+     want: Number
+     got:  col 17=Keyword(neluaKeyword)
+FAIL L117 (code L109) [punctuation.separator.decimal]
+     code:     0xa.bc + 0xa. + 0x.b;
+     want: Number
+     got:  col 17=Keyword(neluaKeyword)
+FAIL L160 (code L159) [meta.string string.quoted.single]
+     code:     '\a\b\f\n\r\t\v\\\'\"\[\]';
+     want: String
+     got:  col 6=SpecialChar(neluaSpecial), col 7=SpecialChar(neluaSpecial), col 8=SpecialChar(neluaSpecial), col 9=SpecialChar(neluaSpecial), col 10=SpecialChar(neluaSpecial), col 11=SpecialChar(neluaSpecial), col 12=SpecialChar(neluaSpecial), col 13=SpecialChar(neluaSpecial), col 14=SpecialChar(neluaSpecial), col 15=SpecialChar(neluaSpecial), col 16=SpecialChar(neluaSpecial), col 17=SpecialChar(neluaSpecial), col 18=SpecialChar(neluaSpecial), col 19=SpecialChar(neluaSpecial), col 20=SpecialChar(neluaSpecial), col 21=SpecialChar(neluaSpecial), col 22=SpecialChar(neluaSpecial), col 23=SpecialChar(neluaSpecial), col 24=SpecialChar(neluaSpecial), col 25=SpecialChar(neluaSpecial), col 26=SpecialChar(neluaSpecial), col 28=SpecialChar(neluaSpecial)
+FAIL L161 (code L159) [constant.character.escape]
+     code:     '\a\b\f\n\r\t\v\\\'\"\[\]';
+     want: SpecialChar
+     got:  col 27=String(neluastring), col 29=String(neluastring)
+FAIL L174 (code L173) [constant.character.escape.unicode]
+     code:     '\u{0} \u{f00d}';
+     want: SpecialChar
+     got:  col 7=String(neluastring), col 8=String(neluastring), col 9=String(neluastring), col 10=String(neluastring)
+FAIL L175 (code L173) [constant.character.escape.unicode]
+     code:     '\u{0} \u{f00d}';
+     want: SpecialChar
+     got:  col 13=String(neluastring), col 14=String(neluastring), col 15=String(neluastring), col 16=String(neluastring), col 17=String(neluastring), col 18=String(neluastring), col 19=String(neluastring)
+FAIL L178 (code L177) [constant.character.escape - invalid]
+     code:     '\z
+     want: SpecialChar  not: Error
+     got:  col 8=NONE(), col 9=NONE(), col 10=NONE()
+FAIL L183 (code L182) [constant.character.escape]
+     code: 
+     want: SpecialChar
+     got:  col 1=NONE()
+FAIL L187 (code L186) [constant.character.escape]
+     code:     '\z  done';
+     want: SpecialChar
+     got:  col 8=String(neluastring), col 9=String(neluastring)
+FAIL L191 (code L190) [constant.character.escape]
+     code:     '\
+     want: SpecialChar
+     got:  col 7=NONE()
+FAIL L196 (code L195) [invalid.illegal.invalid-escape]
+     code:     'foo\q';
+     want: Error
+     got:  col 9=NONE(), col 10=NONE()
+FAIL L199 (code L198) [invalid.illegal.unclosed-string]
+     code:     '
+     want: Error
+     got:  col 6=NONE()
+FAIL L202 (code L201) [meta.string string.quoted.double]
+     code:     "foo\"\'";
+     want: String
+     got:  col 9=SpecialChar(neluaSpecial), col 10=SpecialChar(neluaSpecial), col 11=SpecialChar(neluaSpecial), col 12=SpecialChar(neluaSpecial)
+FAIL L230 (code L229) [meta.string string.quoted.multiline - punctuation]
+     code:         ]]
+     want: String
+     got:  col 11=NONE()
+FAIL L239 (code L238) [keyword.operator.length]
+     code:     #'foo';
+     want: Operator
+     got:  col 5=PreProc(neluaPreProc)
+FAIL L242 (code L241) [keyword.operator.arithmetic]
+     code:     -1;
+     want: Operator
+     got:  col 5=NONE()
+FAIL L246 (code L245) [keyword.operator.bitwise]
+     code:     ~1;
+     want: Operator
+     got:  col 5=Keyword(neluaKeyword)
+FAIL L254 (code L253) [keyword.operator.arithmetic]
+     code:     2 + 2 - 2 * 2 / 2 // 2 % 2 ^ 2;
+     want: Operator
+     got:  col 7=Keyword(neluaKeyword)
+FAIL L255 (code L253) [keyword.operator.arithmetic]
+     code:     2 + 2 - 2 * 2 / 2 // 2 % 2 ^ 2;
+     want: Operator
+     got:  col 11=NONE()
+FAIL L256 (code L253) [keyword.operator.arithmetic]
+     code:     2 + 2 - 2 * 2 / 2 // 2 % 2 ^ 2;
+     want: Operator
+     got:  col 15=Keyword(neluaKeyword)
+FAIL L257 (code L253) [keyword.operator.arithmetic]
+     code:     2 + 2 - 2 * 2 / 2 // 2 % 2 ^ 2;
+     want: Operator
+     got:  col 19=Keyword(neluaKeyword)
+FAIL L258 (code L253) [keyword.operator.arithmetic]
+     code:     2 + 2 - 2 * 2 / 2 // 2 % 2 ^ 2;
+     want: Operator
+     got:  col 23=Keyword(neluaKeyword), col 24=Keyword(neluaKeyword)
+FAIL L259 (code L253) [keyword.operator.arithmetic]
+     code:     2 + 2 - 2 * 2 / 2 // 2 % 2 ^ 2;
+     want: Operator
+     got:  col 28=NONE()
+FAIL L260 (code L253) [keyword.operator.arithmetic]
+     code:     2 + 2 - 2 * 2 / 2 // 2 % 2 ^ 2;
+     want: Operator
+     got:  col 32=Keyword(neluaKeyword)
+FAIL L263 (code L262) [keyword.operator.bitwise]
+     code:     2 >> 2 << 2 & 2 | 2 ~ 2;
+     want: Operator
+     got:  col 7=Keyword(neluaKeyword), col 8=Keyword(neluaKeyword)
+FAIL L264 (code L262) [keyword.operator.bitwise]
+     code:     2 >> 2 << 2 & 2 | 2 ~ 2;
+     want: Operator
+     got:  col 12=Keyword(neluaKeyword), col 13=Keyword(neluaKeyword)
+FAIL L265 (code L262) [keyword.operator.bitwise]
+     code:     2 >> 2 << 2 & 2 | 2 ~ 2;
+     want: Operator
+     got:  col 17=Keyword(neluaKeyword)
+FAIL L266 (code L262) [keyword.operator.bitwise]
+     code:     2 >> 2 << 2 & 2 | 2 ~ 2;
+     want: Operator
+     got:  col 21=NONE()
+FAIL L267 (code L262) [keyword.operator.bitwise]
+     code:     2 >> 2 << 2 & 2 | 2 ~ 2;
+     want: Operator
+     got:  col 25=Keyword(neluaKeyword)
+FAIL L270 (code L269) [keyword.operator.comparison]
+     code:     2 > 2; 2 < 2; 2 == 2; 2 >= 2; 2 <= 2; 2 ~= 2;
+     want: Operator
+     got:  col 7=Keyword(neluaKeyword)
+FAIL L271 (code L269) [keyword.operator.comparison]
+     code:     2 > 2; 2 < 2; 2 == 2; 2 >= 2; 2 <= 2; 2 ~= 2;
+     want: Operator
+     got:  col 14=Keyword(neluaKeyword)
+FAIL L272 (code L269) [keyword.operator.comparison]
+     code:     2 > 2; 2 < 2; 2 == 2; 2 >= 2; 2 <= 2; 2 ~= 2;
+     want: Operator
+     got:  col 21=Keyword(neluaKeyword), col 22=Keyword(neluaKeyword)
+FAIL L273 (code L269) [keyword.operator.comparison]
+     code:     2 > 2; 2 < 2; 2 == 2; 2 >= 2; 2 <= 2; 2 ~= 2;
+     want: Operator
+     got:  col 29=Keyword(neluaKeyword), col 30=Keyword(neluaKeyword)
+FAIL L274 (code L269) [keyword.operator.comparison]
+     code:     2 > 2; 2 < 2; 2 == 2; 2 >= 2; 2 <= 2; 2 ~= 2;
+     want: Operator
+     got:  col 37=Keyword(neluaKeyword), col 38=Keyword(neluaKeyword)
+FAIL L275 (code L269) [keyword.operator.comparison]
+     code:     2 > 2; 2 < 2; 2 == 2; 2 >= 2; 2 <= 2; 2 ~= 2;
+     want: Operator
+     got:  col 45=Keyword(neluaKeyword), col 46=Keyword(neluaKeyword)
+FAIL L282 (code L281) [keyword.operator.concatenation]
+     code:     'foo' .. 'bar';
+     want: Operator
+     got:  col 11=Keyword(neluaKeyword), col 12=Keyword(neluaKeyword)
+FAIL L285 (code L284) [keyword.operator.assignment]
+     code:     x = 42;
+     want: Operator
+     got:  col 7=Keyword(neluaKeyword)
+FAIL L327 (code L322) [keyword.operator.comparison]
+     code:     {some = 2}, {some == 2}
+     want: Operator
+     got:  col 23=Keyword(neluaKeyword), col 24=Keyword(neluaKeyword)
+FAIL L332 (code L331) [meta.mapping.key.lua entity.name.function.lua - support]
+     code:      method = function ()
+     want: Function
+     got:  col 6=NONE(), col 7=NONE(), col 8=NONE(), col 9=NONE(), col 10=NONE(), col 11=NONE()
+FAIL L362 (code L360) [meta.property meta.function-call variable.function]
+     code:     foo.baz();
+     want: Function
+     got:  col 9=NONE(), col 10=NONE(), col 11=NONE()
+FAIL L366 (code L364) [meta.property meta.function-call variable.function]
+     code:     foo.baz "";
+     want: Function
+     got:  col 9=NONE(), col 10=NONE(), col 11=NONE()
+FAIL L370 (code L368) [meta.property meta.function-call variable.function]
+     code:     foo.baz '';
+     want: Function
+     got:  col 9=NONE(), col 10=NONE(), col 11=NONE()
+FAIL L374 (code L372) [meta.property meta.function-call variable.function]
+     code:     foo.baz [=[ a string ]=];
+     want: Function
+     got:  col 9=NONE(), col 10=NONE(), col 11=NONE()
+FAIL L378 (code L376) [meta.property meta.function-call variable.function]
+     code:     foo.baz {};
+     want: Function
+     got:  col 9=NONE(), col 10=NONE(), col 11=NONE()
+FAIL L407 (code L406) [meta.function-call variable.function]
+     code:     f(42);
+     want: Function
+     got:  col 5=NONE()
+FAIL L413 (code L412) [meta.function-call variable.function]
+     code:     f "argument";
+     want: Function
+     got:  col 5=NONE()
+FAIL L421 (code L420) [meta.function-call variable.function]
+     code:     f [[ foo ]];
+     want: Function
+     got:  col 5=NONE()
+FAIL L425 (code L424) [meta.function-call variable.function]
+     code:     f {};
+     want: Function
+     got:  col 5=NONE()
+FAIL L434 (code L433) [meta.function-call.lua support.function.builtin.lua]
+     code:     print('argument')
+     want: Function|Special
+     got:  col 5=String(neluastring)
+FAIL L440 (code L438) [keyword.declaration.function]
+     code:     function function_name( a, b, ... )
+     want: Keyword
+     got:  col 5=String(neluastring), col 6=String(neluastring), col 7=String(neluastring), col 8=String(neluastring), col 9=String(neluastring), col 10=String(neluastring), col 11=String(neluastring), col 12=String(neluastring)
+FAIL L441 (code L438) [entity.name.function]
+     code:     function function_name( a, b, ... )
+     want: Function
+     got:  col 14=String(neluastring), col 15=String(neluastring), col 16=String(neluastring), col 17=String(neluastring), col 18=String(neluastring), col 19=String(neluastring), col 20=String(neluastring), col 21=String(neluastring), col 22=String(neluastring), col 23=String(neluastring), col 24=String(neluastring), col 25=String(neluastring), col 26=String(neluastring)
+FAIL L444 (code L438) [variable.parameter.function]
+     code:     function function_name( a, b, ... )
+     want: NONE|Identifier
+     got:  col 29=String(neluastring)
+FAIL L446 (code L438) [variable.parameter.function]
+     code:     function function_name( a, b, ... )
+     want: NONE|Identifier
+     got:  col 32=String(neluastring)
+FAIL L448 (code L438) [constant.language]
+     code:     function function_name( a, b, ... )
+     want: Constant|Special
+     got:  col 35=String(neluastring), col 36=String(neluastring), col 37=String(neluastring)
+FAIL L451 (code L450) [meta.function meta.block keyword.control.end]
+     code:     end
+     want: Keyword|Conditional|Repeat|Statement
+     got:  col 5=String(neluastring), col 6=String(neluastring), col 7=String(neluastring)
+FAIL L455 (code L453) [variable.other - entity]
+     code:     function foo.bar:baz (...) end
+     want: NONE|Identifier  not: Function
+     got:  col 14=String(neluastring), col 15=String(neluastring), col 16=String(neluastring)
+FAIL L459 (code L453) [meta.property entity.name.function]
+     code:     function foo.bar:baz (...) end
+     want: Function
+     got:  col 22=String(neluastring), col 23=String(neluastring), col 24=String(neluastring)
+FAIL L461 (code L453) [keyword.control.end]
+     code:     function foo.bar:baz (...) end
+     want: Keyword|Conditional|Repeat|Statement
+     got:  col 32=String(neluastring), col 33=String(neluastring), col 34=String(neluastring)
+FAIL L464 (code L463) [meta.name.function meta.property.lua entity.name.function.lua]
+     code:     function foo.bar:__index (...) end
+     want: Function
+     got:  col 22=String(neluastring), col 23=String(neluastring), col 24=String(neluastring), col 25=String(neluastring), col 26=String(neluastring), col 27=String(neluastring), col 28=String(neluastring)
+FAIL L470 (code L467) [entity.name.function]
+     code:         .bar () end
+     want: Function
+     got:  col 10=String(neluastring), col 11=String(neluastring), col 12=String(neluastring)
+FAIL L473 (code L472) [storage.modifier]
+     code:     local function foo () end
+     want: StorageClass|Keyword|Statement
+     got:  col 5=String(neluastring), col 6=String(neluastring), col 7=String(neluastring), col 8=String(neluastring), col 9=String(neluastring)
+FAIL L475 (code L472) [entity.name.function]
+     code:     local function foo () end
+     want: Function
+     got:  col 20=String(neluastring), col 21=String(neluastring), col 22=String(neluastring)
+FAIL L481 (code L477) [keyword.control.end]
+     code:     ~function( a, b, ... ) end;
+     want: Keyword|Conditional|Repeat|Statement
+     got:  col 28=String(neluastring), col 29=String(neluastring), col 30=String(neluastring)
+FAIL L485 (code L483) [entity.name.function]
+     code:     ~function foo () end;
+     want: Function
+     got:  col 15=String(neluastring), col 16=String(neluastring), col 17=String(neluastring)
+FAIL L488 (code L487) [entity.name.function]
+     code:     foo = function() end;
+     want: Function
+     got:  col 5=String(neluastring), col 6=String(neluastring), col 7=String(neluastring)
+FAIL L491 (code L490) [meta.property entity.name.function]
+     code:     foo.bar = function() end;
+     want: Function
+     got:  col 9=String(neluastring), col 10=String(neluastring), col 11=String(neluastring)
+FAIL L494 (code L493) [meta.property.lua entity.name.function.lua]
+     code:     foo.__call = function() end;
+     want: Function
+     got:  col 9=String(neluastring), col 10=String(neluastring), col 11=String(neluastring), col 12=String(neluastring), col 13=String(neluastring), col 14=String(neluastring)
+FAIL L503 (code L501) [keyword.control]
+     code:     do
+     want: Keyword|Conditional|Repeat|Statement
+     got:  col 5=String(neluastring), col 6=String(neluastring)
+FAIL L507 (code L505) [keyword.control.end]
+     code:     end
+     want: Keyword|Conditional|Repeat|Statement
+     got:  col 5=String(neluastring), col 6=String(neluastring), col 7=String(neluastring)
+FAIL L511 (code L509) [keyword.control]
+     code:     do 2 + 2 end
+     want: Keyword|Conditional|Repeat|Statement
+     got:  col 5=String(neluastring), col 6=String(neluastring)
+FAIL L512 (code L509) [keyword.control.end]
+     code:     do 2 + 2 end
+     want: Keyword|Conditional|Repeat|Statement
+     got:  col 14=String(neluastring), col 15=String(neluastring), col 16=String(neluastring)
+FAIL L515 (code L514) [keyword.control.conditional]
+     code:     if true then
+     want: Conditional
+     got:  col 5=String(neluastring), col 6=String(neluastring)
+FAIL L516 (code L514) [keyword.control.conditional]
+     code:     if true then
+     want: Conditional
+     got:  col 13=String(neluastring), col 14=String(neluastring), col 15=String(neluastring), col 16=String(neluastring)
+FAIL L519 (code L518) [keyword.control.conditional]
+     code:     elseif false then
+     want: Conditional
+     got:  col 5=String(neluastring), col 6=String(neluastring), col 7=String(neluastring), col 8=String(neluastring), col 9=String(neluastring), col 10=String(neluastring)
+FAIL L520 (code L518) [keyword.control.conditional]
+     code:     elseif false then
+     want: Conditional
+     got:  col 18=String(neluastring), col 19=String(neluastring), col 20=String(neluastring), col 21=String(neluastring)
+FAIL L522 (code L521) [keyword.control.conditional]
+     code:     else
+     want: Conditional
+     got:  col 5=String(neluastring), col 6=String(neluastring), col 7=String(neluastring), col 8=String(neluastring)
+FAIL L528 (code L526) [keyword.control.conditional]
+     code:     if a ! = b then end
+     want: Conditional
+     got:  col 16=String(neluastring), col 17=String(neluastring), col 18=String(neluastring), col 19=String(neluastring)
+FAIL L529 (code L526) [keyword.control.end]
+     code:     if a ! = b then end
+     want: Keyword|Conditional|Repeat|Statement
+     got:  col 21=String(neluastring), col 22=String(neluastring), col 23=String(neluastring)
+FAIL L532 (code L531) [keyword.control.loop]
+     code:     while true do
+     want: Repeat
+     got:  col 5=String(neluastring), col 6=String(neluastring), col 7=String(neluastring), col 8=String(neluastring), col 9=String(neluastring)
+FAIL L533 (code L531) [keyword.control]
+     code:     while true do
+     want: Keyword|Conditional|Repeat|Statement
+     got:  col 16=String(neluastring), col 17=String(neluastring)
+FAIL L536 (code L535) [keyword.control.end]
+     code:     end
+     want: Keyword|Conditional|Repeat|Statement
+     got:  col 5=String(neluastring), col 6=String(neluastring), col 7=String(neluastring)
+FAIL L539 (code L538) [keyword.control.loop]
+     code:     repeat
+     want: Repeat
+     got:  col 5=String(neluastring), col 6=String(neluastring), col 7=String(neluastring), col 8=String(neluastring), col 9=String(neluastring), col 10=String(neluastring)
+FAIL L542 (code L541) [keyword.control.loop]
+     code:     until true;
+     want: Repeat
+     got:  col 5=String(neluastring), col 6=String(neluastring), col 7=String(neluastring), col 8=String(neluastring), col 9=String(neluastring)
+FAIL L543 (code L541) [constant.language.boolean.lua]
+     code:     until true;
+     want: Boolean
+     got:  col 11=String(neluastring), col 12=String(neluastring), col 13=String(neluastring), col 14=String(neluastring)
+FAIL L546 (code L545) [keyword.control.loop]
+     code:     for x = 1, y, z do end
+     want: Repeat
+     got:  col 5=String(neluastring), col 6=String(neluastring), col 7=String(neluastring)
+FAIL L547 (code L545) [variable.other]
+     code:     for x = 1, y, z do end
+     want: NONE|Identifier
+     got:  col 9=String(neluastring)
+FAIL L548 (code L545) [keyword.operator.assignment]
+     code:     for x = 1, y, z do end
+     want: Operator
+     got:  col 11=String(neluastring)
+FAIL L550 (code L545) [variable.other]
+     code:     for x = 1, y, z do end
+     want: NONE|Identifier
+     got:  col 16=String(neluastring)
+FAIL L552 (code L545) [variable.other]
+     code:     for x = 1, y, z do end
+     want: NONE|Identifier
+     got:  col 19=String(neluastring)
+FAIL L554 (code L545) [keyword.control]
+     code:     for x = 1, y, z do end
+     want: Keyword|Conditional|Repeat|Statement
+     got:  col 21=String(neluastring), col 22=String(neluastring)
+FAIL L555 (code L545) [keyword.control.end]
+     code:     for x = 1, y, z do end
+     want: Keyword|Conditional|Repeat|Statement
+     got:  col 24=String(neluastring), col 25=String(neluastring), col 26=String(neluastring)
+FAIL L558 (code L557) [keyword.control.loop]
+     code:     for x, y in a, b do end
+     want: Repeat
+     got:  col 5=String(neluastring), col 6=String(neluastring), col 7=String(neluastring)
+FAIL L559 (code L557) [variable.other]
+     code:     for x, y in a, b do end
+     want: NONE|Identifier
+     got:  col 9=String(neluastring)
+FAIL L561 (code L557) [variable.other]
+     code:     for x, y in a, b do end
+     want: NONE|Identifier
+     got:  col 12=String(neluastring)
+FAIL L562 (code L557) [keyword.control.loop]
+     code:     for x, y in a, b do end
+     want: Repeat
+     got:  col 14=String(neluastring), col 15=String(neluastring)
+FAIL L563 (code L557) [variable.other]
+     code:     for x, y in a, b do end
+     want: NONE|Identifier
+     got:  col 17=String(neluastring)
+FAIL L565 (code L557) [variable.other]
+     code:     for x, y in a, b do end
+     want: NONE|Identifier
+     got:  col 20=String(neluastring)
+FAIL L567 (code L557) [keyword.control]
+     code:     for x, y in a, b do end
+     want: Keyword|Conditional|Repeat|Statement
+     got:  col 22=String(neluastring), col 23=String(neluastring)
+FAIL L568 (code L557) [keyword.control.end]
+     code:     for x, y in a, b do end
+     want: Keyword|Conditional|Repeat|Statement
+     got:  col 25=String(neluastring), col 26=String(neluastring), col 27=String(neluastring)
+FAIL L572 (code L571) [punctuation.definition.label.begin]
+     code:     :: foo ::;
+     want: Label
+     got:  col 5=String(neluastring), col 6=String(neluastring)
+FAIL L573 (code L571) [entity.name.label]
+     code:     :: foo ::;
+     want: Label
+     got:  col 8=String(neluastring), col 9=String(neluastring), col 10=String(neluastring)
+FAIL L574 (code L571) [punctuation.definition.label.end]
+     code:     :: foo ::;
+     want: Label
+     got:  col 12=String(neluastring), col 13=String(neluastring)
+FAIL L577 (code L576) [keyword.control.goto]
+     code:     goto foo;
+     want: Statement|Keyword
+     got:  col 5=String(neluastring), col 6=String(neluastring), col 7=String(neluastring), col 8=String(neluastring)
+FAIL L578 (code L576) [variable.label]
+     code:     goto foo;
+     want: Label
+     got:  col 10=String(neluastring), col 11=String(neluastring), col 12=String(neluastring)
+FAIL L581 (code L580) [keyword.control.break]
+     code:     break;
+     want: Statement|Keyword
+     got:  col 5=String(neluastring), col 6=String(neluastring), col 7=String(neluastring), col 8=String(neluastring), col 9=String(neluastring)
+FAIL L584 (code L583) [keyword.control.return]
+     code:     return;
+     want: Statement|Keyword
+     got:  col 5=String(neluastring), col 6=String(neluastring), col 7=String(neluastring), col 8=String(neluastring), col 9=String(neluastring), col 10=String(neluastring)
+FAIL L587 (code L586) [keyword.control.return]
+     code:     return foo or a < b and a <= b;
+     want: Statement|Keyword
+     got:  col 5=String(neluastring), col 6=String(neluastring), col 7=String(neluastring), col 8=String(neluastring), col 9=String(neluastring), col 10=String(neluastring)
+FAIL L588 (code L586) [variable.other]
+     code:     return foo or a < b and a <= b;
+     want: NONE|Identifier
+     got:  col 12=String(neluastring), col 13=String(neluastring), col 14=String(neluastring)
+FAIL L589 (code L586) [keyword.operator.logical.lua]
+     code:     return foo or a < b and a <= b;
+     want: Operator|Keyword
+     got:  col 16=String(neluastring), col 17=String(neluastring)
+FAIL L590 (code L586) [keyword.operator.comparison.lua]
+     code:     return foo or a < b and a <= b;
+     want: Operator
+     got:  col 21=String(neluastring)
+FAIL L591 (code L586) [keyword.operator.logical.lua]
+     code:     return foo or a < b and a <= b;
+     want: Operator|Keyword
+     got:  col 25=String(neluastring), col 26=String(neluastring), col 27=String(neluastring)
+FAIL L592 (code L586) [keyword.operator.comparison.lua]
+     code:     return foo or a < b and a <= b;
+     want: Operator
+     got:  col 31=String(neluastring), col 32=String(neluastring)
+FAIL L595 (code L594) [keyword.operator.bitwise.lua]
+     code:     return a << b;
+     want: Operator
+     got:  col 14=String(neluastring), col 15=String(neluastring)
+FAIL L598 (code L597) [storage.modifier]
+     code:     local x = 1, y = 2;
+     want: StorageClass|Keyword|Statement
+     got:  col 5=String(neluastring), col 6=String(neluastring), col 7=String(neluastring), col 8=String(neluastring), col 9=String(neluastring)
+FAIL L599 (code L597) [variable.other]
+     code:     local x = 1, y = 2;
+     want: NONE|Identifier
+     got:  col 11=String(neluastring)
+FAIL L600 (code L597) [keyword.operator.assignment]
+     code:     local x = 1, y = 2;
+     want: Operator
+     got:  col 13=String(neluastring)
+FAIL L601 (code L597) [meta.number.integer.decimal constant.numeric.value]
+     code:     local x = 1, y = 2;
+     want: Number
+     got:  col 15=String(neluastring)
+FAIL L603 (code L597) [variable.other]
+     code:     local x = 1, y = 2;
+     want: NONE|Identifier
+     got:  col 18=String(neluastring)
+FAIL L604 (code L597) [keyword.operator.assignment]
+     code:     local x = 1, y = 2;
+     want: Operator
+     got:  col 20=String(neluastring)
+FAIL L605 (code L597) [meta.number.integer.decimal constant.numeric.value]
+     code:     local x = 1, y = 2;
+     want: Number
+     got:  col 22=String(neluastring)
+FAIL L609 (code L608) [storage.modifier.lua]
+     code:     local x <const>, y <  const  > = 1, 2;
+     want: StorageClass|Keyword|Statement
+     got:  col 5=String(neluastring), col 6=String(neluastring), col 7=String(neluastring), col 8=String(neluastring), col 9=String(neluastring)
+FAIL L610 (code L608) [variable.other.lua]
+     code:     local x <const>, y <  const  > = 1, 2;
+     want: NONE|Identifier
+     got:  col 11=String(neluastring)
+FAIL L612 (code L608) [punctuation.definition.annotation.begin.lua]
+     code:     local x <const>, y <  const  > = 1, 2;
+     want: Macro|Delimiter|Special
+     got:  col 13=String(neluastring)
+FAIL L613 (code L608) [punctuation.definition.annotation.end.lua]
+     code:     local x <const>, y <  const  > = 1, 2;
+     want: Macro|Delimiter|Special
+     got:  col 19=String(neluastring)
+FAIL L614 (code L608) [variable.annotation.lua entity.other.attribute-name]
+     code:     local x <const>, y <  const  > = 1, 2;
+     want: Macro
+     got:  col 14=String(neluastring), col 15=String(neluastring), col 16=String(neluastring), col 17=String(neluastring), col 18=String(neluastring)
+FAIL L615 (code L608) [keyword.operator.assignment.lua]
+     code:     local x <const>, y <  const  > = 1, 2;
+     want: Operator
+     got:  col 36=String(neluastring)
+FAIL L616 (code L608) [meta.number.integer.decimal.lua constant.numeric.value.lua]
+     code:     local x <const>, y <  const  > = 1, 2;
+     want: Number
+     got:  col 38=String(neluastring)
+FAIL L618 (code L608) [variable.other.lua]
+     code:     local x <const>, y <  const  > = 1, 2;
+     want: NONE|Identifier
+     got:  col 22=String(neluastring)
+FAIL L620 (code L608) [punctuation.definition.annotation.begin.lua]
+     code:     local x <const>, y <  const  > = 1, 2;
+     want: Macro|Delimiter|Special
+     got:  col 24=String(neluastring)
+FAIL L621 (code L608) [variable.annotation.lua entity.other.attribute-name]
+     code:     local x <const>, y <  const  > = 1, 2;
+     want: Macro
+     got:  col 27=String(neluastring), col 28=String(neluastring), col 29=String(neluastring), col 30=String(neluastring), col 31=String(neluastring)
+FAIL L622 (code L608) [punctuation.definition.annotation.end.lua]
+     code:     local x <const>, y <  const  > = 1, 2;
+     want: Macro|Delimiter|Special
+     got:  col 34=String(neluastring)
+FAIL L623 (code L608) [keyword.operator.assignment.lua]
+     code:     local x <const>, y <  const  > = 1, 2;
+     want: Operator
+     got:  col 36=String(neluastring)
+FAIL L624 (code L608) [meta.number.integer.decimal.lua constant.numeric.value.lua]
+     code:     local x <const>, y <  const  > = 1, 2;
+     want: Number
+     got:  col 41=String(neluastring)
+FAIL L627 (code L626) [storage.modifier.lua]
+     code:     local t = a >= b and b <= a
+     want: StorageClass|Keyword|Statement
+     got:  col 5=String(neluastring), col 6=String(neluastring), col 7=String(neluastring), col 8=String(neluastring), col 9=String(neluastring)
+FAIL L628 (code L626) [keyword.operator.assignment.lua]
+     code:     local t = a >= b and b <= a
+     want: Operator
+     got:  col 13=String(neluastring)
+FAIL L629 (code L626) [keyword.operator.comparison.lua]
+     code:     local t = a >= b and b <= a
+     want: Operator
+     got:  col 17=String(neluastring), col 18=String(neluastring)
+FAIL L630 (code L626) [keyword.operator.logical.lua]
+     code:     local t = a >= b and b <= a
+     want: Operator|Keyword
+     got:  col 22=String(neluastring), col 23=String(neluastring), col 24=String(neluastring)
+FAIL L631 (code L626) [keyword.operator.comparison.lua]
+     code:     local t = a >= b and b <= a
+     want: Operator
+     got:  col 28=String(neluastring), col 29=String(neluastring)
+FAIL L634 (code L633) [storage.modifier.lua]
+     code:     local text <const = "Hello, World";
+     want: StorageClass|Keyword|Statement
+     got:  col 5=String(neluastring), col 6=String(neluastring), col 7=String(neluastring), col 8=String(neluastring), col 9=String(neluastring)
+FAIL L635 (code L633) [variable.other.lua]
+     code:     local text <const = "Hello, World";
+     want: NONE|Identifier
+     got:  col 11=String(neluastring), col 12=String(neluastring), col 13=String(neluastring), col 14=String(neluastring)
+FAIL L637 (code L633) [keyword.operator.assignment.lua - meta.annotation]
+     code:     local text <const = "Hello, World";
+     want: Operator  not: Macro
+     got:  col 23=String(neluastring)
+FAIL L644 (code L643) [storage.modifier.lua]
+     code:     local f <close> = io.open("/etc/fstab", "r")
+     want: StorageClass|Keyword|Statement
+     got:  col 5=String(neluastring), col 6=String(neluastring), col 7=String(neluastring), col 8=String(neluastring), col 9=String(neluastring)
+FAIL L645 (code L643) [variable.other.lua]
+     code:     local f <close> = io.open("/etc/fstab", "r")
+     want: NONE|Identifier
+     got:  col 11=String(neluastring)
+FAIL L647 (code L643) [punctuation.definition.annotation.begin.lua]
+     code:     local f <close> = io.open("/etc/fstab", "r")
+     want: Macro|Delimiter|Special
+     got:  col 13=String(neluastring)
+FAIL L648 (code L643) [variable.annotation.lua entity.other.attribute-name]
+     code:     local f <close> = io.open("/etc/fstab", "r")
+     want: Macro
+     got:  col 14=String(neluastring), col 15=String(neluastring), col 16=String(neluastring), col 17=String(neluastring), col 18=String(neluastring)
+FAIL L649 (code L643) [punctuation.definition.annotation.end.lua]
+     code:     local f <close> = io.open("/etc/fstab", "r")
+     want: Macro|Delimiter|Special
+     got:  col 19=String(neluastring)
+FAIL L650 (code L643) [keyword.operator.assignment.lua]
+     code:     local f <close> = io.open("/etc/fstab", "r")
+     want: Operator
+     got:  col 21=String(neluastring)
+FAIL L651 (code L643) [support.constant.builtin.lua]
+     code:     local f <close> = io.open("/etc/fstab", "r")
+     want: Special|Constant
+     got:  col 23=String(neluastring), col 24=String(neluastring)
+FAIL L653 (code L643) [meta.property.lua support.function.builtin.lua]
+     code:     local f <close> = io.open("/etc/fstab", "r")
+     want: Function|Special
+     got:  col 26=String(neluastring), col 27=String(neluastring), col 28=String(neluastring), col 29=String(neluastring)
+SUMMARY file=sublime_syntax_test_nelua.nelua pass=129 fail=158 skipped(no colour meaning)=87
